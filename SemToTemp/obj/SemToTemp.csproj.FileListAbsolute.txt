@@ -1,0 +1,7 @@
+Z:\Work\Coding\Github\repos\SemToTemp\SemToTemp\bin\Debug\SemToTemp.exe
+Z:\Work\Coding\Github\repos\SemToTemp\SemToTemp\bin\Debug\SemToTemp.pdb
+Z:\Work\Coding\Github\repos\SemToTemp\SemToTemp\obj\Debug\ResolveAssemblyReference.cache
+Z:\Work\Coding\Github\repos\SemToTemp\SemToTemp\obj\Debug\SemToTemp.Properties.Resources.resources
+Z:\Work\Coding\Github\repos\SemToTemp\SemToTemp\obj\Debug\SemToTemp.csproj.GenerateResource.Cache
+Z:\Work\Coding\Github\repos\SemToTemp\SemToTemp\obj\Debug\SemToTemp.exe
+Z:\Work\Coding\Github\repos\SemToTemp\SemToTemp\obj\Debug\SemToTemp.pdb
