@@ -276,7 +276,7 @@ partial class SqlOracle
         while (reader.Read())
         {
             val = reader.GetValue(0);
-            Message.Show(reader.GetValue(0));
+            break;
         }
 
         reader.Close();

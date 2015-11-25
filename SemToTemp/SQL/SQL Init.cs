@@ -23,6 +23,7 @@ static partial class SqlOracle
         try
         {
             _conn = new OracleConnection(_connectionString);
+            Logger.WriteLine("Статус соединения: " + _conn.State + " - открытие соединения...");
             _conn.Open();
             Logger.WriteLine("Соединение открыто!");
         }
@@ -35,44 +36,47 @@ static partial class SqlOracle
     }
     public static void _close()
     {
-        Logger.WriteLine(_conn.State + " - закрытие соединения...");
-        bool closed = false;
-        do
+        if (_conn != null)
         {
-            switch (_conn.State)
+            Logger.WriteLine("Статус соединения: " + _conn.State + " - закрытие соединения...");
+            bool closed = false;
+            do
             {
+                switch (_conn.State)
+                {
                     case ConnectionState.Closed:
-                    {
-                        closed = true;
-                        break;
-                    }
+                        {
+                            closed = true;
+                            break;
+                        }
                     case ConnectionState.Broken:
-                    {
-                        closed = true;
-                        _conn.Close();
-                        break;
-                    }
+                        {
+                            closed = true;
+                            _conn.Close();
+                            break;
+                        }
                     case ConnectionState.Connecting:
-                    {
-                        break;
-                    }
+                        {
+                            break;
+                        }
                     case ConnectionState.Executing:
-                    {
-                        break;
-                    }
+                        {
+                            break;
+                        }
                     case ConnectionState.Fetching:
-                    {
-                        break;
-                    }
+                        {
+                            break;
+                        }
                     case ConnectionState.Open:
-                    {
-                        closed = true;
-                        _conn.Close();
-                        break;
-                    }
-            }
-        } while (!closed);
-        Logger.WriteLine("Успешно!");
+                        {
+                            closed = true;
+                            _conn.Close();
+                            break;
+                        }
+                }
+            } while (!closed);
+        }
+        Logger.WriteLine("Соединение закрыто!");
     }
 
 
@@ -87,10 +91,15 @@ static partial class SqlOracle
                             ";password=" + password +
                             ";Data Source = " + dataSource;
     }
+    
     /// <summary>
-    /// Метод построения строки соеднинения
-    /// </summary>   
-    /// <returns></returns>
+    /// Метод составляет строку соединения.
+    /// </summary>
+    /// <param name="user">Логин</param>
+    /// <param name="password">Пароль</param>
+    /// <param name="dataSource">Имя службы</param>
+    /// <param name="host">Имя хоста</param>
+    /// <param name="port">Порт</param>
     public static void BuildConnectionString(string user, string password, string dataSource, string host, string port)
     {
         _connectionString = "User id=" + user +
@@ -102,5 +111,37 @@ static partial class SqlOracle
 
     }
 
+    /// <summary>
+    /// Метод составляет строку соединения.
+    /// </summary>
+    /// <param name="user">Логин</param>
+    /// <param name="password">Пароль</param>
+    /// <param name="sid">Идентификатор службы</param>
+    /// <param name="host">Имя хоста</param>
+    /// <param name="port">Порт</param>
+    public static void BuildConnectionStringSid(string user, string password, string sid, string host, string port)
+    {
+        _connectionString = "User id=" + user +
+                                             ";password=" + password +
+                                               ";SID  = " + sid +
+                                                    ";Host = " + host +
+                                                        ";Direct = true" +
+                                                            ";Port = " + port;
 
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="tableName"></param>
+    /// <returns></returns>
+    public static bool TestQuery(string tableName)
+    {
+        object data = TestSelect("SELECT * FROM " + tableName);
+        if (data != null)
+        {
+            return true;
+        }
+        return false;
+    }
 }

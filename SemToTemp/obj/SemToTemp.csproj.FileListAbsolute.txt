@@ -6,3 +6,4 @@ Z:\Work\Coding\Github\repos\SemToTemp\SemToTemp\obj\Debug\SemToTemp.csproj.Gener
 Z:\Work\Coding\Github\repos\SemToTemp\SemToTemp\obj\Debug\SemToTemp.exe
 Z:\Work\Coding\Github\repos\SemToTemp\SemToTemp\obj\Debug\SemToTemp.pdb
 Z:\Work\Coding\Github\repos\SemToTemp\SemToTemp\obj\Debug\SemToTemp.exe.licenses
+Z:\Work\Coding\Github\repos\SemToTemp\SemToTemp\obj\Debug\SemToTemp.fConnect.resources

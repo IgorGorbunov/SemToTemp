@@ -1,18 +1,38 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace SemToTemp
 {
-    public partial class Form1 : Form
+    public partial class fConnect : Form
     {
-        public Form1()
+        public fConnect()
         {
             InitializeComponent();
+        }
+
+        private void bttnConnect_Click(object sender, EventArgs e)
+        {
+            SqlOracle.BuildConnectionStringSid(tBlogin.Text.Trim(), tBpassword.Text.Trim(),
+                                               tBsid.Text.Trim(), tBhostname.Text.Trim(),
+                                               tBport.Text.Trim());
+
+            if (SqlOracle.TestQuery("TABLE_1"))
+            {
+                Visible = false;
+                fMain mainForm = new fMain();
+                mainForm.ShowDialog();
+            }
+            Close();
+        }
+
+        private void fConnect_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void fConnect_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            SqlOracle._close();
         }
     }
 }

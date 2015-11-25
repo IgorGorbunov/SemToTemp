@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-
-using System.Drawing;
-using Devart.Data.Oracle;
 
 /// <summary>
 /// Класс c методами типа Select
