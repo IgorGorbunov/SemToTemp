@@ -133,6 +133,11 @@ public static class Instr
         return maxEl;
     }
 
+    /// <summary>
+    /// Возвращает md5 хэш-сумму для файла.
+    /// </summary>
+    /// <param name="path">Путь к файлу.</param>
+    /// <returns></returns>
     public static string ComputeMd5Checksum(string path)
     {
         using (FileStream fs = File.OpenRead(path))
@@ -146,5 +151,116 @@ public static class Instr
         }
     }
 
+    /// <summary>
+    /// Возвращает строку без лишних пробелов.
+    /// </summary>
+    /// <param name="line">Начальная строка.</param>
+    /// <returns></returns>
+    public static string DeleteDoubleSpaces(string line)
+    {
+        string[] split = line.Split(' ');
+        string newLine = "";
+        bool first = true;
+        foreach (string s in split)
+        {
+            if (string.IsNullOrEmpty(s))
+                continue;
+
+            if (!first)
+            {
+                newLine += ' ';
+            }
+            newLine += s;
+            first = false;
+        }
+        return newLine;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="nDataTypeBytes"></param>
+    public static void AddSpaces(ref string data, int nDataTypeBytes)
+    {
+        data = AddSpaces(data, nDataTypeBytes);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="nDataTypeBytes"></param>
+    /// <returns></returns>
+    public static string AddSpaces(string data, int nDataTypeBytes)
+    {
+        if (data.Length >= nDataTypeBytes)
+        {
+            return data.Substring(0, nDataTypeBytes);
+        }
+        string spaces = "";
+        for (int i = 0; i < nDataTypeBytes - data.Length; i++)
+        {
+            spaces += " ";
+        }
+        return data + spaces;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    public static void AddQuotes(ref string data)
+    {
+        data = String.Format("\'{0}\'", data);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="nDataTypeBytes"></param>
+    /// <returns></returns>
+    public static string PrepareSqlString(string data, int nDataTypeBytes)
+    {
+        string newData = PrepareSqlParamString(data, nDataTypeBytes);
+        if (newData == "NULL")
+        {
+            return newData;
+        }
+        AddQuotes(ref newData);
+        return newData;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="nDataTypeBytes"></param>
+    /// <returns></returns>
+    public static string PrepareSqlParamString(string data, int nDataTypeBytes)
+    {
+        if (string.IsNullOrEmpty(data))
+        {
+            return "NULL";
+        }
+        string newData = DeleteDoubleSpaces(data);
+        if (string.IsNullOrEmpty(newData))
+        {
+            return "NULL";
+        }
+        AddSpaces(ref newData, nDataTypeBytes);
+        return newData;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public static string GetSqlToday()
+    {
+        return DateTime.Today.ToString("dd.MM.yy");
+    }
 }
 

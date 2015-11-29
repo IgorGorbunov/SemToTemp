@@ -1,9 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace SemToTemp
@@ -13,6 +9,20 @@ namespace SemToTemp
         public fMain()
         {
             InitializeComponent();
+        }
+
+        private void bttnRecord_Click(object sender, EventArgs e)
+        {
+            Dictionary<string, string> pars = new Dictionary<string, string>();
+            pars.Add(tbAb1.Text, tbSum1.Text);
+            pars.Add(tbAb2.Text, tbSum2.Text);
+            pars.Add(tbAb3.Text, tbSum3.Text);
+            pars.Add(tbAb4.Text, tbSum4.Text);
+            pars.Add(tbAb5.Text, tbSum5.Text);
+            GroupElement groupElement = new GroupElement("група  1", pars);
+            groupElement.AddIntoDbParam();
+            MessageBox.Show("OK!");
+
         }
     }
 }

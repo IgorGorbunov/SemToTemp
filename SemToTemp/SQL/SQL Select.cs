@@ -107,6 +107,50 @@ partial class SqlOracle
         }
     }
 
+    public static List<T> Sel<T>(string cmdQuery)
+    {
+        List<T> values = new List<T>();
+        try
+        {
+            _open();
+
+            OracleCommand cmd = new OracleCommand(cmdQuery, _conn);
+
+            OracleDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                values.Add((T)reader.GetValue(0));
+            }
+
+            reader.Close();
+            cmd.Dispose();
+
+            ProcessSuccess(cmdQuery, values);
+        }
+        catch (TimeoutException)
+        {
+            throw;
+        }
+        catch (OracleException ex)
+        {
+            string mess = "Ошибка в запросе к БД!" + Environment.NewLine + ex;
+            Logger.WriteError(mess);
+            Message.Show(mess);
+            throw new BadQueryExeption();
+        }
+        catch (Exception ex)
+        {
+            string mess = "Ошибка в запросе к БД!" + Environment.NewLine + ex;
+            Logger.WriteError(mess);
+            Message.Show(mess);
+        }
+        finally
+        {
+            _close();
+        }
+        return values;
+    }
+
     public static bool Sel<T1, T2>(string cmdQuery, Dictionary<string, string> paramsDict, out Dictionary<T1, T2> values)
     {
         values = new Dictionary<T1, T2>();
@@ -286,7 +330,12 @@ partial class SqlOracle
         return val;
     }
 
-
+    static void ProcessSuccess(string cmdQuery, Dictionary<string, string> paramsDict)
+    {
+        string mess = "Запрос прошёл!";
+        mess = RecordQuery(mess, cmdQuery, paramsDict);
+        Logger.WriteLine(mess);
+    }
     static void ProcessSuccess<T>(string cmdQuery, Dictionary<string, string> paramsDict, T value)
     {
         string mess = "Запрос прошёл!";
@@ -301,6 +350,17 @@ partial class SqlOracle
         string mess = "Запрос прошёл!";
         mess = RecordQuery(mess, cmdQuery, paramsDict);
         mess += Environment.NewLine + "-";
+        mess += Environment.NewLine + "Data:";
+        foreach (T value in values)
+        {
+            mess += Environment.NewLine + value;
+        }
+        Logger.WriteLine(mess);
+    }
+    static void ProcessSuccess<T>(string cmdQuery, List<T> values)
+    {
+        string mess = "Запрос прошёл!";
+        mess += Environment.NewLine + cmdQuery;
         mess += Environment.NewLine + "Data:";
         foreach (T value in values)
         {

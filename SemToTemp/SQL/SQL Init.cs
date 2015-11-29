@@ -7,6 +7,8 @@ using Devart.Data.Oracle;
 /// </summary>
 static partial class SqlOracle
 {
+    public static string Login;
+
     /// <summary>
     /// Объявление компонентов
     /// </summary>
@@ -87,6 +89,7 @@ static partial class SqlOracle
     /// <returns></returns>
     public static void BuildConnectionString(string user, string password, string dataSource)
     {
+        Login = user;
         _connectionString = "User id=" + user +
                             ";password=" + password +
                             ";Data Source = " + dataSource;
@@ -102,6 +105,7 @@ static partial class SqlOracle
     /// <param name="port">Порт</param>
     public static void BuildConnectionString(string user, string password, string dataSource, string host, string port)
     {
+        Login = user;
         _connectionString = "User id=" + user +
                                              ";password=" + password +
                                                ";Service Name  = " + dataSource +
@@ -121,6 +125,7 @@ static partial class SqlOracle
     /// <param name="port">Порт</param>
     public static void BuildConnectionStringSid(string user, string password, string sid, string host, string port)
     {
+        Login = user;
         _connectionString = "User id=" + user +
                                              ";password=" + password +
                                                ";SID  = " + sid +
@@ -144,4 +149,6 @@ static partial class SqlOracle
         }
         return false;
     }
+
+    
 }

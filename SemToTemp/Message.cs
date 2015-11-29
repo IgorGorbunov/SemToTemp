@@ -136,7 +136,6 @@ public static class Message
         //}
         //Config.TheUi.NXMessageBox.Show(title, dialog, mess == null ? "null" : mess.ToString());
 
-        MessageBoxButtons buttons = MessageBoxButtons.OK;
         MessageBoxIcon icon = MessageBoxIcon.Error;
         switch (type)
         {

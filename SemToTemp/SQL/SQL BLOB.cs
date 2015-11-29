@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using Devart.Data.Oracle;
 
@@ -14,6 +13,7 @@ partial class SqlOracle
     /// </summary>
     /// <param name="cmdQuery"></param>
     /// <param name="path"></param>
+    /// <param name="fileName"></param>
     /// <param name="paramsDict"></param>
     /// <returns></returns>
     static public bool UnloadFile(string cmdQuery, string path, string fileName, Dictionary<string, string> paramsDict)

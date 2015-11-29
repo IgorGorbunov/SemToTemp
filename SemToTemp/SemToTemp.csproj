@@ -57,11 +57,16 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="GroupElement.cs" />
     <Compile Include="Instr.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="fMain.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>fMain.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <SubType>Designer</SubType>
       <DependentUpon>Form1.cs</DependentUpon>
@@ -88,6 +93,7 @@
     <Compile Include="SQL\SQL BLOB.cs" />
     <Compile Include="SQL\SQL Exist.cs" />
     <Compile Include="SQL\SQL Init.cs" />
+    <Compile Include="SQL\SQL Insert.cs" />
     <Compile Include="SQL\SQL Select.cs" />
     <Compile Include="SQL\SQL Update.cs" />
   </ItemGroup>
