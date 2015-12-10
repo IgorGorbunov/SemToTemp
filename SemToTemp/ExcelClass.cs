@@ -431,6 +431,17 @@ public sealed class ExcelClass
     /// <summary>
     /// Возвращает true, если ячейка пустая("") или без данных(NULL).
     /// </summary>
+    /// <param name="iRow">Номер строки.</param>
+    /// <param name="iCol">Номер столбца.</param>
+    /// <returns></returns>
+    public bool CellIsNullOrVoid(int iRow, int iCol)
+    {
+        return GetCellStringValue(iRow, iCol) == "";
+    }
+
+    /// <summary>
+    /// Возвращает true, если ячейка пустая("") или без данных(NULL).
+    /// </summary>
     /// <param name="colLetter">Буква столбца ячейки.</param>
     /// <param name="nRow">Номер строки ячейки.</param>
     /// <returns></returns>
