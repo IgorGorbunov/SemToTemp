@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class GroupElement
 {
-    private int Id
+    public int Id
     {
         get
         {
@@ -25,7 +25,7 @@ public class GroupElement
 
     private const int _N_CHAR = 80;
     private const int _N_PARAM_NAME_CHAR = 2;
-    private const int _N_USER_NAME_CHAR = 32;
+
 
     public GroupElement(string name, Dictionary<string, string> parametrs)
     {
@@ -44,7 +44,7 @@ public class GroupElement
             query += string.Format(", {0}, {1}", paramSql[i, 0], paramSql[i, 1]);
         }
         string sqlToday = Instr.GetSqlToday();
-        string sqlLogin = Instr.PrepareSqlString(SqlOracle.Login, _N_USER_NAME_CHAR);
+        string sqlLogin = Instr.PrepareSqlString(SqlOracle.Login, Element.NUserNameChar);
         int isSketch = 0;
         string sqlFileExt = "NULL";
         string sqlFile = "NULL";
@@ -52,12 +52,12 @@ public class GroupElement
         SqlOracle.Insert(query);
     }
 
-    public void AddIntoDbParam()
+    public void WriteToDb()
     {
         string nameSql = Instr.PrepareSqlParamString(_name, _N_CHAR);
         string[,] paramSql = GetTenParams();
         string sqlToday = Instr.GetSqlToday();
-        string sqlLogin = Instr.PrepareSqlParamString(SqlOracle.Login, _N_USER_NAME_CHAR);
+        string sqlLogin = Instr.PrepareSqlParamString(SqlOracle.Login, Element.NUserNameChar);
         int isSketch = 0;
         string sqlFileExt = "NULL";
         string sqlFile = "NULL";

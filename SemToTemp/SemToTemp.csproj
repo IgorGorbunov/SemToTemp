@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuyInstrument.cs" />
+    <Compile Include="Element.cs" />
     <Compile Include="Exceptions\BadQueryExeption.cs" />
     <Compile Include="fMain.cs">
       <SubType>Form</SubType>
@@ -61,6 +63,7 @@
     <Compile Include="Instr.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Message.cs" />
+    <Compile Include="Position.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="fMain.resx">

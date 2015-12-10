@@ -30,6 +30,8 @@ namespace SemToTemp
         {
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tpAddGroup = new System.Windows.Forms.TabPage();
+            this.rtbResult = new System.Windows.Forms.RichTextBox();
+            this.tbGroupName = new System.Windows.Forms.TextBox();
             this.tbSum5 = new System.Windows.Forms.TextBox();
             this.tbSum4 = new System.Windows.Forms.TextBox();
             this.tbSum3 = new System.Windows.Forms.TextBox();
@@ -43,8 +45,10 @@ namespace SemToTemp
             this.label1 = new System.Windows.Forms.Label();
             this.bttnRecord = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tbGroupName = new System.Windows.Forms.TextBox();
-            this.rtbResult = new System.Windows.Forms.RichTextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
             this.tabControl.SuspendLayout();
             this.tpAddGroup.SuspendLayout();
             this.SuspendLayout();
@@ -62,6 +66,10 @@ namespace SemToTemp
             // 
             // tpAddGroup
             // 
+            this.tpAddGroup.Controls.Add(this.textBox4);
+            this.tpAddGroup.Controls.Add(this.textBox3);
+            this.tpAddGroup.Controls.Add(this.textBox2);
+            this.tpAddGroup.Controls.Add(this.textBox1);
             this.tpAddGroup.Controls.Add(this.rtbResult);
             this.tpAddGroup.Controls.Add(this.tbGroupName);
             this.tpAddGroup.Controls.Add(this.tbSum5);
@@ -84,16 +92,34 @@ namespace SemToTemp
             this.tpAddGroup.Text = "Добавить группу";
             this.tpAddGroup.UseVisualStyleBackColor = true;
             // 
+            // rtbResult
+            // 
+            this.rtbResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rtbResult.Location = new System.Drawing.Point(38, 203);
+            this.rtbResult.Name = "rtbResult";
+            this.rtbResult.Size = new System.Drawing.Size(1011, 370);
+            this.rtbResult.TabIndex = 13;
+            this.rtbResult.Text = "";
+            this.rtbResult.WordWrap = false;
+            // 
+            // tbGroupName
+            // 
+            this.tbGroupName.Location = new System.Drawing.Point(38, 49);
+            this.tbGroupName.Name = "tbGroupName";
+            this.tbGroupName.Size = new System.Drawing.Size(164, 20);
+            this.tbGroupName.TabIndex = 12;
+            this.tbGroupName.Text = "много пробелов ва да-да  да -  да  !";
+            // 
             // tbSum5
             // 
-            this.tbSum5.Location = new System.Drawing.Point(415, 127);
+            this.tbSum5.Location = new System.Drawing.Point(263, 128);
             this.tbSum5.Name = "tbSum5";
             this.tbSum5.Size = new System.Drawing.Size(100, 20);
             this.tbSum5.TabIndex = 11;
             // 
             // tbSum4
             // 
-            this.tbSum4.Location = new System.Drawing.Point(415, 101);
+            this.tbSum4.Location = new System.Drawing.Point(263, 102);
             this.tbSum4.Name = "tbSum4";
             this.tbSum4.Size = new System.Drawing.Size(100, 20);
             this.tbSum4.TabIndex = 10;
@@ -101,7 +127,7 @@ namespace SemToTemp
             // 
             // tbSum3
             // 
-            this.tbSum3.Location = new System.Drawing.Point(415, 75);
+            this.tbSum3.Location = new System.Drawing.Point(263, 76);
             this.tbSum3.Name = "tbSum3";
             this.tbSum3.Size = new System.Drawing.Size(100, 20);
             this.tbSum3.TabIndex = 9;
@@ -109,7 +135,7 @@ namespace SemToTemp
             // 
             // tbSum2
             // 
-            this.tbSum2.Location = new System.Drawing.Point(415, 49);
+            this.tbSum2.Location = new System.Drawing.Point(263, 50);
             this.tbSum2.Name = "tbSum2";
             this.tbSum2.Size = new System.Drawing.Size(100, 20);
             this.tbSum2.TabIndex = 8;
@@ -117,14 +143,14 @@ namespace SemToTemp
             // 
             // tbAb5
             // 
-            this.tbAb5.Location = new System.Drawing.Point(382, 127);
+            this.tbAb5.Location = new System.Drawing.Point(230, 128);
             this.tbAb5.Name = "tbAb5";
             this.tbAb5.Size = new System.Drawing.Size(27, 20);
             this.tbAb5.TabIndex = 7;
             // 
             // tbAb4
             // 
-            this.tbAb4.Location = new System.Drawing.Point(382, 101);
+            this.tbAb4.Location = new System.Drawing.Point(230, 102);
             this.tbAb4.Name = "tbAb4";
             this.tbAb4.Size = new System.Drawing.Size(27, 20);
             this.tbAb4.TabIndex = 6;
@@ -132,7 +158,7 @@ namespace SemToTemp
             // 
             // tbAb3
             // 
-            this.tbAb3.Location = new System.Drawing.Point(382, 75);
+            this.tbAb3.Location = new System.Drawing.Point(230, 76);
             this.tbAb3.Name = "tbAb3";
             this.tbAb3.Size = new System.Drawing.Size(27, 20);
             this.tbAb3.TabIndex = 5;
@@ -140,7 +166,7 @@ namespace SemToTemp
             // 
             // tbAb2
             // 
-            this.tbAb2.Location = new System.Drawing.Point(382, 49);
+            this.tbAb2.Location = new System.Drawing.Point(230, 50);
             this.tbAb2.Name = "tbAb2";
             this.tbAb2.Size = new System.Drawing.Size(27, 20);
             this.tbAb2.TabIndex = 4;
@@ -148,7 +174,7 @@ namespace SemToTemp
             // 
             // tbSum1
             // 
-            this.tbSum1.Location = new System.Drawing.Point(415, 23);
+            this.tbSum1.Location = new System.Drawing.Point(263, 24);
             this.tbSum1.Name = "tbSum1";
             this.tbSum1.Size = new System.Drawing.Size(100, 20);
             this.tbSum1.TabIndex = 3;
@@ -156,7 +182,7 @@ namespace SemToTemp
             // 
             // tbAb1
             // 
-            this.tbAb1.Location = new System.Drawing.Point(382, 23);
+            this.tbAb1.Location = new System.Drawing.Point(230, 24);
             this.tbAb1.Name = "tbAb1";
             this.tbAb1.Size = new System.Drawing.Size(27, 20);
             this.tbAb1.TabIndex = 2;
@@ -186,28 +212,42 @@ namespace SemToTemp
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(739, 240);
+            this.tabPage2.Size = new System.Drawing.Size(1065, 593);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // tbGroupName
+            // textBox1
             // 
-            this.tbGroupName.Location = new System.Drawing.Point(38, 49);
-            this.tbGroupName.Name = "tbGroupName";
-            this.tbGroupName.Size = new System.Drawing.Size(164, 20);
-            this.tbGroupName.TabIndex = 12;
-            this.tbGroupName.Text = "много пробелов ва да-да  да -  да  !";
+            this.textBox1.Location = new System.Drawing.Point(536, 42);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.TabIndex = 14;
+            this.textBox1.Text = "наименование";
             // 
-            // rtbResult
+            // textBox2
             // 
-            this.rtbResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbResult.Location = new System.Drawing.Point(38, 203);
-            this.rtbResult.Name = "rtbResult";
-            this.rtbResult.Size = new System.Drawing.Size(1011, 370);
-            this.rtbResult.TabIndex = 13;
-            this.rtbResult.Text = "";
-            this.rtbResult.WordWrap = false;
+            this.textBox2.Location = new System.Drawing.Point(536, 68);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(100, 20);
+            this.textBox2.TabIndex = 15;
+            this.textBox2.Text = "обозначение";
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(536, 94);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(100, 20);
+            this.textBox3.TabIndex = 16;
+            this.textBox3.Text = "документ";
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(536, 120);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(100, 20);
+            this.textBox4.TabIndex = 17;
+            this.textBox4.Text = "год";
             // 
             // fMain
             // 
@@ -243,5 +283,9 @@ namespace SemToTemp
         private System.Windows.Forms.TextBox tbAb1;
         private System.Windows.Forms.TextBox tbGroupName;
         private System.Windows.Forms.RichTextBox rtbResult;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox textBox3;
     }
 }
