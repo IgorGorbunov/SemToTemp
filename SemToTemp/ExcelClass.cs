@@ -372,8 +372,7 @@ public sealed class ExcelClass
     public string GetCellStringValue(int iRow, int iCol)
     {
         object o =
-            GetCellValue(_xlWorkSheet.get_Range(_xlWorkSheet.Cells[iRow, iCol],
-                                                _xlWorkSheet.Cells[iRow, iCol]));
+            GetCellValue((Excel.Range)_xlWorkSheet.Cells[iRow, iCol]);
         return o == null ? "" : o.ToString();
     }
 
@@ -493,7 +492,7 @@ public sealed class ExcelClass
         releaseObject(_range);
         releaseObject(_xlWorkSheet);
         releaseObject(_xlWorkBook);
-        releaseObject(_xlApp);         
+        releaseObject(_xlApp);
         GC.GetTotalMemory(true);
     }
 

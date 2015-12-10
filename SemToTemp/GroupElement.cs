@@ -30,8 +30,14 @@ public class GroupElement
     public GroupElement(string name, Dictionary<string, string> parametrs)
     {
         _name = name;
-        _parametrs = parametrs;
-        SetId();
+        if (_parametrs == null)
+        {
+            _parametrs = new Dictionary<string, string>();
+        }
+        else
+        {
+            _parametrs = parametrs;
+        }
     }
 
     public void AddIntoDb()

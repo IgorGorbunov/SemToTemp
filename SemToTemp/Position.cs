@@ -6,6 +6,18 @@ using System.Collections.Generic;
 /// </summary>
 public class Position : Element
 {
+    public int Id
+    {
+        get
+        {
+            if (_id == -1)
+            {
+                SetId();
+            }
+            return _id;
+        }
+    }
+
     private const int _N_NAME_CHAR = 200;
     private const int _N_CHAR = 100;
     private const int _N_YEAR_CHAR = 4;
@@ -17,7 +29,7 @@ public class Position : Element
     private readonly string _docYear = "";
     private readonly GroupElement _groupElement;
 
-    protected int Id = -1;
+    protected int _id = -1;
 
     protected int SIdGroup;
     protected string[,] SParams;
@@ -31,11 +43,17 @@ public class Position : Element
     {
         _name = name;
         _title = title;
-        _parametrs = parametrs;
+        if (parametrs == null)
+        {
+            _parametrs = new Dictionary<string, string>();
+        }
+        else
+        {
+            _parametrs = parametrs;
+        }
         _groupElement = groupElement;
         _doc = doc;
         _docYear = docYear;
-        SetId();
     }
 
     protected void AddSqlPosParam()
@@ -52,14 +70,18 @@ public class Position : Element
         SDocYear = Instr.PrepareSqlParamString(_docYear, _N_YEAR_CHAR);
         _fullDoc = GetFullDoc(_doc, _docYear);
         SNotes = GetNotes();
-        SBigName = String.Format("{0} {1} {2} ({3})", _name, _title, _fullDoc, SNotes);
+        SBigName = String.Format("{0} {1} {2}", _name, _title, _fullDoc);
+        if (!string.IsNullOrEmpty(SNotes))
+        {
+            SBigName += string.Format(" ({0})", SNotes);
+        }
         SBigName = Instr.PrepareSqlParamString(SBigName, _N_NAME_CHAR);
         SNotes = Instr.PrepareSqlParamString(SNotes, _N_CHAR);
     }
 
     private void SetId()
     {
-        Id = GetFreeId();
+        _id = GetFreeId();
     }
 
     private int GetFreeId()
