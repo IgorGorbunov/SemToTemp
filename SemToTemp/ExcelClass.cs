@@ -259,8 +259,8 @@ public sealed class ExcelClass
     /// <summary>
     /// Записывает значение в ячейку.
     /// </summary>
-    /// <param name="rowI"></param>
-    /// <param name="colI"></param>
+    /// <param name="rowI">Номер строки.</param>
+    /// <param name="colI">Номер столбца.</param>
     /// <param name="value">Значение ячейки.</param>
     public void SetCellValue(int rowI, int colI, string value)
     {
@@ -355,8 +355,26 @@ public sealed class ExcelClass
     /// <returns></returns>
     public object GetCellValue(string cellAdress)
     {
-        _range = _xlWorkSheet.get_Range(cellAdress, Type.Missing);
-        return _range.Value2;
+        return GetCellValue(_xlWorkSheet.get_Range(cellAdress, Type.Missing));
+    }
+
+    private object GetCellValue(Excel.Range range)
+    {
+        return range.Value2;
+    }
+
+    /// <summary>
+    /// Возвращает данные из ячейки в виде строки. Если ячейка без данных, возвращается пустая строка.
+    /// </summary>
+    /// <param name="iRow">Номер строки.</param>
+    /// <param name="iCol">Номер столбца.</param>
+    /// <returns></returns>
+    public string GetCellStringValue(int iRow, int iCol)
+    {
+        object o =
+            GetCellValue(_xlWorkSheet.get_Range(_xlWorkSheet.Cells[iRow, iCol],
+                                                _xlWorkSheet.Cells[iRow, iCol]));
+        return o == null ? "" : o.ToString();
     }
 
     /// <summary>
@@ -503,7 +521,7 @@ public sealed class ExcelClass
     /// <param name="start">Левая верхняя ячейка диапазона</param>
     /// <param name="end">Правая нижняя ячейка диапазона</param>
     /// <param name="destination">Ячейка нового местоположения</param>
-    public void copyCells(object start, object end, object destination)
+    public void CopyCells(object start, object end, object destination)
     {
         Excel.Range rangeDest = _xlWorkSheet.get_Range(destination, _misValue);
         _range = _xlWorkSheet.get_Range(start, end);
@@ -515,7 +533,7 @@ public sealed class ExcelClass
     /// </summary>
     /// <param name="start">Начало диапазона</param>
     /// <param name="end">Конец диапазона</param>
-    public void setBold(object start, object end)
+    public void SetBold(object start, object end)
     {
         SelectCells(start, end);
         _range.Font.Bold = true;
