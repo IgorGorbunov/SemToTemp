@@ -36,6 +36,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Projects\ASPPR\Devart.Data.Oracle.dll</HintPath>
     </Reference>
+    <Reference Include="Interop.Microsoft.Office.Interop.Excel, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\test\USP\version 8.3 - 22.05.15\Interop.Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -46,6 +50,7 @@
   <ItemGroup>
     <Compile Include="BuyInstrument.cs" />
     <Compile Include="Element.cs" />
+    <Compile Include="ExcelClass.cs" />
     <Compile Include="Exceptions\BadQueryExeption.cs" />
     <Compile Include="fMain.cs">
       <SubType>Form</SubType>
@@ -93,6 +98,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Processor.cs" />
     <Compile Include="SQL\SQL BLOB.cs" />
     <Compile Include="SQL\SQL Exist.cs" />
     <Compile Include="SQL\SQL Init.cs" />
