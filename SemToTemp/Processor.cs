@@ -14,7 +14,9 @@ public static class Processor
     private const string _DOC_COL_NAME = "C";
     private const string _YEAR_COL_NAME = "D";
     private const int _PARS_COL_NUM = 5;
-    private const int _FIRST_ROW = 2;
+    private const int _ATTR_NAME_ROW = 2;
+    private const int _ATTR_TITLE_ROW = 3;
+    private const int _FIRST_ROW = 4;
 
     /// <summary>
     /// Обработка Excel документов
@@ -36,11 +38,12 @@ public static class Processor
             for (int i = 0; i < xlsBooks.FileNames.Length; i++)
             {
                 List<BuyInstrument> instruments = new List<BuyInstrument>();
-                GroupElement group = new GroupElement(GetShortFileName(xlsBooks.FileNames[i]), null);
+                int iRow = _FIRST_ROW;
+                GroupElement group;
                 try
                 {
                     xls.OpenDocument(xlsBooks.FileNames[i], false);
-                    int iRow = _FIRST_ROW;
+                    group = new GroupElement(GetShortFileName(xlsBooks.FileNames[i]), GetGroupParams(xls));
                     while (!xls.CellIsNullOrVoid(_NAME_COL_NAME, iRow) ||
                            !xls.CellIsNullOrVoid(_TITLE_COL_NAME, iRow) ||
                            !xls.CellIsNullOrVoid(_DOC_COL_NAME, iRow) ||
@@ -59,7 +62,7 @@ public static class Processor
                         string doc = xls.GetCellStringValue(_DOC_COL_NAME, iRow);
                         string year = xls.GetCellStringValue(_YEAR_COL_NAME, iRow);
                         BuyInstrument instrument = new BuyInstrument(name, title, group,
-                                                                     GetElementParams(xls, iRow),
+                                                                     GetPositionParams(xls, iRow),
                                                                      doc,
                                                                      year);
                         instruments.Add(instrument);
@@ -87,19 +90,40 @@ public static class Processor
         MessageBox.Show(mess);
     }
 
-    private static Dictionary<string, string> GetElementParams(ExcelClass xls, int iRow)
+    private static Dictionary<string, string> GetPositionParams(ExcelClass xls, int iRow)
     {
         Dictionary<string, string> parametrs = new Dictionary<string, string>();
         int iCol = _PARS_COL_NUM;
-        string sKey = xls.GetCellStringValue(_FIRST_ROW - 1, iCol);
-        string sVal = xls.GetCellStringValue(iRow, iCol);
+        string sKey = xls.GetCellStringValue(iCol, _ATTR_TITLE_ROW);
+        string sVal = xls.GetCellStringValue(iCol, iRow);
         while (!string.IsNullOrEmpty(sKey) &&
                !string.IsNullOrEmpty(sVal))
         {
             parametrs.Add(sKey, sVal);
             iCol++;
-            sKey = xls.GetCellStringValue(_FIRST_ROW - 1, iCol);
-            sVal = xls.GetCellStringValue(iRow, iCol);
+            sKey = xls.GetCellStringValue(iCol, _ATTR_TITLE_ROW);
+            sVal = xls.GetCellStringValue(iCol, iRow);
+        }
+        if (parametrs.Count > 0)
+        {
+            return parametrs;
+        }
+        return null;
+    }
+
+    private static Dictionary<string, string> GetGroupParams(ExcelClass xls)
+    {
+        Dictionary<string, string> parametrs = new Dictionary<string, string>();
+        int iCol = _PARS_COL_NUM;
+        string sKey = xls.GetCellStringValue(iCol, _ATTR_TITLE_ROW);
+        string sVal = xls.GetCellStringValue(iCol, _ATTR_NAME_ROW);
+        while (!string.IsNullOrEmpty(sKey) &&
+               !string.IsNullOrEmpty(sVal))
+        {
+            parametrs.Add(sKey, sVal);
+            iCol++;
+            sKey = xls.GetCellStringValue(iCol, _ATTR_TITLE_ROW);
+            sVal = xls.GetCellStringValue(iCol, _ATTR_NAME_ROW);
         }
         if (parametrs.Count > 0)
         {

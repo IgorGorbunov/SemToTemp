@@ -369,7 +369,7 @@ public sealed class ExcelClass
     /// <param name="iRow">Номер строки.</param>
     /// <param name="iCol">Номер столбца.</param>
     /// <returns></returns>
-    public string GetCellStringValue(int iRow, int iCol)
+    public string GetCellStringValue(int iCol, int iRow)
     {
         object o =
             GetCellValue((Excel.Range)_xlWorkSheet.Cells[iRow, iCol]);
@@ -433,7 +433,7 @@ public sealed class ExcelClass
     /// <param name="iRow">Номер строки.</param>
     /// <param name="iCol">Номер столбца.</param>
     /// <returns></returns>
-    public bool CellIsNullOrVoid(int iRow, int iCol)
+    public bool CellIsNullOrVoid(int iCol, int iRow)
     {
         return GetCellStringValue(iRow, iCol) == "";
     }
