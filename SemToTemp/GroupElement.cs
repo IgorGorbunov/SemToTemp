@@ -26,6 +26,13 @@ public class GroupElement
     private const int _N_CHAR = 80;
     private const int _N_PARAM_NAME_CHAR = 2;
 
+    public static bool Exist(string name, out int id)
+    {
+        string query = "select T1_NG from " + SqlOracle.preLogin + "TABLE_1 where T1_NM = :GNAME";
+        Dictionary<string, string> sqlParams = new Dictionary<string, string>();
+        sqlParams.Add("GNAME", Instr.PrepareSqlParamString(name, _N_CHAR));
+        return SqlOracle.Sel(query, sqlParams, out id);
+    }
 
     public GroupElement(string name, Dictionary<string, string> parametrs)
     {
@@ -40,23 +47,6 @@ public class GroupElement
         }
     }
 
-    public void AddIntoDb()
-    {
-        string nameSql = Instr.PrepareSqlString(_name, _N_CHAR);
-        string query = String.Format("insert into TABLE_1 values ({0}, {1}", Id, nameSql);
-        string[,] paramSql = GetTenParams();
-        for (int i = 0; i < _N_PARAMS; i++)
-        {
-            query += string.Format(", {0}, {1}", paramSql[i, 0], paramSql[i, 1]);
-        }
-        string sqlToday = Instr.GetSqlToday();
-        string sqlLogin = Instr.PrepareSqlString(SqlOracle.Login, Element.NUserNameChar);
-        int isSketch = 0;
-        string sqlFileExt = "NULL";
-        string sqlFile = "NULL";
-        query += string.Format(", {0}, {1}, {2}, {3}, {4})", sqlToday, sqlLogin, isSketch, sqlFileExt, sqlFile);
-        SqlOracle.Insert(query);
-    }
 
     public void WriteToDb()
     {
@@ -82,13 +72,16 @@ public class GroupElement
         sqlParams.Add("FILEEXT", sqlFileExt);
         sqlParams.Add("FILEBLOB", sqlFile);
 
-        const string query = @"insert into TABLE_1 values (:IDGROUP, :NAME, 
+        string query = @"insert into " + SqlOracle.preLogin + "TABLE_1 ";
+        query += @"values (:IDGROUP, :NAME, 
                             :PA0, :PS0, :PA1, :PS1, :PA2, :PS2, :PA3, :PS3, 
                             :PA4, :PS4, :PA5, :PS5, :PA6, :PS6, :PA7, :PS7, 
                             :PA8, :PS8, :PA9, :PS9, :TODAYDATE, :LOGINUSER,
                             :SKETCH, :FILEEXT, :FILEBLOB)";
         SqlOracle.Insert(query, sqlParams);
     }
+
+    
 
     private void SetId()
     {
@@ -97,8 +90,8 @@ public class GroupElement
 
     private int GetFreeId()
     {
-        List<int> ids = SqlOracle.Sel<int>("select T1_NG from TABLE_1 order by T1_NG");
-        int i = 0;
+        List<int> ids = SqlOracle.Sel<int>("select T1_NG from " + SqlOracle.preLogin + "TABLE_1 order by T1_NG");
+        int i = 1;
         foreach (int id in ids)
         {
             if (id > i)

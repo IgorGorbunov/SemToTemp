@@ -51,7 +51,8 @@ public class BuyInstrument : Position
         sqlParams.Add("NOTES", SNotes);
         sqlParams.Add("DOCYEAR", SDocYear);
 
-        const string query = @"insert into TABLE_2 values (:BIGTITLE, :IDG, :IDN,
+        string query = "insert into " + SqlOracle.preLogin + "TABLE_2 ";
+        query += @"values (:BIGTITLE, :IDG, :IDN,
                             :TYPE, :TOOLTYPE, :MODELTYPE,
                             :PA0, :PS0, :PA1, :PS1, :PA2, :PS2, :PA3, :PS3, 
                             :PA4, :PS4, :PA5, :PS5, :PA6, :PS6, :PA7, :PS7, 

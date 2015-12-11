@@ -7,6 +7,8 @@ using Devart.Data.Oracle;
 /// </summary>
 static partial class SqlOracle
 {
+    public static string preLogin;
+
     public static string Login;
 
     /// <summary>
@@ -20,7 +22,7 @@ static partial class SqlOracle
     /// <summary>
     /// Cоединене с БД (второе исполнение)
     /// </summary>
-    public static void _open()
+    private static void _open()
     {
         try
         {
@@ -36,6 +38,10 @@ static partial class SqlOracle
             throw new TimeoutException();
         }
     }
+
+    /// <summary>
+    /// Закрывает соединение с БД.
+    /// </summary>
     public static void _close()
     {
         if (_conn != null)
@@ -84,9 +90,11 @@ static partial class SqlOracle
 
 
     /// <summary>
-    /// Метод построения строки соеднинения
-    /// </summary>   
-    /// <returns></returns>
+    /// Метод составляющий строку соединения с БД.
+    /// </summary>
+    /// <param name="user">Логин пользователя.</param>
+    /// <param name="password">Пароль пользователя.</param>
+    /// <param name="dataSource">Источник данных.</param>
     public static void BuildConnectionString(string user, string password, string dataSource)
     {
         Login = user;
@@ -136,9 +144,9 @@ static partial class SqlOracle
     }
 
     /// <summary>
-    /// 
+    /// Тестовый запрос селект.
     /// </summary>
-    /// <param name="tableName"></param>
+    /// <param name="tableName">Имя таблицы.</param>
     /// <returns></returns>
     public static bool TestQuery(string tableName)
     {

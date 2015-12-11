@@ -15,14 +15,22 @@ namespace SemToTemp
             SqlOracle.BuildConnectionStringSid(tBlogin.Text.Trim(), tBpassword.Text.Trim(),
                                                tBsid.Text.Trim(), tBhostname.Text.Trim(),
                                                tBport.Text.Trim());
-
-            if (SqlOracle.TestQuery("TABLE_1"))
+            try
             {
-                Visible = false;
-                fMain mainForm = new fMain();
-                mainForm.ShowDialog();
+                if (SqlOracle.TestQuery(SqlOracle.preLogin + "TABLE_1"))
+                {
+                    Visible = false;
+                    fMain mainForm = new fMain();
+                    mainForm.ShowDialog();
+                }
+                Close();
             }
-            Close();
+            catch (TimeoutException exception)
+            {
+                const string mess = "База данных недоступна!";
+                Logger.WriteError(mess, exception);
+                MessageBox.Show(mess);
+            }
         }
 
         private void fConnect_Load(object sender, EventArgs e)
@@ -34,5 +42,37 @@ namespace SemToTemp
         {
             SqlOracle._close();
         }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (comboBox1.Text)
+            {
+                case "УлГУ - Debug":
+                    tBlogin.Text = "avia_design";
+                    tBpassword.Text = "avia_design";
+                    tBsid.Text = "temp";
+                    tBhostname.Text = "temp-server";
+                    tBport.Text = "1521";
+                    SqlOracle.preLogin = "";
+                    break;
+                case "Авиастар - Debug":
+                    tBlogin.Text = "ulgu";
+                    tBpassword.Text = "1";
+                    tBsid.Text = "";
+                    tBhostname.Text = "OTL.KTPP.AVIASTAR.LINK-UL.RU";
+                    tBport.Text = "";
+                    SqlOracle.preLogin = "AVIA_DESIGN.";
+                    break;
+                case "Авиастар - Release":
+                    tBlogin.Text = "avia_design";
+                    tBpassword.Text = "avia_design";
+                    tBsid.Text = "temp";
+                    tBhostname.Text = "temp-server";
+                    tBport.Text = "1521";
+                    SqlOracle.preLogin = "";
+                    break;
+            }
+        }
+
     }
 }
