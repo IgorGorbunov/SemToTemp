@@ -30,6 +30,10 @@ namespace SemToTemp
         {
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tpAddGroup = new System.Windows.Forms.TabPage();
+            this.tbYear = new System.Windows.Forms.TextBox();
+            this.tbDoc = new System.Windows.Forms.TextBox();
+            this.tbTitle = new System.Windows.Forms.TextBox();
+            this.tbName = new System.Windows.Forms.TextBox();
             this.rtbResult = new System.Windows.Forms.RichTextBox();
             this.tbGroupName = new System.Windows.Forms.TextBox();
             this.tbSum5 = new System.Windows.Forms.TextBox();
@@ -45,10 +49,6 @@ namespace SemToTemp
             this.label1 = new System.Windows.Forms.Label();
             this.bttnRecord = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
             this.tabControl.SuspendLayout();
             this.tpAddGroup.SuspendLayout();
             this.SuspendLayout();
@@ -66,10 +66,10 @@ namespace SemToTemp
             // 
             // tpAddGroup
             // 
-            this.tpAddGroup.Controls.Add(this.textBox4);
-            this.tpAddGroup.Controls.Add(this.textBox3);
-            this.tpAddGroup.Controls.Add(this.textBox2);
-            this.tpAddGroup.Controls.Add(this.textBox1);
+            this.tpAddGroup.Controls.Add(this.tbYear);
+            this.tpAddGroup.Controls.Add(this.tbDoc);
+            this.tpAddGroup.Controls.Add(this.tbTitle);
+            this.tpAddGroup.Controls.Add(this.tbName);
             this.tpAddGroup.Controls.Add(this.rtbResult);
             this.tpAddGroup.Controls.Add(this.tbGroupName);
             this.tpAddGroup.Controls.Add(this.tbSum5);
@@ -91,6 +91,38 @@ namespace SemToTemp
             this.tpAddGroup.TabIndex = 0;
             this.tpAddGroup.Text = "Добавить группу";
             this.tpAddGroup.UseVisualStyleBackColor = true;
+            // 
+            // tbYear
+            // 
+            this.tbYear.Location = new System.Drawing.Point(536, 120);
+            this.tbYear.Name = "tbYear";
+            this.tbYear.Size = new System.Drawing.Size(100, 20);
+            this.tbYear.TabIndex = 17;
+            this.tbYear.Text = "год";
+            // 
+            // tbDoc
+            // 
+            this.tbDoc.Location = new System.Drawing.Point(536, 94);
+            this.tbDoc.Name = "tbDoc";
+            this.tbDoc.Size = new System.Drawing.Size(100, 20);
+            this.tbDoc.TabIndex = 16;
+            this.tbDoc.Text = "документ";
+            // 
+            // tbTitle
+            // 
+            this.tbTitle.Location = new System.Drawing.Point(536, 68);
+            this.tbTitle.Name = "tbTitle";
+            this.tbTitle.Size = new System.Drawing.Size(100, 20);
+            this.tbTitle.TabIndex = 15;
+            this.tbTitle.Text = "обозначение";
+            // 
+            // tbName
+            // 
+            this.tbName.Location = new System.Drawing.Point(536, 42);
+            this.tbName.Name = "tbName";
+            this.tbName.Size = new System.Drawing.Size(100, 20);
+            this.tbName.TabIndex = 14;
+            this.tbName.Text = "наименование";
             // 
             // rtbResult
             // 
@@ -217,38 +249,6 @@ namespace SemToTemp
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(536, 42);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 14;
-            this.textBox1.Text = "наименование";
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(536, 68);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 15;
-            this.textBox2.Text = "обозначение";
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(536, 94);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 20);
-            this.textBox3.TabIndex = 16;
-            this.textBox3.Text = "документ";
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(536, 120);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 20);
-            this.textBox4.TabIndex = 17;
-            this.textBox4.Text = "год";
-            // 
             // fMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -283,9 +283,9 @@ namespace SemToTemp
         private System.Windows.Forms.TextBox tbAb1;
         private System.Windows.Forms.TextBox tbGroupName;
         private System.Windows.Forms.RichTextBox rtbResult;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox tbTitle;
+        private System.Windows.Forms.TextBox tbName;
+        private System.Windows.Forms.TextBox tbYear;
+        private System.Windows.Forms.TextBox tbDoc;
     }
 }

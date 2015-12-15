@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 
@@ -28,7 +27,7 @@ public class GroupElement
 
     public static bool Exist(string name, out int id)
     {
-        string query = "select T1_NG from " + SqlOracle.preLogin + "TABLE_1 where T1_NM = :GNAME";
+        string query = "select T1_NG from " + SqlOracle.PreLogin + "TABLE_1 where T1_NM = :GNAME";
         Dictionary<string, string> sqlParams = new Dictionary<string, string>();
         sqlParams.Add("GNAME", Instr.PrepareSqlParamString(name, _N_CHAR));
         return SqlOracle.Sel(query, sqlParams, out id);
@@ -72,7 +71,7 @@ public class GroupElement
         sqlParams.Add("FILEEXT", sqlFileExt);
         sqlParams.Add("FILEBLOB", sqlFile);
 
-        string query = @"insert into " + SqlOracle.preLogin + "TABLE_1 ";
+        string query = @"insert into " + SqlOracle.PreLogin + "TABLE_1 ";
         query += @"values (:IDGROUP, :NAME, 
                             :PA0, :PS0, :PA1, :PS1, :PA2, :PS2, :PA3, :PS3, 
                             :PA4, :PS4, :PA5, :PS5, :PA6, :PS6, :PA7, :PS7, 
@@ -90,7 +89,7 @@ public class GroupElement
 
     private int GetFreeId()
     {
-        List<int> ids = SqlOracle.Sel<int>("select T1_NG from " + SqlOracle.preLogin + "TABLE_1 order by T1_NG");
+        List<int> ids = SqlOracle.Sel<int>("select T1_NG from " + SqlOracle.PreLogin + "TABLE_1 order by T1_NG");
         int i = 1;
         foreach (int id in ids)
         {

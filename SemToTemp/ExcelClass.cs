@@ -297,49 +297,49 @@ public sealed class ExcelClass
     }
 
     //ÓÑÒÀÍÎÂÊÀ ØÈĞÈÍÛ ÑÒÎËÁÖÎÂ
-    public void SetColumnWidth(double Width)
+    public void SetColumnWidth(double width)
     {
-        _range.ColumnWidth = Width;           
+        _range.ColumnWidth = width;           
     }
 
     //ÓÑÒÀÍÎÂÊÀ ÍÀÏĞÀÂËÅÍÈß ÒÅÊÑÒÀ
-    public void SetTextOrientation(int Orientation)
+    public void SetTextOrientation(int orientation)
     {
-        _range.Orientation = Orientation;           
+        _range.Orientation = orientation;           
     }
 
     //ÂÛĞÀÂÍÈÂÀÍÈÅ ÒÅÊÑÒÀ Â ß×ÅÉÊÅ ÏÎ ÂÅĞÒÈÊÀËÈ
-    public void SetVerticalAlignment(int Alignment)
+    public void SetVerticalAlignment(int alignment)
     {
-        _range.VerticalAlignment = Alignment;
+        _range.VerticalAlignment = alignment;
     }
 
     //ÂÛĞÀÂÍÈÂÀÍÈÅ ÒÅÊÑÒÀ Â ß×ÅÉÊÅ ÏÎ ÃÎĞÈÇÎÍÒÀËÈ
-    public void SetHorisontalAlignment(int Alignment)
+    public void SetHorisontalAlignment(int alignment)
     {
-        _range.HorizontalAlignment = Alignment;   
+        _range.HorizontalAlignment = alignment;   
     }
 
 
 
     //ÏÅĞÅÍÎÑ ÑËÎÂ Â ß×ÅÉÊÅ
-    public void SetWrapText(bool Value)
+    public void SetWrapText(bool value)
     {
-        _range.WrapText = Value;            
+        _range.WrapText = value;            
     }
 
     //ÓÑÒÀÍÎÂÊÀ ÂÛÑÎÒÛ ÑÒĞÎÊÈ
-    public void SetRowHeight(double Height)
+    public void SetRowHeight(double height)
     {
-        _range.RowHeight = Height;         
+        _range.RowHeight = height;         
     }
 
     //ÓÑÒÀÍÎÂÊÀ ÂÈÄÀ ÃĞÀÍÈÖ
-    public void SetBorderStyle(int color, Excel.XlLineStyle LineStyle, Excel.XlBorderWeight Weight)
+    public void SetBorderStyle(int color, Excel.XlLineStyle lineStyle, Excel.XlBorderWeight weight)
     {
         _range.Borders.ColorIndex = color;
-        _range.Borders.LineStyle = LineStyle;
-        _range.Borders.Weight = Weight;
+        _range.Borders.LineStyle = lineStyle;
+        _range.Borders.Weight = weight;
     }
 
     //×ÒÅÍÈÅ ÇÍÀ×ÅÍÈß ÈÇ ß×ÅÉÊÈ

@@ -7,7 +7,7 @@ using Devart.Data.Oracle;
 /// </summary>
 static partial class SqlOracle
 {
-    public static string preLogin;
+    public static string PreLogin;
 
     public static string Login;
 

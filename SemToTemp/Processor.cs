@@ -9,20 +9,39 @@ using System.Windows.Forms;
 /// </summary>
 public static class Processor
 {
-    private const string _NAME_COL_NAME = "A";
-    private const string _TITLE_COL_NAME = "B";
-    private const string _DOC_COL_NAME = "C";
-    private const string _YEAR_COL_NAME = "D";
+    private static string _nameColName = "A";
+    private static string _titleColName = "B";
+    private static string _docColName = "C";
+    private static string _yearColName = "D";
     private const int _PARS_COL_NUM = 5;
     private const int _ATTR_NAME_ROW = 2;
     private const int _ATTR_TITLE_ROW = 3;
     private const int _FIRST_ROW = 4;
 
+    
+    // 
     /// <summary>
     /// Обработка Excel документов
     /// </summary>
-    public static void SelectXlsFiles()
+    /// <param name="nameColName"></param>
+    /// <param name="titleColName"></param>
+    /// <param name="docColName"></param>
+    /// <param name="yearColName"></param>
+    public static void SelectXlsFiles(string nameColName, string titleColName, string docColName, string yearColName)
     {
+        _nameColName = nameColName;
+        _titleColName = titleColName;
+        _docColName = docColName;
+        if (string.IsNullOrEmpty(yearColName))
+        {
+            _yearColName = docColName;
+        }
+        else
+        {
+            _yearColName = yearColName;
+        }
+        
+
         string mess = "";
         OpenFileDialog xlsBooks = new OpenFileDialog();
         xlsBooks.Title = "Выберите файлы Excel с позициями";
@@ -53,10 +72,10 @@ public static class Processor
                         mess += "Операция прекращена пользователем на файле " + shortFileName;
                         break;
                     }
-                    while (!xls.CellIsNullOrVoid(_NAME_COL_NAME, iRow) ||
-                           !xls.CellIsNullOrVoid(_TITLE_COL_NAME, iRow) ||
-                           !xls.CellIsNullOrVoid(_DOC_COL_NAME, iRow) ||
-                           !xls.CellIsNullOrVoid(_YEAR_COL_NAME, iRow))
+                    while (!xls.CellIsNullOrVoid(_nameColName, iRow) ||
+                           !xls.CellIsNullOrVoid(_titleColName, iRow) ||
+                           !xls.CellIsNullOrVoid(_docColName, iRow) ||
+                           !xls.CellIsNullOrVoid(_yearColName, iRow))
                     {
                         ProcessOneRow(xls, iRow, ref mess, instruments, group,
                                       shortFileName);
@@ -82,6 +101,17 @@ public static class Processor
             xls.Dispose();
         }
         MessageBox.Show(mess);
+    }
+
+    /// <summary>
+    /// Обработка Excel документов
+    /// </summary>
+    /// <param name="nameColName"></param>
+    /// <param name="titleColName"></param>
+    /// <param name="docColName"></param>
+    public static void SelectXlsFiles(string nameColName, string titleColName, string docColName)
+    {
+        
     }
 
     private static bool ReWrite(string shortFileName, out int oldId, out bool exit)
@@ -110,8 +140,8 @@ public static class Processor
 
     private static void ProcessOneRow(ExcelClass xls, int iRow, ref string message, List<BuyInstrument> instruments, GroupElement group, string fileName)
     {
-        string name = xls.GetCellStringValue(_NAME_COL_NAME, iRow);
-        string title = xls.GetCellStringValue(_TITLE_COL_NAME, iRow);
+        string name = xls.GetCellStringValue(_nameColName, iRow);
+        string title = xls.GetCellStringValue(_titleColName, iRow);
         if (string.IsNullOrEmpty(title))
         {
             message +=
@@ -119,8 +149,22 @@ public static class Processor
                 " строке позиция без обозначения!" + Environment.NewLine;
             return;
         }
-        string doc = xls.GetCellStringValue(_DOC_COL_NAME, iRow);
-        string year = xls.GetCellStringValue(_YEAR_COL_NAME, iRow);
+        string doc = "", year;
+        if (_docColName == _yearColName)
+        {
+            string[] split = xls.GetCellStringValue(_docColName, iRow).Split('-');
+            for (int i = 0; i < split.Length - 1; i++)
+            {
+                doc += split[i];
+            }
+            year = split[split.Length - 1];
+        }
+        else
+        {
+            doc = xls.GetCellStringValue(_docColName, iRow);
+            year = xls.GetCellStringValue(_yearColName, iRow);
+        }
+        
         BuyInstrument instrument = new BuyInstrument(name, title, group,
                                                      GetPositionParams(xls, iRow),
                                                      doc,

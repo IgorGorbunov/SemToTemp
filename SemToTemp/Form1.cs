@@ -17,7 +17,7 @@ namespace SemToTemp
                                                tBport.Text.Trim());
             try
             {
-                if (SqlOracle.TestQuery(SqlOracle.preLogin + "TABLE_1"))
+                if (SqlOracle.TestQuery(SqlOracle.PreLogin + "TABLE_1"))
                 {
                     Visible = false;
                     fMain mainForm = new fMain();
@@ -53,7 +53,7 @@ namespace SemToTemp
                     tBsid.Text = "temp";
                     tBhostname.Text = "temp-server";
                     tBport.Text = "1521";
-                    SqlOracle.preLogin = "";
+                    SqlOracle.PreLogin = "";
                     break;
                 case "Авиастар - Debug":
                     tBlogin.Text = "ulgu";
@@ -61,7 +61,7 @@ namespace SemToTemp
                     tBsid.Text = "";
                     tBhostname.Text = "OTL.KTPP.AVIASTAR.LINK-UL.RU";
                     tBport.Text = "";
-                    SqlOracle.preLogin = "AVIA_DESIGN.";
+                    SqlOracle.PreLogin = "AVIA_DESIGN.";
                     break;
                 case "Авиастар - Release":
                     tBlogin.Text = "avia_design";
@@ -69,7 +69,7 @@ namespace SemToTemp
                     tBsid.Text = "temp";
                     tBhostname.Text = "temp-server";
                     tBport.Text = "1521";
-                    SqlOracle.preLogin = "";
+                    SqlOracle.PreLogin = "";
                     break;
             }
         }

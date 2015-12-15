@@ -86,7 +86,7 @@ public class Position : Element
 
     private int GetFreeId()
     {
-        List<int> ids = SqlOracle.Sel<int>("select T2_NN from " + SqlOracle.preLogin + "TABLE_2 order by T2_NN");
+        List<int> ids = SqlOracle.Sel<int>("select T2_NN from " + SqlOracle.PreLogin + "TABLE_2 order by T2_NN");
         int i = 1;
         foreach (int id in ids)
         {
