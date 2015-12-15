@@ -1,4 +1,4 @@
-п»їusing System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -26,7 +26,7 @@ public class FolderGroup : Element
     }
 
     /// <summary>
-    /// РњРµС‚РѕРґ, Р·Р°РїРёСЃС‹РІР°СЋС‰РёР№ РґР°РЅРЅС‹Рµ РІ Р‘Р”.
+    /// Метод, записывающий данные в БД.
     /// </summary>
     public void WriteToDb()
     {

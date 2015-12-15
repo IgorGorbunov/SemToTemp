@@ -15,6 +15,8 @@ public class GroupElement
         }
     }
 
+    public int FolderId;
+
     private readonly string _name;
     private readonly Dictionary<string, string> _parametrs;
     private string _fullName;
@@ -94,6 +96,7 @@ public class GroupElement
             parentId = folder.Id;
             level++;
         }
+        FolderId = parentId;
     }
 
     

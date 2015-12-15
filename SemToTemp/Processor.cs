@@ -95,6 +95,7 @@ public static class Processor
                 foreach (BuyInstrument buyInstrument in instruments)
                 {
                     buyInstrument.WriteToDb();
+                    buyInstrument.AddFolder();
                 }
             }
         }

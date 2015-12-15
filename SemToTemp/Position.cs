@@ -39,6 +39,12 @@ public class Position : Element
     private string _fullDoc;
 
 
+    public void AddFolder()
+    {
+        FolderPosition folder = new FolderPosition(_groupElement.FolderId, Id);
+        folder.WriteToDb();
+    }
+
     protected Position(string name, string title, GroupElement groupElement, Dictionary<string, string> parametrs, string doc, string docYear)
     {
         _name = name;
