@@ -60,6 +60,7 @@
     <Compile Include="fMain.Designer.cs">
       <DependentUpon>fMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="FolderGroup.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

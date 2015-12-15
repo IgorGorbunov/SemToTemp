@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Drawing;
 using System.IO;
 
@@ -6,7 +6,7 @@ using Excel =  Microsoft.Office.Interop.Excel;
 using System.Windows.Forms;
 
 /// <summary>
-/// Класс для работы с Excel.
+/// РљР»Р°СЃСЃ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Excel.
 /// </summary>
 public sealed class ExcelClass
 {
@@ -24,7 +24,7 @@ public sealed class ExcelClass
 
 
     /// <summary>
-    /// Конструктор класса.
+    /// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.
     /// </summary>
     public ExcelClass()
     {
@@ -32,7 +32,7 @@ public sealed class ExcelClass
     }
 
 
-    //ВИДИМОСТЬ EXCEL
+    //Р’РР”РРњРћРЎРўР¬ EXCEL
     public bool Visible
     {
         set
@@ -47,7 +47,7 @@ public sealed class ExcelClass
 
 
 
-    //СОЗДАТЬ НОВЫЙ ДОКУМЕНТ
+    //РЎРћР—Р”РђРўР¬ РќРћР’Р«Р™ Р”РћРљРЈРњР•РќРў
     public void NewDocument()
     {
         _xlWorkBook = _xlApp.Workbooks.Add(_misValue);
@@ -57,7 +57,7 @@ public sealed class ExcelClass
         //_xlApp.UserControl = true;
     }
 
-    //СОЗДАТЬ НОВЫЙ ДОКУМЕНТ C ШАБЛОНОМ
+    //РЎРћР—Р”РђРўР¬ РќРћР’Р«Р™ Р”РћРљРЈРњР•РќРў C РЁРђР‘Р›РћРќРћРњ
     public void NewDocument(string templateName)
     {
         _xlWorkBook = _xlApp.Workbooks.Add(_TEMPLATE_PATH + templateName);
@@ -65,10 +65,10 @@ public sealed class ExcelClass
     }
 
     /// <summary>
-    /// Открывает Excel-документ.
+    /// РћС‚РєСЂС‹РІР°РµС‚ Excel-РґРѕРєСѓРјРµРЅС‚.
     /// </summary>
-    /// <param name="fileName">Путь к Excel файлу.</param>
-    /// <param name="isVisible">Отображать ли документ при открытии.</param>
+    /// <param name="fileName">РџСѓС‚СЊ Рє Excel С„Р°Р№Р»Сѓ.</param>
+    /// <param name="isVisible">РћС‚РѕР±СЂР°Р¶Р°С‚СЊ Р»Рё РґРѕРєСѓРјРµРЅС‚ РїСЂРё РѕС‚РєСЂС‹С‚РёРё.</param>
     public void OpenDocument(string fileName, bool isVisible)
     {
         _xlWorkBook = _xlApp.Workbooks.Open(fileName, _misValue, _misValue, _misValue, _misValue,
@@ -79,7 +79,7 @@ public sealed class ExcelClass
     }
 
     /// <summary>
-    /// Возвращает количество листов в книге Excel.
+    /// Р’РѕР·РІСЂР°С‰Р°РµС‚ РєРѕР»РёС‡РµСЃС‚РІРѕ Р»РёСЃС‚РѕРІ РІ РєРЅРёРіРµ Excel.
     /// </summary>
     /// <returns></returns>
     public int GetNShieets()
@@ -88,29 +88,18 @@ public sealed class ExcelClass
     }
 
 
-    //СОХРАНИТЬ ДОКУМЕНТ
+    //РЎРћРҐР РђРќРРўР¬ Р”РћРљРЈРњР•РќРў
     public void SaveDocument(string name)
     {
         _xlApp.DisplayAlerts = true;
         if (File.Exists(name))
         {
-            DialogResult result = MessageBox.Show("Такой файл уже существует! Заменить его?", "Error",
-                             MessageBoxButtons.YesNo,
-                             MessageBoxIcon.Question);
-
-             if (result == DialogResult.Yes)
-            {
-                File.Delete(name);
-                _xlWorkBook.SaveAs(name, Excel.XlFileFormat.xlWorkbookDefault, _misValue, _misValue, _misValue, _misValue, Excel.XlSaveAsAccessMode.xlExclusive, _misValue, _misValue, _misValue, _misValue, _misValue);
-            }
-        }else
-        {
-            _xlWorkBook.SaveAs(name, Excel.XlFileFormat.xlWorkbookDefault, _misValue, _misValue, _misValue, _misValue, Excel.XlSaveAsAccessMode.xlExclusive, _misValue, _misValue, _misValue, _misValue, _misValue);
-        }      
-        
+            File.Delete(name);
+        }
+        _xlWorkBook.SaveAs(name, Excel.XlFileFormat.xlWorkbookDefault, _misValue, _misValue, _misValue, _misValue, Excel.XlSaveAsAccessMode.xlExclusive, _misValue, _misValue, _misValue, _misValue, _misValue);
     }
 
-    //Выделить ячейки
+    //Р’С‹РґРµР»РёС‚СЊ СЏС‡РµР№РєРё
     public void SelectCells(Object start, Object end)
     {
         if (start == null)
@@ -125,14 +114,14 @@ public sealed class ExcelClass
         _range = _xlWorkSheet.get_Range(start, end);
     }
 
-    //Скопировать выделенные ячейки
+    //РЎРєРѕРїРёСЂРѕРІР°С‚СЊ РІС‹РґРµР»РµРЅРЅС‹Рµ СЏС‡РµР№РєРё
     public void CopyTo(Object cell)
     {
         Excel.Range rangeDest = _xlWorkSheet.get_Range(cell, _misValue);
         _range.Copy(rangeDest);
     }
 
-    //Выделить лист
+    //Р’С‹РґРµР»РёС‚СЊ Р»РёСЃС‚
     public void SelectWorksheet(int count)
     {
         if (count <= _xlWorkBook.Worksheets.Count)
@@ -141,7 +130,7 @@ public sealed class ExcelClass
         }
         else {
 
-            MessageBox.Show("Произошла ошибка в коде! Выделен несуществующий лист!");
+            MessageBox.Show("РџСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР° РІ РєРѕРґРµ! Р’С‹РґРµР»РµРЅ РЅРµСЃСѓС‰РµСЃС‚РІСѓСЋС‰РёР№ Р»РёСЃС‚!");
 
         }
         
@@ -149,7 +138,7 @@ public sealed class ExcelClass
 
 
 
-    //УСТАНОВКА ЦВЕТА ФОНА ЯЧЕЙКИ
+    //РЈРЎРўРђРќРћР’РљРђ Р¦Р’Р•РўРђ Р¤РћРќРђ РЇР§Р•Р™РљР
 
     public void SetColor(int color)
     {            
@@ -164,20 +153,20 @@ public sealed class ExcelClass
         _range.Interior.PatternColorIndex = Excel.Constants.xlAutomatic;
     }
 
-    //ОРИЕНТАЦИИ СТРАНИЦЫ
+    //РћР РР•РќРўРђР¦РР РЎРўР РђРќРР¦Р«
    
     public void SetOrientation(Excel.XlPageOrientation orientation)
     {
         _xlWorkSheet.PageSetup.Orientation = orientation;
     }
 
-    //УСТАНОВКА РАЗМЕРОВ ПОЛЕЙ ЛИСТА
+    //РЈРЎРўРђРќРћР’РљРђ Р РђР—РњР•Р РћР’ РџРћР›Р•Р™ Р›РРЎРўРђ
     public void SetMargin(double left, double right, double top, double bottom)
     {
-        //Range.PageSetup.LeftMargin - ЛЕВОЕ
-        //Range.PageSetup.RightMargin - ПРАВОЕ 
-        //Range.PageSetup.TopMargin - ВЕРХНЕЕ
-        //Range.PageSetup.BottomMargin - НИЖНЕЕ
+        //Range.PageSetup.LeftMargin - Р›Р•Р’РћР•
+        //Range.PageSetup.RightMargin - РџР РђР’РћР• 
+        //Range.PageSetup.TopMargin - Р’Р•Р РҐРќР•Р•
+        //Range.PageSetup.BottomMargin - РќРР–РќР•Р•
 
         _xlWorkSheet.PageSetup.RightMargin = right;
         _xlWorkSheet.PageSetup.LeftMargin = left;
@@ -187,13 +176,13 @@ public sealed class ExcelClass
     }
 
 
-    //УСТАНОВКА РАЗМЕРА ЛИСТА
+    //РЈРЎРўРђРќРћР’РљРђ Р РђР—РњР•Р Рђ Р›РРЎРўРђ
     public void SetPaperSize(Excel.XlPaperSize size)
     {
         _xlWorkSheet.PageSetup.PaperSize = size;
     }
 
-    //УСТАНОВКА МАСШТАБА ПЕЧАТИ
+    //РЈРЎРўРђРќРћР’РљРђ РњРђРЎРЁРўРђР‘Рђ РџР•Р§РђРўР
     public void SetZoom(int percent)
     {
         _xlWorkSheet.PageSetup.Zoom = percent;
@@ -201,7 +190,7 @@ public sealed class ExcelClass
     }
 
     
-    //ПЕРЕИМЕНОВАТЬ ЛИСТ
+    //РџР•Р Р•РРњР•РќРћР’РђРўР¬ Р›РРЎРў
     private void ReNamePage(int n, string name)
     {
 
@@ -210,7 +199,7 @@ public sealed class ExcelClass
         _xlWorkSheet.Name = name;
     }
 
-    //ДОБАВЛЕНИЕ ЛИСТА В НАЧАЛО СПИСКА
+    //Р”РћР‘РђР’Р›Р•РќРР• Р›РРЎРўРђ Р’ РќРђР§РђР›Рћ РЎРџРРЎРљРђ
     public void AddNewPageAtTheStart(string name)
     {          
        _xlWorkSheet = (Excel.Worksheet)_xlWorkBook.Worksheets.Add(_misValue, _misValue, _misValue, _misValue);
@@ -219,7 +208,7 @@ public sealed class ExcelClass
        
     }
 
-    //ДОБАВЛЕНИЕ ЛИСТА В Конец Списка
+    //Р”РћР‘РђР’Р›Р•РќРР• Р›РРЎРўРђ Р’ РљРѕРЅРµС† РЎРїРёСЃРєР°
     public void AddNewPageAtTheEnd(string name)
     {
         _xlWorkSheet = (Excel.Worksheet)_xlWorkBook.Worksheets.Add(_misValue, _xlWorkBook.Worksheets.get_Item(_xlWorkBook.Worksheets.Count), 1, _misValue);
@@ -228,7 +217,7 @@ public sealed class ExcelClass
 
     }
 
-    //ПРИМЕНЕНИЕ ШРИФТА К ЯЧЕЙКЕ
+    //РџР РРњР•РќР•РќРР• РЁР РР¤РўРђ Рљ РЇР§Р•Р™РљР•
     public void SetFont(Font font,int colorIndex)
     {            
         _range.Font.Size = font.Size;
@@ -239,17 +228,17 @@ public sealed class ExcelClass
     }
 
 
-    //ЗАПИСЬ ЗНАЧЕНИЯ В ЯЧЕЙКУ
+    //Р—РђРџРРЎР¬ Р—РќРђР§Р•РќРРЇ Р’ РЇР§Р•Р™РљРЈ
     public void SetCellValue(string value)
     {
         _range.Value2 = value;
     }
     
     /// <summary>
-    /// Записывает значение в ячейку.
+    /// Р—Р°РїРёСЃС‹РІР°РµС‚ Р·РЅР°С‡РµРЅРёРµ РІ СЏС‡РµР№РєСѓ.
     /// </summary>
-    /// <param name="cell">Адресс ячейки.</param>
-    /// <param name="value">Значение ячейки.</param>
+    /// <param name="cell">РђРґСЂРµСЃСЃ СЏС‡РµР№РєРё.</param>
+    /// <param name="value">Р—РЅР°С‡РµРЅРёРµ СЏС‡РµР№РєРё.</param>
     public void SetCellValue(string cell, string value)
     {
         _range = _xlWorkSheet.get_Range(cell, _misValue);
@@ -257,64 +246,64 @@ public sealed class ExcelClass
     }
 
     /// <summary>
-    /// Записывает значение в ячейку.
+    /// Р—Р°РїРёСЃС‹РІР°РµС‚ Р·РЅР°С‡РµРЅРёРµ РІ СЏС‡РµР№РєСѓ.
     /// </summary>
-    /// <param name="rowI">Номер строки.</param>
-    /// <param name="colI">Номер столбца.</param>
-    /// <param name="value">Значение ячейки.</param>
-    public void SetCellValue(int rowI, int colI, string value)
+    /// <param name="rowI">РќРѕРјРµСЂ СЃС‚СЂРѕРєРё.</param>
+    /// <param name="colI">РќРѕРјРµСЂ СЃС‚РѕР»Р±С†Р°.</param>
+    /// <param name="value">Р—РЅР°С‡РµРЅРёРµ СЏС‡РµР№РєРё.</param>
+    public void SetCellValue(int colI, int rowI, string value)
     {
         _range = _xlWorkSheet.get_Range(_xlWorkSheet.Cells[rowI, colI], _xlWorkSheet.Cells[rowI, colI]);
         _range.Value2 = value;
     }
 
     /// <summary>
-    /// Записывает значение в ячейку.
+    /// Р—Р°РїРёСЃС‹РІР°РµС‚ Р·РЅР°С‡РµРЅРёРµ РІ СЏС‡РµР№РєСѓ.
     /// </summary>
-    /// <param name="column">Номер столбца ячейки.</param>
-    /// <param name="row">Номер строки ячейки.</param>
-    /// <param name="value">Значение ячейки.</param>
+    /// <param name="column">РќРѕРјРµСЂ СЃС‚РѕР»Р±С†Р° СЏС‡РµР№РєРё.</param>
+    /// <param name="row">РќРѕРјРµСЂ СЃС‚СЂРѕРєРё СЏС‡РµР№РєРё.</param>
+    /// <param name="value">Р—РЅР°С‡РµРЅРёРµ СЏС‡РµР№РєРё.</param>
     public void SetCellValue(string column, int row, string value)
     {
         SetCellValue(column + row, value);
     }
 
     /// <summary>
-    /// Добавляет к имеющимся данным в ячейке новые
+    /// Р”РѕР±Р°РІР»СЏРµС‚ Рє РёРјРµСЋС‰РёРјСЃСЏ РґР°РЅРЅС‹Рј РІ СЏС‡РµР№РєРµ РЅРѕРІС‹Рµ
     /// </summary>
-    /// <param name="cell">Номер ячейки в формате "A1"</param>
-    /// <param name="addValue">Данные</param>
+    /// <param name="cell">РќРѕРјРµСЂ СЏС‡РµР№РєРё РІ С„РѕСЂРјР°С‚Рµ "A1"</param>
+    /// <param name="addValue">Р”Р°РЅРЅС‹Рµ</param>
     public void AddValueToCell(string cell, string addValue)
     {
         _range = _xlWorkSheet.get_Range(cell, Type.Missing);
         _range.Value2 += addValue;
     }
 
-    //ОБЪЕДИНЕНИЕ ЯЧЕЕК
+    //РћР‘РЄР•Р”РРќР•РќРР• РЇР§Р•Р•Рљ
     public void SetMerge()
     {
         _range.Merge(_misValue);
     }
 
-    //УСТАНОВКА ШИРИНЫ СТОЛБЦОВ
+    //РЈРЎРўРђРќРћР’РљРђ РЁРР РРќР« РЎРўРћР›Р‘Р¦РћР’
     public void SetColumnWidth(double width)
     {
         _range.ColumnWidth = width;           
     }
 
-    //УСТАНОВКА НАПРАВЛЕНИЯ ТЕКСТА
+    //РЈРЎРўРђРќРћР’РљРђ РќРђРџР РђР’Р›Р•РќРРЇ РўР•РљРЎРўРђ
     public void SetTextOrientation(int orientation)
     {
         _range.Orientation = orientation;           
     }
 
-    //ВЫРАВНИВАНИЕ ТЕКСТА В ЯЧЕЙКЕ ПО ВЕРТИКАЛИ
+    //Р’Р«Р РђР’РќРР’РђРќРР• РўР•РљРЎРўРђ Р’ РЇР§Р•Р™РљР• РџРћ Р’Р•Р РўРРљРђР›Р
     public void SetVerticalAlignment(int alignment)
     {
         _range.VerticalAlignment = alignment;
     }
 
-    //ВЫРАВНИВАНИЕ ТЕКСТА В ЯЧЕЙКЕ ПО ГОРИЗОНТАЛИ
+    //Р’Р«Р РђР’РќРР’РђРќРР• РўР•РљРЎРўРђ Р’ РЇР§Р•Р™РљР• РџРћ Р“РћР РР—РћРќРўРђР›Р
     public void SetHorisontalAlignment(int alignment)
     {
         _range.HorizontalAlignment = alignment;   
@@ -322,19 +311,19 @@ public sealed class ExcelClass
 
 
 
-    //ПЕРЕНОС СЛОВ В ЯЧЕЙКЕ
+    //РџР•Р Р•РќРћРЎ РЎР›РћР’ Р’ РЇР§Р•Р™РљР•
     public void SetWrapText(bool value)
     {
         _range.WrapText = value;            
     }
 
-    //УСТАНОВКА ВЫСОТЫ СТРОКИ
+    //РЈРЎРўРђРќРћР’РљРђ Р’Р«РЎРћРўР« РЎРўР РћРљР
     public void SetRowHeight(double height)
     {
         _range.RowHeight = height;         
     }
 
-    //УСТАНОВКА ВИДА ГРАНИЦ
+    //РЈРЎРўРђРќРћР’РљРђ Р’РР”Рђ Р“Р РђРќРР¦
     public void SetBorderStyle(int color, Excel.XlLineStyle lineStyle, Excel.XlBorderWeight weight)
     {
         _range.Borders.ColorIndex = color;
@@ -342,16 +331,16 @@ public sealed class ExcelClass
         _range.Borders.Weight = weight;
     }
 
-    //ЧТЕНИЕ ЗНАЧЕНИЯ ИЗ ЯЧЕЙКИ
+    //Р§РўР•РќРР• Р—РќРђР§Р•РќРРЇ РР— РЇР§Р•Р™РљР
     public string GetValue()
     {
         return _range.Value2.ToString();
     }
 
     /// <summary>
-    /// Возвращает данные из ячейки.
+    /// Р’РѕР·РІСЂР°С‰Р°РµС‚ РґР°РЅРЅС‹Рµ РёР· СЏС‡РµР№РєРё.
     /// </summary>
-    /// <param name="cellAdress">Номер ячейки в формате "A1".</param>
+    /// <param name="cellAdress">РќРѕРјРµСЂ СЏС‡РµР№РєРё РІ С„РѕСЂРјР°С‚Рµ "A1".</param>
     /// <returns></returns>
     public object GetCellValue(string cellAdress)
     {
@@ -364,10 +353,10 @@ public sealed class ExcelClass
     }
 
     /// <summary>
-    /// Возвращает данные из ячейки в виде строки. Если ячейка без данных, возвращается пустая строка.
+    /// Р’РѕР·РІСЂР°С‰Р°РµС‚ РґР°РЅРЅС‹Рµ РёР· СЏС‡РµР№РєРё РІ РІРёРґРµ СЃС‚СЂРѕРєРё. Р•СЃР»Рё СЏС‡РµР№РєР° Р±РµР· РґР°РЅРЅС‹С…, РІРѕР·РІСЂР°С‰Р°РµС‚СЃСЏ РїСѓСЃС‚Р°СЏ СЃС‚СЂРѕРєР°.
     /// </summary>
-    /// <param name="iRow">Номер строки.</param>
-    /// <param name="iCol">Номер столбца.</param>
+    /// <param name="iRow">РќРѕРјРµСЂ СЃС‚СЂРѕРєРё.</param>
+    /// <param name="iCol">РќРѕРјРµСЂ СЃС‚РѕР»Р±С†Р°.</param>
     /// <returns></returns>
     public string GetCellStringValue(int iCol, int iRow)
     {
@@ -377,9 +366,9 @@ public sealed class ExcelClass
     }
 
     /// <summary>
-    /// Возвращает данные из ячейки в виде строки. Если ячейка без данных, возвращается пустая строка.
+    /// Р’РѕР·РІСЂР°С‰Р°РµС‚ РґР°РЅРЅС‹Рµ РёР· СЏС‡РµР№РєРё РІ РІРёРґРµ СЃС‚СЂРѕРєРё. Р•СЃР»Рё СЏС‡РµР№РєР° Р±РµР· РґР°РЅРЅС‹С…, РІРѕР·РІСЂР°С‰Р°РµС‚СЃСЏ РїСѓСЃС‚Р°СЏ СЃС‚СЂРѕРєР°.
     /// </summary>
-    /// <param name="cellAdress">Номер ячейки в формате "A1".</param>
+    /// <param name="cellAdress">РќРѕРјРµСЂ СЏС‡РµР№РєРё РІ С„РѕСЂРјР°С‚Рµ "A1".</param>
     /// <returns></returns>
     public string GetCellStringValue(string cellAdress)
     {
@@ -388,10 +377,10 @@ public sealed class ExcelClass
     }
 
     /// <summary>
-    /// Возвращает данные из ячейки в виде строки. Если ячейка без данных, возвращается пустая строка.
+    /// Р’РѕР·РІСЂР°С‰Р°РµС‚ РґР°РЅРЅС‹Рµ РёР· СЏС‡РµР№РєРё РІ РІРёРґРµ СЃС‚СЂРѕРєРё. Р•СЃР»Рё СЏС‡РµР№РєР° Р±РµР· РґР°РЅРЅС‹С…, РІРѕР·РІСЂР°С‰Р°РµС‚СЃСЏ РїСѓСЃС‚Р°СЏ СЃС‚СЂРѕРєР°.
     /// </summary>
-    /// <param name="colLetter">Буква столбца ячейки.</param>
-    /// <param name="nRow">Номер строки ячейки.</param>
+    /// <param name="colLetter">Р‘СѓРєРІР° СЃС‚РѕР»Р±С†Р° СЏС‡РµР№РєРё.</param>
+    /// <param name="nRow">РќРѕРјРµСЂ СЃС‚СЂРѕРєРё СЏС‡РµР№РєРё.</param>
     /// <returns></returns>
     public string GetCellStringValue(string colLetter, int nRow)
     {
@@ -418,9 +407,9 @@ public sealed class ExcelClass
     }
 
     /// <summary>
-    /// Возвращает true, если ячейка пустая("") или без данных(NULL).
+    /// Р’РѕР·РІСЂР°С‰Р°РµС‚ true, РµСЃР»Рё СЏС‡РµР№РєР° РїСѓСЃС‚Р°СЏ("") РёР»Рё Р±РµР· РґР°РЅРЅС‹С…(NULL).
     /// </summary>
-    /// <param name="cellAdress">Номер ячейки в формате "A1".</param>
+    /// <param name="cellAdress">РќРѕРјРµСЂ СЏС‡РµР№РєРё РІ С„РѕСЂРјР°С‚Рµ "A1".</param>
     /// <returns></returns>
     public bool CellIsNullOrVoid(string cellAdress)
     {
@@ -428,21 +417,21 @@ public sealed class ExcelClass
     }
 
     /// <summary>
-    /// Возвращает true, если ячейка пустая("") или без данных(NULL).
+    /// Р’РѕР·РІСЂР°С‰Р°РµС‚ true, РµСЃР»Рё СЏС‡РµР№РєР° РїСѓСЃС‚Р°СЏ("") РёР»Рё Р±РµР· РґР°РЅРЅС‹С…(NULL).
     /// </summary>
-    /// <param name="iRow">Номер строки.</param>
-    /// <param name="iCol">Номер столбца.</param>
+    /// <param name="iRow">РќРѕРјРµСЂ СЃС‚СЂРѕРєРё.</param>
+    /// <param name="iCol">РќРѕРјРµСЂ СЃС‚РѕР»Р±С†Р°.</param>
     /// <returns></returns>
     public bool CellIsNullOrVoid(int iCol, int iRow)
     {
-        return GetCellStringValue(iRow, iCol) == "";
+        return GetCellStringValue(iCol, iRow) == "";
     }
 
     /// <summary>
-    /// Возвращает true, если ячейка пустая("") или без данных(NULL).
+    /// Р’РѕР·РІСЂР°С‰Р°РµС‚ true, РµСЃР»Рё СЏС‡РµР№РєР° РїСѓСЃС‚Р°СЏ("") РёР»Рё Р±РµР· РґР°РЅРЅС‹С…(NULL).
     /// </summary>
-    /// <param name="colLetter">Буква столбца ячейки.</param>
-    /// <param name="nRow">Номер строки ячейки.</param>
+    /// <param name="colLetter">Р‘СѓРєРІР° СЃС‚РѕР»Р±С†Р° СЏС‡РµР№РєРё.</param>
+    /// <param name="nRow">РќРѕРјРµСЂ СЃС‚СЂРѕРєРё СЏС‡РµР№РєРё.</param>
     /// <returns></returns>
     public bool CellIsNullOrVoid(string colLetter, int nRow)
     {
@@ -450,10 +439,10 @@ public sealed class ExcelClass
     }
 
     /// <summary>
-    /// Возвращает номер цвета фона ячейки.
+    /// Р’РѕР·РІСЂР°С‰Р°РµС‚ РЅРѕРјРµСЂ С†РІРµС‚Р° С„РѕРЅР° СЏС‡РµР№РєРё.
     /// </summary>
-    /// <param name="colLetter">Буква столбца ячейки.</param>
-    /// <param name="nRow">Номер строки ячейки.</param>
+    /// <param name="colLetter">Р‘СѓРєРІР° СЃС‚РѕР»Р±С†Р° СЏС‡РµР№РєРё.</param>
+    /// <param name="nRow">РќРѕРјРµСЂ СЃС‚СЂРѕРєРё СЏС‡РµР№РєРё.</param>
     /// <returns></returns>
     public int GetCellColorIndex(string colLetter, int nRow)
     {
@@ -461,32 +450,45 @@ public sealed class ExcelClass
         return (int)_range.Interior.ColorIndex;
     }
 
-    //Закрыть документ
+    /// <summary>
+    /// Р—Р°РєСЂС‹С‚СЊ РґРѕРєСѓРјРµРЅС‚
+    /// </summary>
     public void CloseDocument()
-    {            
-        _xlWorkBook.Close(false, _misValue, _misValue);
-        _xlApp.Quit();
-        GC.GetTotalMemory(true);
+    {
+        CloseDocument(false);
     }
 
     /// <summary>
-    /// Закрыть документ с сохранением.
+    /// Р—Р°РєСЂС‹С‚СЊ РґРѕРєСѓРјРµРЅС‚ СЃ СЃРѕС…СЂР°РЅРµРЅРёРµРј.
     /// </summary>
     public void CloseDocumentSave()
     {
-        _xlWorkBook.Close(true, _misValue, _misValue);
+        CloseDocument(true);
+    }
+
+    /// <summary>
+    /// Р—Р°РєСЂС‹С‚СЊ РґРѕРєСѓРјРµРЅС‚
+    /// </summary>
+    /// <param name="save">C СЃРѕС…СЂР°РЅРµРЅРёРµРј</param>
+    public void CloseDocument(bool save)
+    {
+        if (_xlApp.ActiveWorkbook != null)
+        {
+            _xlWorkBook.Close(save, _misValue, _misValue);
+        }
         _xlApp.Quit();
         GC.GetTotalMemory(true);
     }
 
-    //Завершить процесс
+
+    //Р—Р°РІРµСЂС€РёС‚СЊ РїСЂРѕС†РµСЃСЃ
     public void Exit()
     {
         _xlApp.Quit();
     }
 
-    //Уничтожение объекта
-    //без этого процесс висит
+    //РЈРЅРёС‡С‚РѕР¶РµРЅРёРµ РѕР±СЉРµРєС‚Р°
+    //Р±РµР· СЌС‚РѕРіРѕ РїСЂРѕС†РµСЃСЃ РІРёСЃРёС‚
     public void Dispose()
     {
         releaseObject(_range);
@@ -515,7 +517,7 @@ public sealed class ExcelClass
         }
     }
 
-    //ЗАПИСЬ КАРТИНКИ В ЯЧЕЙКУ
+    //Р—РђРџРРЎР¬ РљРђР РўРРќРљР Р’ РЇР§Р•Р™РљРЈ
     public void WritePictureToCell(string path)
     {            
         _p = _xlWorkSheet.Pictures(_misValue) as Excel.Pictures;           
@@ -526,11 +528,11 @@ public sealed class ExcelClass
     }
 
     /// <summary>
-    /// Метод копирует выбранный диапазон ячеек на новое место
+    /// РњРµС‚РѕРґ РєРѕРїРёСЂСѓРµС‚ РІС‹Р±СЂР°РЅРЅС‹Р№ РґРёР°РїР°Р·РѕРЅ СЏС‡РµРµРє РЅР° РЅРѕРІРѕРµ РјРµСЃС‚Рѕ
     /// </summary>
-    /// <param name="start">Левая верхняя ячейка диапазона</param>
-    /// <param name="end">Правая нижняя ячейка диапазона</param>
-    /// <param name="destination">Ячейка нового местоположения</param>
+    /// <param name="start">Р›РµРІР°СЏ РІРµСЂС…РЅСЏСЏ СЏС‡РµР№РєР° РґРёР°РїР°Р·РѕРЅР°</param>
+    /// <param name="end">РџСЂР°РІР°СЏ РЅРёР¶РЅСЏСЏ СЏС‡РµР№РєР° РґРёР°РїР°Р·РѕРЅР°</param>
+    /// <param name="destination">РЇС‡РµР№РєР° РЅРѕРІРѕРіРѕ РјРµСЃС‚РѕРїРѕР»РѕР¶РµРЅРёСЏ</param>
     public void CopyCells(object start, object end, object destination)
     {
         Excel.Range rangeDest = _xlWorkSheet.get_Range(destination, _misValue);
@@ -539,10 +541,10 @@ public sealed class ExcelClass
     }
 
     /// <summary>
-    /// Метод делает жирным выделенные ячейки
+    /// РњРµС‚РѕРґ РґРµР»Р°РµС‚ Р¶РёСЂРЅС‹Рј РІС‹РґРµР»РµРЅРЅС‹Рµ СЏС‡РµР№РєРё
     /// </summary>
-    /// <param name="start">Начало диапазона</param>
-    /// <param name="end">Конец диапазона</param>
+    /// <param name="start">РќР°С‡Р°Р»Рѕ РґРёР°РїР°Р·РѕРЅР°</param>
+    /// <param name="end">РљРѕРЅРµС† РґРёР°РїР°Р·РѕРЅР°</param>
     public void SetBold(object start, object end)
     {
         SelectCells(start, end);
@@ -550,9 +552,9 @@ public sealed class ExcelClass
     }
 
     /// <summary>
-    /// Метод выравнивает ширину столбцов по max ячейке
+    /// РњРµС‚РѕРґ РІС‹СЂР°РІРЅРёРІР°РµС‚ С€РёСЂРёРЅСѓ СЃС‚РѕР»Р±С†РѕРІ РїРѕ max СЏС‡РµР№РєРµ
     /// </summary>
-    /// <param name="columnName">Наименование столбца/столбцов в формате "А:А"</param>
+    /// <param name="columnName">РќР°РёРјРµРЅРѕРІР°РЅРёРµ СЃС‚РѕР»Р±С†Р°/СЃС‚РѕР»Р±С†РѕРІ РІ С„РѕСЂРјР°С‚Рµ "Рђ:Рђ"</param>
     public void SetAutoFit(string columnName)
     {
         _range = _xlWorkSheet.get_Range(columnName, _misValue);

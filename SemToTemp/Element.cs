@@ -104,5 +104,20 @@ public class Element
         SqlToday = Instr.GetSqlToday();
         SqlLogin = Instr.PrepareSqlParamString(SqlOracle.Login, NUserNameChar);
     }
+
+    protected int GetFreeId(string colName, string table)
+    {
+        List<int> ids = SqlOracle.Sel<int>("select " + colName + " from " + SqlOracle.PreLogin + table + " order by " + colName);
+        int i = 1;
+        foreach (int id in ids)
+        {
+            if (id > i)
+            {
+                return i;
+            }
+            i++;
+        }
+        return i;
+    }
 }
 

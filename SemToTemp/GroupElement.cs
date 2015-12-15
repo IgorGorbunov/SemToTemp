@@ -16,7 +16,8 @@ public class GroupElement
     }
 
     private readonly string _name;
-    private readonly Dictionary<string, string> _parametrs; 
+    private readonly Dictionary<string, string> _parametrs;
+    private string _fullName;
     private int _id = -1;
 
     private const int _N_PARAMS = 10;
@@ -33,7 +34,7 @@ public class GroupElement
         return SqlOracle.Sel(query, sqlParams, out id);
     }
 
-    public GroupElement(string name, Dictionary<string, string> parametrs)
+    public GroupElement(string name, Dictionary<string, string> parametrs, string fullName)
     {
         _name = name;
         if (parametrs == null)
@@ -44,6 +45,7 @@ public class GroupElement
         {
             _parametrs = parametrs;
         }
+        _fullName = fullName;
     }
 
 
@@ -78,6 +80,20 @@ public class GroupElement
                             :PA8, :PS8, :PA9, :PS9, :TODAYDATE, :LOGINUSER,
                             :SKETCH, :FILEEXT, :FILEBLOB)";
         SqlOracle.Insert(query, sqlParams);
+    }
+
+    public void AddFolders()
+    {
+        string[] split = _fullName.Split('\\');
+        int parentId = 0;
+        int level = 0;
+        foreach (string name in split)
+        {
+            FolderGroup folder = new FolderGroup(name.Trim(), parentId, level, 1);
+            folder.WriteToDb();
+            parentId = folder.Id;
+            level++;
+        }
     }
 
     

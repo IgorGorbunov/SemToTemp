@@ -133,14 +133,14 @@ partial class SqlOracle
         }
         catch (OracleException ex)
         {
-            string mess = "Ошибка в запросе к БД!" + Environment.NewLine + ex;
+            string mess = "Ошибка в запросе к БД!" + Environment.NewLine + cmdQuery + Environment.NewLine + ex;
             Logger.WriteError(mess);
             Message.Show(mess);
             throw new BadQueryExeption();
         }
         catch (Exception ex)
         {
-            string mess = "Ошибка в запросе к БД!" + Environment.NewLine + ex;
+            string mess = "Ошибка в запросе к БД!" + Environment.NewLine + cmdQuery + Environment.NewLine + ex;
             Logger.WriteError(mess);
             Message.Show(mess);
         }

@@ -63,7 +63,8 @@ public static class Processor
                 {
                     xls.OpenDocument(xlsBooks.FileNames[i], false);
                     string shortFileName = GetShortFileName(xlsBooks.FileNames[i]);
-                    group = new GroupElement(shortFileName, GetGroupParams(xls));
+                    string fullName = xls.GetCellStringValue("A", 1);
+                    group = new GroupElement(shortFileName, GetGroupParams(xls), fullName);
                     bool exit;
                     int oldId;
                     bool reWrite = ReWrite(shortFileName, out oldId, out exit);
@@ -89,6 +90,7 @@ public static class Processor
                 if (instruments.Count > 0)
                 {
                     group.WriteToDb();
+                    group.AddFolders();
                 }
                 foreach (BuyInstrument buyInstrument in instruments)
                 {
