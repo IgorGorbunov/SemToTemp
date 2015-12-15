@@ -1,22 +1,29 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-
+/// <summary>
+/// Класс для добавления папок на группы.
+/// </summary>
 public class FolderGroup : Element
 {
     public int Id;
 
-    private string idColName = "TR_NN";
-    private string tableName = "Tree_Dir";
+    private const string _ID_COL_NAME = "TR_NN";
+    private const string _TABLE_NAME = "Tree_Dir";
 
-    private string _name;
-    private int _parentId;
-    private int _level;
-    private int _type;
+    private readonly string _name;
+    private readonly int _parentId;
+    private readonly int _level;
+    private readonly int _type;
 
     private const int _N_NAME_CHAR = 200;
 
+    /// <summary>
+    /// Конструктор для добавления папок на группы.
+    /// </summary>
+    /// <param name="name">Имя папки.</param>
+    /// <param name="parentId">ID предыдущей папки.</param>
+    /// <param name="level">Уровень вложенности.</param>
+    /// <param name="type">Тип папки (0 - группа, 1 - позиция).</param>
     public FolderGroup(string name, int parentId, int level, int type)
     {
         _name = name;
@@ -26,13 +33,13 @@ public class FolderGroup : Element
     }
 
     /// <summary>
-    /// �����, ������������ ������ � ��.
+    /// Метод, записывающий данные в БД.
     /// </summary>
     public void WriteToDb()
     {
         Dictionary<string, string> sqlParams = new Dictionary<string, string>();
         sqlParams.Add("FNAME", Instr.PrepareSqlParamString(_name, _N_NAME_CHAR));
-        Id = GetFreeId(idColName, tableName);
+        Id = GetFreeId(_ID_COL_NAME, _TABLE_NAME);
         sqlParams.Add("IDF", Id.ToString());
         sqlParams.Add("PARENTID", _parentId.ToString());
         sqlParams.Add("FLEVEL", _level.ToString());
@@ -40,7 +47,7 @@ public class FolderGroup : Element
         sqlParams.Add("LOGINUSER", Instr.PrepareSqlParamString(SqlOracle.Login, NUserNameChar));
         sqlParams.Add("TODAYDATE", Instr.GetSqlToday());
 
-        string query = "insert into " + SqlOracle.PreLogin + tableName;
+        string query = "insert into " + SqlOracle.PreLogin + _TABLE_NAME;
         query += @" values (:IDF, :FNAME, :PARENTID,
                             :FLEVEL, :FTYPE, :LOGINUSER, :TODAYDATE)";
         SqlOracle.Insert(query, sqlParams);

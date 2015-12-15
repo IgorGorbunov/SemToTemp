@@ -1,18 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-
+/// <summary>
+/// Класс для добавления папок на позиции.
+/// </summary>
 public class FolderPosition
 {
+    private const string _TABLE_NAME = "INS_DIR";
 
-    private string tableName = "INS_DIR";
-
-    private int _folderGroupId;
-    private int _positionId;
+    private readonly int _folderGroupId;
+    private readonly int _positionId;
 
     private const int _N_NAME_CHAR = 60;
 
+    /// <summary>
+    /// Конструктор для добавления папок на позиции.
+    /// </summary>
+    /// <param name="folderGroupId">ID папки группы.</param>
+    /// <param name="positionId">ID позиции.</param>
     public FolderPosition(int folderGroupId, int positionId)
     {
         _folderGroupId = folderGroupId;
@@ -31,7 +35,7 @@ public class FolderPosition
         sqlParams.Add("FTYPE", 1.ToString());
 
 
-        string query = "insert into " + SqlOracle.PreLogin + tableName;
+        string query = "insert into " + SqlOracle.PreLogin + _TABLE_NAME;
         query += @" values (:GROUPID, :FNAME, :POSITIONID, :FTYPE)";
         SqlOracle.Insert(query, sqlParams);
     }
