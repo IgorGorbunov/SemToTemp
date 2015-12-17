@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Windows.Forms;
 
 namespace SemToTemp
@@ -27,7 +27,7 @@ namespace SemToTemp
             }
             catch (TimeoutException exception)
             {
-                const string mess = "База данных недоступна!";
+                const string mess = "Р‘Р°Р·Р° РґР°РЅРЅС‹С… РЅРµРґРѕСЃС‚СѓРїРЅР°!";
                 Logger.WriteError(mess, exception);
                 MessageBox.Show(mess);
             }
@@ -47,7 +47,7 @@ namespace SemToTemp
         {
             switch (comboBox1.Text)
             {
-                case "УлГУ - Debug":
+                case "РЈР»Р“РЈ - Debug":
                     tBlogin.Text = "avia_design";
                     tBpassword.Text = "avia_design";
                     tBsid.Text = "temp";
@@ -55,7 +55,7 @@ namespace SemToTemp
                     tBport.Text = "1521";
                     SqlOracle.PreLogin = "";
                     break;
-                case "Авиастар - Debug":
+                case "РђРІРёР°СЃС‚Р°СЂ - Debug":
                     tBlogin.Text = "ulgu";
                     tBpassword.Text = "1";
                     tBsid.Text = "OTL";
@@ -63,7 +63,7 @@ namespace SemToTemp
                     tBport.Text = "1521";
                     SqlOracle.PreLogin = "AVIA_DESIGN.";
                     break;
-                case "Авиастар - Release":
+                case "РђРІРёР°СЃС‚Р°СЂ - Release":
                     tBlogin.Text = "ulgu";
                     tBpassword.Text = "1";
                     tBsid.Text = "asp";

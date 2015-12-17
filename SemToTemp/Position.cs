@@ -66,7 +66,7 @@ public class Position : Element
     {
         AddSqlElParam();
         SIdGroup = _groupElement.Id;
-        SModelType = "0";
+        SModelType = " ";
         SParams = GetTenParams(TempElement.SingleElement, _parametrs);
         SGeom = "NULL";
         SdocFile = "NULL";
@@ -108,11 +108,17 @@ public class Position : Element
     private string GetNotes()
     {
         string text = "";
+        int i = 1;
         foreach (KeyValuePair<string, string> keyValuePair in _parametrs)
         {
             if (!string.IsNullOrEmpty(keyValuePair.Key.Trim()))
             {
                 text += string.Format("{0}={1} ", keyValuePair.Key.Trim(), keyValuePair.Value.Trim());
+                i++;
+            }
+            if (i > NParams)
+            {
+                break;
             }
         }
         return text.Trim();

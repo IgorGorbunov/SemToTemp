@@ -16,17 +16,18 @@ public class GroupElement
     }
 
     public int FolderId;
+    public const int NParamNameChar = 2;
 
     private readonly string _name;
     private readonly Dictionary<string, string> _parametrs;
-    private string _fullName;
+    private readonly string _fullName;
     private int _id = -1;
 
     private const int _N_PARAMS = 10;
     private const int _N_COL_PARAMS = 2;
 
     private const int _N_CHAR = 80;
-    private const int _N_PARAM_NAME_CHAR = 2;
+    
 
     public static bool Exist(string name, out int id)
     {
@@ -127,7 +128,7 @@ public class GroupElement
         int i = 0;
         foreach (KeyValuePair<string, string> keyValuePair in _parametrs)
         {
-            paramSql[i, 0] = Instr.PrepareSqlParamString(keyValuePair.Key, _N_PARAM_NAME_CHAR);
+            paramSql[i, 0] = Instr.PrepareSqlParamString(keyValuePair.Key, NParamNameChar);
             paramSql[i, 1] = Instr.PrepareSqlParamString(keyValuePair.Value, _N_CHAR);
             i++;
             if (i >= _N_PARAMS)
