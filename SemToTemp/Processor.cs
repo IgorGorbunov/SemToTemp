@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Windows.Forms;
 
 /// <summary>
@@ -27,7 +26,7 @@ public static class Processor
     /// <param name="titleColName"></param>
     /// <param name="docColName"></param>
     /// <param name="yearColName"></param>
-    public static void SelectXlsFiles(string nameColName, string titleColName, string docColName, string yearColName)
+    public static void SelectXlsFiles(string nameColName, string titleColName, string docColName, string yearColName, ProgressBar bar)
     {
         _nameColName = nameColName;
         _titleColName = titleColName;
@@ -80,6 +79,7 @@ public static class Processor
                     {
                         ProcessOneRow(xls, iRow, ref mess, instruments, group,
                                       shortFileName);
+
                         iRow++;
                     }
                 }
@@ -92,10 +92,13 @@ public static class Processor
                     group.WriteToDb();
                     group.AddFolders();
                 }
+                bar.Maximum = instruments.Count;
+                bar.Value = 0;
                 foreach (BuyInstrument buyInstrument in instruments)
                 {
                     buyInstrument.WriteToDb();
                     buyInstrument.AddFolder();
+                    bar.Increment(1);
                 }
             }
         }
@@ -104,17 +107,6 @@ public static class Processor
             xls.Dispose();
         }
         MessageBox.Show(mess);
-    }
-
-    /// <summary>
-    /// Обработка Excel документов
-    /// </summary>
-    /// <param name="nameColName"></param>
-    /// <param name="titleColName"></param>
-    /// <param name="docColName"></param>
-    public static void SelectXlsFiles(string nameColName, string titleColName, string docColName)
-    {
-        
     }
 
     private static bool ReWrite(string shortFileName, out int oldId, out bool exit)

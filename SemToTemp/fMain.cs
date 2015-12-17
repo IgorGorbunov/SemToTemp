@@ -13,8 +13,7 @@ namespace SemToTemp
 
         private void bttnRecord_Click(object sender, EventArgs e)
         {
-            Processor.SelectXlsFiles(tbName.Text, tbTitle.Text, tbDoc.Text, tbYear.Text);
-
+            Processor.SelectXlsFiles(tbName.Text, tbTitle.Text, tbDoc.Text, tbYear.Text, pbLoad);
         }
     }
 }

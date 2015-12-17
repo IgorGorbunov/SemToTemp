@@ -49,6 +49,7 @@ namespace SemToTemp
             this.label1 = new System.Windows.Forms.Label();
             this.bttnRecord = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.pbLoad = new System.Windows.Forms.ProgressBar();
             this.tabControl.SuspendLayout();
             this.tpAddGroup.SuspendLayout();
             this.SuspendLayout();
@@ -66,6 +67,7 @@ namespace SemToTemp
             // 
             // tpAddGroup
             // 
+            this.tpAddGroup.Controls.Add(this.pbLoad);
             this.tpAddGroup.Controls.Add(this.tbYear);
             this.tpAddGroup.Controls.Add(this.tbDoc);
             this.tpAddGroup.Controls.Add(this.tbTitle);
@@ -127,9 +129,9 @@ namespace SemToTemp
             // rtbResult
             // 
             this.rtbResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbResult.Location = new System.Drawing.Point(38, 203);
+            this.rtbResult.Location = new System.Drawing.Point(38, 256);
             this.rtbResult.Name = "rtbResult";
-            this.rtbResult.Size = new System.Drawing.Size(1011, 370);
+            this.rtbResult.Size = new System.Drawing.Size(1011, 317);
             this.rtbResult.TabIndex = 13;
             this.rtbResult.Text = "";
             this.rtbResult.WordWrap = false;
@@ -249,6 +251,13 @@ namespace SemToTemp
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // pbLoad
+            // 
+            this.pbLoad.Location = new System.Drawing.Point(38, 240);
+            this.pbLoad.Name = "pbLoad";
+            this.pbLoad.Size = new System.Drawing.Size(1011, 10);
+            this.pbLoad.TabIndex = 18;
+            // 
             // fMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -287,5 +296,6 @@ namespace SemToTemp
         private System.Windows.Forms.TextBox tbName;
         private System.Windows.Forms.TextBox tbYear;
         private System.Windows.Forms.TextBox tbDoc;
+        private System.Windows.Forms.ProgressBar pbLoad;
     }
 }

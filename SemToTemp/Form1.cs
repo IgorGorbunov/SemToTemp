@@ -58,16 +58,22 @@ namespace SemToTemp
                 case "Авиастар - Debug":
                     tBlogin.Text = "ulgu";
                     tBpassword.Text = "1";
-                    tBsid.Text = "";
-                    tBhostname.Text = "OTL.KTPP.AVIASTAR.LINK-UL.RU";
-                    tBport.Text = "";
+                    tBsid.Text = "OTL";
+                    tBhostname.Text = "10.68.0.24";
+                    tBport.Text = "1521";
                     SqlOracle.PreLogin = "AVIA_DESIGN.";
                     break;
                 case "Авиастар - Release":
+                    tBlogin.Text = "ulgu";
+                    tBpassword.Text = "1";
+                    tBsid.Text = "asp";
+                    tBhostname.Text = "10.68.2.61";
+                    tBport.Text = "1521";
+                    SqlOracle.PreLogin = "";
                     tBlogin.Text = "avia_design";
                     tBpassword.Text = "avia_design";
-                    tBsid.Text = "temp";
-                    tBhostname.Text = "temp-server";
+                    tBsid.Text = "OTL";
+                    tBhostname.Text = "10.68.0.24";
                     tBport.Text = "1521";
                     SqlOracle.PreLogin = "";
                     break;
