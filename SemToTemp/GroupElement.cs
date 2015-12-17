@@ -92,9 +92,18 @@ public class GroupElement
         int level = 0;
         foreach (string name in split)
         {
-            FolderGroup folder = new FolderGroup(name.Trim(), parentId, level, 1);
-            folder.WriteToDb();
-            parentId = folder.Id;
+            int existId;
+            if (FolderGroup.Exist(name.Trim(), out existId))
+            {
+                parentId = existId;
+            }
+            else
+            {
+                FolderGroup folder = new FolderGroup(name.Trim(), parentId, level, 1);
+                folder.WriteToDb();
+                parentId = folder.Id;
+            }
+            
             level++;
         }
         FolderId = parentId;
@@ -110,7 +119,7 @@ public class GroupElement
     private int GetFreeId()
     {
         List<int> ids = SqlOracle.Sel<int>("select T1_NG from " + SqlOracle.PreLogin + "TABLE_1 order by T1_NG");
-        int i = 1;
+        int i = 0;
         foreach (int id in ids)
         {
             if (id > i)

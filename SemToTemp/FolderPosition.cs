@@ -29,7 +29,7 @@ public class FolderPosition
     public void WriteToDb()
     {
         Dictionary<string, string> sqlParams = new Dictionary<string, string>();
-        sqlParams.Add("FNAME", Instr.PrepareSqlParamString("   ", _N_NAME_CHAR));
+        sqlParams.Add("FNAME", Instr.PrepareSqlParamString("Инструменты НСИ", _N_NAME_CHAR));
         sqlParams.Add("GROUPID", _folderGroupId.ToString());
         sqlParams.Add("POSITIONID", _positionId.ToString());
         sqlParams.Add("FTYPE", 1.ToString());

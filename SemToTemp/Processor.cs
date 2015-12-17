@@ -83,14 +83,14 @@ public static class Processor
                 if (instruments.Count > 0)
                 {
                     group.WriteToDb();
-                    //group.AddFolders();
+                    group.AddFolders();
                 }
                 bar.Maximum = instruments.Count;
                 bar.Value = 0;
                 foreach (BuyInstrument buyInstrument in instruments)
                 {
                     buyInstrument.WriteToDb();
-                    //buyInstrument.AddFolder();
+                    buyInstrument.AddFolder();
                     bar.Increment(1);
                 }
             }
@@ -173,7 +173,10 @@ public static class Processor
         string sVal = xls.GetCellStringValue(iCol, iRow);
         while (!string.IsNullOrEmpty(sKey))
         {
-            sKey = sKey.Substring(0, GroupElement.NParamNameChar);
+            if (sKey.Length > 2)
+            {
+                sKey = sKey.Substring(0, GroupElement.NParamNameChar);
+            }
             int i = 1;
             while (parametrs.ContainsKey(sKey))
             {
@@ -201,7 +204,10 @@ public static class Processor
         string sVal = xls.GetCellStringValue(iCol, _ATTR_NAME_ROW);
         while (!string.IsNullOrEmpty(sKey))
         {
-            sKey = sKey.Substring(0, GroupElement.NParamNameChar);
+            if (sKey.Length > 2)
+            {
+                sKey = sKey.Substring(0, GroupElement.NParamNameChar);
+            }
             int i = 1;
             while (parametrs.ContainsKey(sKey))
             {

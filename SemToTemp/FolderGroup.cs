@@ -8,6 +8,7 @@ public class FolderGroup : Element
     public int Id;
 
     private const string _ID_COL_NAME = "TR_NN";
+    private const string _NAME_COL_NAME = "TR_NM";
     private const string _TABLE_NAME = "Tree_Dir";
 
     private readonly string _name;
@@ -30,6 +31,14 @@ public class FolderGroup : Element
         _parentId = parentId;
         _level = level;
         _type = type;
+    }
+
+    public static bool Exist(string name, out int id)
+    {
+        string query = "select " + _ID_COL_NAME + " from " + SqlOracle.PreLogin + _TABLE_NAME + " where " + _NAME_COL_NAME + " = :GNAME";
+        Dictionary<string, string> sqlParams = new Dictionary<string, string>();
+        sqlParams.Add("GNAME", Instr.PrepareSqlParamString(name, _N_NAME_CHAR));
+        return SqlOracle.Sel(query, sqlParams, out id);
     }
 
     /// <summary>

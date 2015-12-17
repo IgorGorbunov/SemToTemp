@@ -28,19 +28,20 @@ partial class SqlOracle
             {
                 cmd.Parameters.AddWithValue(":" + pair.Key, pair.Value);
             }
-
+            bool flag = false;
             OracleDataReader reader = cmd.ExecuteReader();
             if (reader.Read())
             {
                 object o = reader.GetValue(0);
                 value = (T)o;
+                flag = true;
             }
 
             reader.Close();
             cmd.Dispose();
 
             ProcessSuccess(cmdQuery, paramsDict, value);
-            return true;
+            return flag;
         }
         catch (TimeoutException)
         {
