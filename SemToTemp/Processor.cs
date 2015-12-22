@@ -83,16 +83,18 @@ public static class Processor
                 if (instruments.Count > 0)
                 {
                     group.WriteToDb();
-                    group.AddFolders();
+                    //group.AddFolders();
                 }
                 bar.Maximum = instruments.Count;
                 bar.Value = 0;
                 foreach (BuyInstrument buyInstrument in instruments)
                 {
                     buyInstrument.WriteToDb();
-                    buyInstrument.AddFolder();
+                    group.AddId(buyInstrument);
+                    //buyInstrument.AddFolder();
                     bar.Increment(1);
                 }
+                group.AddGeneralFolders(@"Справочники НСИ\Справочник покупного инструмента\");
             }
         }
         finally

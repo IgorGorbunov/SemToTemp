@@ -254,6 +254,20 @@ public static class Instr
         return newData;
     }
 
+    public static string AddFirstSpace(string data)
+    {
+        if (data == "NULL")
+        {
+            return data;
+        }
+        if (data[0] == '-')
+        {
+            return data;
+        }
+        data = data.Substring(0, data.Length - 1);
+        return string.Format(" {0}", data);
+    }
+
     /// <summary>
     /// 
     /// </summary>

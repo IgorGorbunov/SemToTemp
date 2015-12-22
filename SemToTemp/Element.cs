@@ -34,14 +34,6 @@ public class Element
         Special
     }
 
-    private enum ModelType
-    {
-        No = 20,
-        SketchOnly = 21,
-        ModelOnly = 30,
-        SketchModel = 31
-    }
-
 
     public const int NUserNameChar = 32;
     protected const int NParams = 10;
@@ -95,6 +87,15 @@ public class Element
         if (equipType == EquipType.CuttingTool)
         {
             return "РИ  ";
+        }
+        return null;
+    }
+
+    protected string GetStringEnum(EquipType equipType)
+    {
+        if (equipType == EquipType.CuttingTool)
+        {
+            return "Режущий инструмент";
         }
         return null;
     }

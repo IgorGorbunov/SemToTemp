@@ -15,13 +15,14 @@ public class GroupElement
         }
     }
 
-    public int FolderId;
+    public int UserFolderId;
     public const int NParamNameChar = 2;
 
     private readonly string _name;
     private readonly Dictionary<string, string> _parametrs;
     private readonly string _fullName;
     private int _id = -1;
+    private List<int> _listId; 
 
     private const int _N_PARAMS = 10;
     private const int _N_COL_PARAMS = 2;
@@ -49,6 +50,12 @@ public class GroupElement
             _parametrs = parametrs;
         }
         _fullName = fullName;
+        _listId = new List<int>();
+    }
+
+    public void AddId(Position position)
+    {
+        _listId.Add(position.Id);
     }
 
 
@@ -93,20 +100,60 @@ public class GroupElement
         foreach (string name in split)
         {
             int existId;
-            if (FolderGroup.Exist(name.Trim(), out existId))
+            if (FolderUserGroup.Exist(name.Trim(), out existId))
             {
                 parentId = existId;
             }
             else
             {
-                FolderGroup folder = new FolderGroup(name.Trim(), parentId, level, 1);
-                folder.WriteToDb();
-                parentId = folder.Id;
+                FolderUserGroup folderUser = new FolderUserGroup(name.Trim(), parentId, level, 1);
+                folderUser.WriteToDb();
+                parentId = folderUser.Id;
             }
             
             level++;
         }
-        FolderId = parentId;
+        UserFolderId = parentId;
+    }
+
+    public void AddGeneralFolders(string begin)
+    {
+        begin += _fullName;
+        string[] split = begin.Split('\\');
+        int parentId = 0;
+        int isChild = 0;
+        Folder parentFolder = null;
+        for (int i = 0; i < split.Length - 1; i++)
+        {
+            int existId;
+            if (Folder.Exist(split[i].Trim(), out existId))
+            {
+                parentId = existId;
+            }
+            else
+            {
+                Folder folder;
+                if (i == split.Length - 2)
+                {
+                    _listId = new List<int>();
+                    _listId.Add(Id);
+                    folder = new Folder(split[i].Trim(), parentId, isChild, _listId);
+                }
+                else
+                {
+                    folder = new Folder(split[i].Trim(), parentId, isChild);
+                }
+                folder.WriteToDb();
+                parentId = folder.Id;
+                if (parentFolder != null)
+                {
+                    parentFolder.AddFolderId(folder.Id);
+                    parentFolder.AddEditions();
+                }
+                parentFolder = folder;
+            }
+            isChild = 1;
+        }
     }
 
     

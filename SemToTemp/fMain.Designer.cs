@@ -30,6 +30,7 @@ namespace SemToTemp
         {
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tpAddGroup = new System.Windows.Forms.TabPage();
+            this.pbLoad = new System.Windows.Forms.ProgressBar();
             this.tbYear = new System.Windows.Forms.TextBox();
             this.tbDoc = new System.Windows.Forms.TextBox();
             this.tbTitle = new System.Windows.Forms.TextBox();
@@ -49,7 +50,6 @@ namespace SemToTemp
             this.label1 = new System.Windows.Forms.Label();
             this.bttnRecord = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.pbLoad = new System.Windows.Forms.ProgressBar();
             this.tabControl.SuspendLayout();
             this.tpAddGroup.SuspendLayout();
             this.SuspendLayout();
@@ -94,13 +94,20 @@ namespace SemToTemp
             this.tpAddGroup.Text = "Добавить группу";
             this.tpAddGroup.UseVisualStyleBackColor = true;
             // 
+            // pbLoad
+            // 
+            this.pbLoad.Location = new System.Drawing.Point(38, 240);
+            this.pbLoad.Name = "pbLoad";
+            this.pbLoad.Size = new System.Drawing.Size(1011, 10);
+            this.pbLoad.TabIndex = 18;
+            // 
             // tbYear
             // 
             this.tbYear.Location = new System.Drawing.Point(536, 120);
             this.tbYear.Name = "tbYear";
             this.tbYear.Size = new System.Drawing.Size(100, 20);
             this.tbYear.TabIndex = 17;
-            this.tbYear.Text = "год";
+            this.tbYear.Text = "C";
             // 
             // tbDoc
             // 
@@ -108,7 +115,7 @@ namespace SemToTemp
             this.tbDoc.Name = "tbDoc";
             this.tbDoc.Size = new System.Drawing.Size(100, 20);
             this.tbDoc.TabIndex = 16;
-            this.tbDoc.Text = "документ";
+            this.tbDoc.Text = "C";
             // 
             // tbTitle
             // 
@@ -116,7 +123,7 @@ namespace SemToTemp
             this.tbTitle.Name = "tbTitle";
             this.tbTitle.Size = new System.Drawing.Size(100, 20);
             this.tbTitle.TabIndex = 15;
-            this.tbTitle.Text = "обозначение";
+            this.tbTitle.Text = "A";
             // 
             // tbName
             // 
@@ -124,7 +131,7 @@ namespace SemToTemp
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(100, 20);
             this.tbName.TabIndex = 14;
-            this.tbName.Text = "наименование";
+            this.tbName.Text = "B";
             // 
             // rtbResult
             // 
@@ -250,13 +257,6 @@ namespace SemToTemp
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // pbLoad
-            // 
-            this.pbLoad.Location = new System.Drawing.Point(38, 240);
-            this.pbLoad.Name = "pbLoad";
-            this.pbLoad.Size = new System.Drawing.Size(1011, 10);
-            this.pbLoad.TabIndex = 18;
             // 
             // fMain
             // 

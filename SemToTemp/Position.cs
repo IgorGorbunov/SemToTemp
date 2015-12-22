@@ -41,8 +41,8 @@ public class Position : Element
 
     public void AddFolder()
     {
-        FolderPosition folder = new FolderPosition(_groupElement.FolderId, Id);
-        folder.WriteToDb();
+        FolderUserPosition folderUser = new FolderUserPosition(_groupElement.UserFolderId, Id);
+        folderUser.WriteToDb();
     }
 
     protected Position(string name, string title, GroupElement groupElement, Dictionary<string, string> parametrs, string doc, string docYear)
