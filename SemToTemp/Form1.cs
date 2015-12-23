@@ -71,11 +71,11 @@ namespace SemToTemp
                     tBport.Text = "1521";
                     SqlOracle.PreLogin = "";
                     tBlogin.Text = "avia_design";
-                    tBpassword.Text = "avia_design";
+                    tBpassword.Text = "avia_design0";
                     tBsid.Text = "OTL";
                     tBhostname.Text = "10.68.0.24";
                     tBport.Text = "1521";
-                    SqlOracle.PreLogin = "";
+                    SqlOracle.PreLogin = "AVIA_DESIGN.";
                     break;
             }
         }

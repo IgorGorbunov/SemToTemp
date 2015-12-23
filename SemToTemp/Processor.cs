@@ -17,6 +17,7 @@ public static class Processor
     private const int _ATTR_TITLE_ROW = 3;
     private const int _FIRST_ROW = 4;
 
+
     
     // 
     /// <summary>
@@ -26,14 +27,12 @@ public static class Processor
     /// <param name="titleColName"></param>
     /// <param name="docColName"></param>
     /// <param name="yearColName"></param>
-    public static void SelectXlsFiles(string nameColName, string titleColName, string docColName, string yearColName, ProgressBar bar)
+    public static void SelectXlsFiles(string nameColName, string titleColName, string docColName, string yearColName, ProgressBar bar, Element.ElementType type, Label status, Label nFiles)
     {
         _nameColName = nameColName;
         _titleColName = titleColName;
         _docColName = docColName;
         _yearColName = yearColName;
-
-        
 
         string mess = "";
         OpenFileDialog xlsBooks = new OpenFileDialog();
@@ -49,7 +48,10 @@ public static class Processor
         {
             for (int i = 0; i < xlsBooks.FileNames.Length; i++)
             {
-                List<BuyInstrument> instruments = new List<BuyInstrument>();
+                status.Text = "Чтение файлов";
+                nFiles.Text = i.ToString();
+                Application.DoEvents();
+                List<Position> instruments = new List<Position>();
                 int iRow = _FIRST_ROW;
                 GroupElement group;
                 try
@@ -70,8 +72,8 @@ public static class Processor
                            !xls.CellIsNullOrVoid(_titleColName, iRow) ||
                            !xls.CellIsNullOrVoid(_docColName, iRow))
                     {
-                        ProcessOneRow(xls, iRow, ref mess, instruments, group,
-                                      shortFileName);
+                        ProcessOneRow2(xls, iRow, ref mess, instruments, group,
+                                      shortFileName, type);
 
                         iRow++;
                     }
@@ -83,18 +85,30 @@ public static class Processor
                 if (instruments.Count > 0)
                 {
                     group.WriteToDb();
-                    //group.AddFolders();
+                    group.AddUserFolders();
                 }
                 bar.Maximum = instruments.Count;
                 bar.Value = 0;
-                foreach (BuyInstrument buyInstrument in instruments)
+                status.Text = "Запись в БД";
+                foreach (Position pos in instruments)
                 {
-                    buyInstrument.WriteToDb();
-                    group.AddId(buyInstrument);
-                    //buyInstrument.AddFolder();
+                    pos.WriteToDb2();
+                    group.AddId(pos);
+                    pos.AddUserFolder();
                     bar.Increment(1);
+                    Application.DoEvents();
                 }
-                group.AddGeneralFolders(@"Справочники НСИ\Справочник покупного инструмента\");
+                switch (type)
+                {
+                        case Element.ElementType.Tool:
+                            group.AddGeneralFolders(@"Справочники НСИ/Справочник покупного инструмента/");
+                        break;
+                        case Element.ElementType.Material:
+                            group.AddGeneralFolders(@"Справочники НСИ/");
+                        break;
+                }
+
+                
             }
         }
         finally
@@ -167,26 +181,95 @@ public static class Processor
         instruments.Add(instrument);
     }
 
+    private static void ProcessOneRow2(ExcelClass xls, int iRow, ref string message, List<Position> positions, GroupElement group, string fileName, Element.ElementType posType)
+    {
+        string name = xls.GetCellStringValue(_nameColName, iRow);
+        string title = xls.GetCellStringValue(_titleColName, iRow);
+        if (string.IsNullOrEmpty(title))
+        {
+            message +=
+                fileName + " - в " + iRow +
+                " строке позиция без обозначения!" + Environment.NewLine;
+            return;
+        }
+        string doc, year = "";
+        if (_docColName == _yearColName)
+        {
+            doc = xls.GetCellStringValue(_docColName, iRow);
+            string[] split = doc.Split('-');
+            if (split.Length > 0)
+            {
+                doc = "";
+                for (int i = 0; i < split.Length - 1; i++)
+                {
+                    doc += split[i];
+                }
+                year = split[split.Length - 1];
+            }
+
+        }
+        else if (string.IsNullOrEmpty(_yearColName.Trim()))
+        {
+            doc = xls.GetCellStringValue(_docColName, iRow);
+            year = "";
+        }
+        else
+        {
+            doc = xls.GetCellStringValue(_docColName, iRow);
+            year = xls.GetCellStringValue(_yearColName, iRow);
+        }
+
+        Position pos = null;
+        switch (posType)
+        {
+                case Element.ElementType.Material:
+                    pos = new Materials(name, title, group,
+                                                             GetPositionParams(xls, iRow),
+                                                             doc,
+                                                             year);
+                break;
+                case Element.ElementType.Tool:
+                    pos = new BuyInstrument(name, title, group,
+                                                         GetPositionParams(xls, iRow),
+                                                         doc,
+                                                         year);
+                break;
+        }
+
+        positions.Add(pos);
+    }
+
     private static Dictionary<string, string> GetPositionParams(ExcelClass xls, int iRow)
     {
         Dictionary<string, string> parametrs = new Dictionary<string, string>();
-        int iCol = _PARS_COL_NUM;
+        int iCol = 1;
         string sKey = xls.GetCellStringValue(iCol, _ATTR_TITLE_ROW);
         string sVal = xls.GetCellStringValue(iCol, iRow);
+        string psevdoYear = _yearColName;
+        if (string.IsNullOrEmpty(psevdoYear))
+        {
+            psevdoYear = _nameColName;
+        }
         while (!string.IsNullOrEmpty(sKey))
         {
-            if (sKey.Length > 2)
+            if (_nameColName != GetChar(iCol) &&
+                _titleColName != GetChar(iCol) && 
+                _docColName != GetChar(iCol) &&
+                psevdoYear != GetChar(iCol))
             {
-                sKey = sKey.Substring(0, GroupElement.NParamNameChar);
+                if (sKey.Length > 2)
+                {
+                    sKey = sKey.Substring(0, GroupElement.NParamNameChar);
+                }
+                int i = 1;
+                while (parametrs.ContainsKey(sKey))
+                {
+                    sKey = sKey.Substring(0, GroupElement.NParamNameChar - 1);
+                    sKey += i;
+                    i++;
+                }
+                parametrs.Add(sKey, sVal);
             }
-            int i = 1;
-            while (parametrs.ContainsKey(sKey))
-            {
-                sKey = sKey.Substring(0, GroupElement.NParamNameChar - 1);
-                sKey += i;
-                i++;
-            }
-            parametrs.Add(sKey, sVal);
             iCol++;
             sKey = xls.GetCellStringValue(iCol, _ATTR_TITLE_ROW);
             sVal = xls.GetCellStringValue(iCol, iRow);
@@ -198,26 +281,42 @@ public static class Processor
         return null;
     }
 
+    private static string GetChar(int jCol)
+    {
+        return ((char) (jCol + 64)).ToString();
+    }
+
     private static Dictionary<string, string> GetGroupParams(ExcelClass xls)
     {
         Dictionary<string, string> parametrs = new Dictionary<string, string>();
-        int iCol = _PARS_COL_NUM;
+        int iCol = 1;
         string sKey = xls.GetCellStringValue(iCol, _ATTR_TITLE_ROW);
         string sVal = xls.GetCellStringValue(iCol, _ATTR_NAME_ROW);
+        string psevdoYear = _yearColName;
+        if (string.IsNullOrEmpty(psevdoYear))
+        {
+            psevdoYear = _nameColName;
+        }
         while (!string.IsNullOrEmpty(sKey))
         {
-            if (sKey.Length > 2)
+            if (_nameColName != GetChar(iCol) &&
+                _titleColName != GetChar(iCol) &&
+                _docColName != GetChar(iCol) &&
+                psevdoYear != GetChar(iCol))
             {
-                sKey = sKey.Substring(0, GroupElement.NParamNameChar);
+                if (sKey.Length > 2)
+                {
+                    sKey = sKey.Substring(0, GroupElement.NParamNameChar);
+                }
+                int i = 1;
+                while (parametrs.ContainsKey(sKey))
+                {
+                    sKey = sKey.Substring(0, GroupElement.NParamNameChar - 1);
+                    sKey += i;
+                    i++;
+                }
+                parametrs.Add(sKey, sVal);
             }
-            int i = 1;
-            while (parametrs.ContainsKey(sKey))
-            {
-                sKey = sKey.Substring(0, GroupElement.NParamNameChar - 1);
-                sKey += i;
-                i++;
-            }
-            parametrs.Add(sKey, sVal);
             iCol++;
             sKey = xls.GetCellStringValue(iCol, _ATTR_TITLE_ROW);
             sVal = xls.GetCellStringValue(iCol, _ATTR_NAME_ROW);

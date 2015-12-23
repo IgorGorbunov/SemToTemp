@@ -72,6 +72,7 @@
     <Compile Include="GroupElement.cs" />
     <Compile Include="Instr.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="materials.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Position.cs" />
     <Compile Include="Program.cs" />

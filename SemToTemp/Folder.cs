@@ -8,6 +8,7 @@ class Folder : Element
     public int Id;
 
     private const string _ID_COL_NAME = "TR_NG";
+    private const string _CHILD_ID_COL_NAME = "TR_NG1";
     private const string _NAME_COL_NAME = "TR_NM";
     private const string _TABLE_NAME = "TREE_GR_INS";
 
@@ -45,6 +46,34 @@ class Folder : Element
     public Folder(string name, int parentId, int isChild) :this(name, parentId, isChild, null)
     {
 
+    }
+
+    public static void UpdateFolderId(int id, int newChildId, bool isGroup)
+    {
+        string query = "select " + _CHILD_ID_COL_NAME + " from " + SqlOracle.PreLogin + _TABLE_NAME + " where " + _ID_COL_NAME + " = :GNAME";
+        Dictionary<string, string> sqlParams = new Dictionary<string, string>();
+        sqlParams.Add("GNAME", id.ToString());
+        string childs;
+        SqlOracle.Sel(query, sqlParams, out childs);
+        char c;
+        if (isGroup)
+        {
+            c = '-';
+        }
+        else
+        {
+            c = ' ';
+        }
+        childs += string.Format("{0}{1}", c, newChildId.ToString("D5"));
+
+        sqlParams = new Dictionary<string, string>();
+        string sGroups = Instr.PrepareSqlParamString(childs, _N_GROUPS_CHAR);
+        sqlParams.Add("GROUPS", Instr.AddFirstSpace(sGroups));
+        sqlParams.Add("IDF", id.ToString());
+
+        query = "update " + SqlOracle.PreLogin + _TABLE_NAME;
+        query += @" set tr_ng1 = :GROUPS where tr_ng = :IDF";
+        SqlOracle.Update(query, sqlParams);
     }
 
     public static bool Exist(string name, out int id)

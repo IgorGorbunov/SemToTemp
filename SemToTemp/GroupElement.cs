@@ -92,13 +92,17 @@ public class GroupElement
         SqlOracle.Insert(query, sqlParams);
     }
 
-    public void AddFolders()
+    public void AddUserFolders()
     {
-        string[] split = _fullName.Split('\\');
+        string[] split = _fullName.Split('/');
         int parentId = 0;
         int level = 0;
         foreach (string name in split)
         {
+            if (string.IsNullOrEmpty(name))
+            {
+                continue;
+            }
             int existId;
             if (FolderUserGroup.Exist(name.Trim(), out existId))
             {
@@ -119,16 +123,28 @@ public class GroupElement
     public void AddGeneralFolders(string begin)
     {
         begin += _fullName;
-        string[] split = begin.Split('\\');
+        string[] split1 = begin.Split('/');
+        string[] split = ReSize(split1);
         int parentId = 0;
         int isChild = 0;
         Folder parentFolder = null;
+        bool exist = false;
         for (int i = 0; i < split.Length - 1; i++)
         {
+            if (string.IsNullOrEmpty(split[i]))
+            {
+                continue;
+            }
             int existId;
             if (Folder.Exist(split[i].Trim(), out existId))
             {
                 parentId = existId;
+                exist = true;
+                //poslednya papka
+                if (i == split.Length - 2)
+                {
+                    Folder.UpdateFolderId(parentId, Id, false);
+                }
             }
             else
             {
@@ -144,6 +160,11 @@ public class GroupElement
                     folder = new Folder(split[i].Trim(), parentId, isChild);
                 }
                 folder.WriteToDb();
+                if (exist)
+                {
+                    Folder.UpdateFolderId(parentId, folder.Id, true);
+                    exist = false;
+                }
                 parentId = folder.Id;
                 if (parentFolder != null)
                 {
@@ -156,6 +177,26 @@ public class GroupElement
         }
     }
 
+
+    private string[] ReSize(string[] mass)
+    {
+        List<string> list = new List<string>();
+        for (int i = 0; i < mass.Length; i++)
+        {
+            if (!string.IsNullOrEmpty(mass[i]))
+            {
+                list.Add(mass[i]);
+            }
+        }
+        string[] newMass = new string[list.Count];
+        int j = 0;
+        foreach (string s in list)
+        {
+            newMass[j] = s;
+            j++;
+        }
+        return newMass;
+    }
     
 
     private void SetId()

@@ -14,10 +14,11 @@ public class Element
 
     protected enum EquipType
     {
-        CuttingTool
+        CuttingTool,
+        MaterialGeneral
     }
 
-    protected enum ElementType
+    public enum ElementType
     {
         Machine = 0,
         Tool = 1,
@@ -88,6 +89,10 @@ public class Element
         {
             return "РИ  ";
         }
+        if (equipType == EquipType.MaterialGeneral)
+        {
+            return "МО  ";
+        }
         return null;
     }
 
@@ -96,6 +101,10 @@ public class Element
         if (equipType == EquipType.CuttingTool)
         {
             return "Режущий инструмент";
+        }
+        if (equipType == EquipType.MaterialGeneral)
+        {
+            return "Материалы";
         }
         return null;
     }
