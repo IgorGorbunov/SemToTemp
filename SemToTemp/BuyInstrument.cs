@@ -19,7 +19,10 @@ public class BuyInstrument : Position
     public BuyInstrument(string name, string title, GroupElement groupElement, Dictionary<string, string> parametrs, string doc, string docYear)
         :base(name, title, groupElement, parametrs, doc, docYear)
     {
-
+        AddSqlPosParam();
+        Stype = ((int)ElementType.Tool).ToString();
+        Stool = ((int)ToolType.Gost).ToString();
+        SvidOsn = GetEnumSql(EquipType.CuttingTool);
     }
 
     /// <summary>
@@ -64,10 +67,7 @@ public class BuyInstrument : Position
 
     private void AddParams()
     {
-        AddSqlPosParam();
-        _type = ((int)ElementType.Tool).ToString();
-        _toolType = ((int)ToolType.Gost).ToString();
-        _vidOsn = GetEnumSql(EquipType.CuttingTool);
+        
     }
 
     

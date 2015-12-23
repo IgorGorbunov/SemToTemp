@@ -27,7 +27,7 @@ public static class Processor
     /// <param name="titleColName"></param>
     /// <param name="docColName"></param>
     /// <param name="yearColName"></param>
-    public static void SelectXlsFiles(string nameColName, string titleColName, string docColName, string yearColName, ProgressBar bar, Element.ElementType type, Label status, Label nFiles)
+    public static void SelectXlsFiles(string nameColName, string titleColName, string docColName, string yearColName, ProgressBar bar, int type, Label status, Label nFiles)
     {
         _nameColName = nameColName;
         _titleColName = titleColName;
@@ -100,11 +100,20 @@ public static class Processor
                 }
                 switch (type)
                 {
-                        case Element.ElementType.Tool:
-                            group.AddGeneralFolders(@"Справочники НСИ/Справочник покупного инструмента/");
+                    case 1:
+                        group.AddGeneralFolders(@"Справочники НСИ/");
                         break;
-                        case Element.ElementType.Material:
-                            group.AddGeneralFolders(@"Справочники НСИ/");
+                    case 2:
+                        group.AddGeneralFolders(@"Справочники НСИ/");
+                        break;
+                    case 0:
+                        group.AddGeneralFolders(@"Справочники НСИ/");
+                        break;
+                    case 3:
+                        group.AddGeneralFolders(@"Справочники НСИ/");
+                        break;
+                    case 4:
+                        group.AddGeneralFolders(@"Справочники НСИ/");
                         break;
                 }
 
@@ -115,7 +124,7 @@ public static class Processor
         {
             xls.Dispose();
         }
-        MessageBox.Show(mess);
+        MessageBox.Show("Готово!");
     }
 
     private static bool ReWrite(string shortFileName, out int oldId, out bool exit)
@@ -181,7 +190,7 @@ public static class Processor
         instruments.Add(instrument);
     }
 
-    private static void ProcessOneRow2(ExcelClass xls, int iRow, ref string message, List<Position> positions, GroupElement group, string fileName, Element.ElementType posType)
+    private static void ProcessOneRow2(ExcelClass xls, int iRow, ref string message, List<Position> positions, GroupElement group, string fileName, int posType)
     {
         string name = xls.GetCellStringValue(_nameColName, iRow);
         string title = xls.GetCellStringValue(_titleColName, iRow);
@@ -222,14 +231,32 @@ public static class Processor
         Position pos = null;
         switch (posType)
         {
-                case Element.ElementType.Material:
+                case 2:
                     pos = new Materials(name, title, group,
                                                              GetPositionParams(xls, iRow),
                                                              doc,
                                                              year);
                 break;
-                case Element.ElementType.Tool:
+                case 1:
                     pos = new BuyInstrument(name, title, group,
+                                                         GetPositionParams(xls, iRow),
+                                                         doc,
+                                                         year);
+                    break;
+                case 0:
+                    pos = new Machine(name, title, group,
+                                                         GetPositionParams(xls, iRow),
+                                                         doc,
+                                                         year);
+                    break;
+                case 3:
+                    pos = new AssembleInstrument(name, title, group,
+                                                         GetPositionParams(xls, iRow),
+                                                         doc,
+                                                         year);
+                    break;
+                case 4:
+                    pos = new MeasureInstrument(name, title, group,
                                                          GetPositionParams(xls, iRow),
                                                          doc,
                                                          year);

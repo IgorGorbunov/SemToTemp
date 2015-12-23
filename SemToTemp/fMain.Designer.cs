@@ -46,6 +46,9 @@ namespace SemToTemp
             this.lblNfiles = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.lblStatus = new System.Windows.Forms.Label();
+            this.rbAddition = new System.Windows.Forms.RadioButton();
+            this.rbMeasure = new System.Windows.Forms.RadioButton();
+            this.rbMachine = new System.Windows.Forms.RadioButton();
             this.tabControl.SuspendLayout();
             this.tpAddGroup.SuspendLayout();
             this.tp2.SuspendLayout();
@@ -134,7 +137,7 @@ namespace SemToTemp
             this.tbYear.Name = "tbYear";
             this.tbYear.Size = new System.Drawing.Size(31, 20);
             this.tbYear.TabIndex = 17;
-            this.tbYear.Text = "L";
+            this.tbYear.Text = "E";
             // 
             // tbDoc
             // 
@@ -142,7 +145,7 @@ namespace SemToTemp
             this.tbDoc.Name = "tbDoc";
             this.tbDoc.Size = new System.Drawing.Size(31, 20);
             this.tbDoc.TabIndex = 16;
-            this.tbDoc.Text = "L";
+            this.tbDoc.Text = "E";
             // 
             // tbTitle
             // 
@@ -172,6 +175,9 @@ namespace SemToTemp
             // 
             // tp2
             // 
+            this.tp2.Controls.Add(this.rbMachine);
+            this.tp2.Controls.Add(this.rbMeasure);
+            this.tp2.Controls.Add(this.rbAddition);
             this.tp2.Controls.Add(this.rbMat);
             this.tp2.Controls.Add(this.rbInstr);
             this.tp2.Location = new System.Drawing.Point(4, 22);
@@ -186,7 +192,7 @@ namespace SemToTemp
             // 
             this.rbMat.AutoSize = true;
             this.rbMat.Checked = true;
-            this.rbMat.Location = new System.Drawing.Point(205, 44);
+            this.rbMat.Location = new System.Drawing.Point(27, 88);
             this.rbMat.Name = "rbMat";
             this.rbMat.Size = new System.Drawing.Size(83, 17);
             this.rbMat.TabIndex = 1;
@@ -197,11 +203,11 @@ namespace SemToTemp
             // rbInstr
             // 
             this.rbInstr.AutoSize = true;
-            this.rbInstr.Location = new System.Drawing.Point(205, 21);
+            this.rbInstr.Location = new System.Drawing.Point(27, 19);
             this.rbInstr.Name = "rbInstr";
-            this.rbInstr.Size = new System.Drawing.Size(85, 17);
+            this.rbInstr.Size = new System.Drawing.Size(134, 17);
             this.rbInstr.TabIndex = 0;
-            this.rbInstr.Text = "radioButton1";
+            this.rbInstr.Text = "Режущий инструмент";
             this.rbInstr.UseVisualStyleBackColor = true;
             // 
             // lblNfiles
@@ -228,6 +234,39 @@ namespace SemToTemp
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(0, 13);
             this.lblStatus.TabIndex = 25;
+            // 
+            // rbAddition
+            // 
+            this.rbAddition.AutoSize = true;
+            this.rbAddition.Location = new System.Drawing.Point(27, 42);
+            this.rbAddition.Name = "rbAddition";
+            this.rbAddition.Size = new System.Drawing.Size(198, 17);
+            this.rbAddition.TabIndex = 2;
+            this.rbAddition.TabStop = true;
+            this.rbAddition.Text = "Слесарно-монтажный инструмент";
+            this.rbAddition.UseVisualStyleBackColor = true;
+            // 
+            // rbMeasure
+            // 
+            this.rbMeasure.AutoSize = true;
+            this.rbMeasure.Location = new System.Drawing.Point(27, 65);
+            this.rbMeasure.Name = "rbMeasure";
+            this.rbMeasure.Size = new System.Drawing.Size(132, 17);
+            this.rbMeasure.TabIndex = 3;
+            this.rbMeasure.TabStop = true;
+            this.rbMeasure.Text = "Средства измерения";
+            this.rbMeasure.UseVisualStyleBackColor = true;
+            // 
+            // rbMachine
+            // 
+            this.rbMachine.AutoSize = true;
+            this.rbMachine.Location = new System.Drawing.Point(27, 111);
+            this.rbMachine.Name = "rbMachine";
+            this.rbMachine.Size = new System.Drawing.Size(98, 17);
+            this.rbMachine.TabIndex = 4;
+            this.rbMachine.TabStop = true;
+            this.rbMachine.Text = "Оборудование";
+            this.rbMachine.UseVisualStyleBackColor = true;
             // 
             // fMain
             // 
@@ -266,5 +305,8 @@ namespace SemToTemp
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lblNfiles;
+        private System.Windows.Forms.RadioButton rbMachine;
+        private System.Windows.Forms.RadioButton rbMeasure;
+        private System.Windows.Forms.RadioButton rbAddition;
     }
 }

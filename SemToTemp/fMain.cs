@@ -13,14 +13,26 @@ namespace SemToTemp
 
         private void bttnRecord_Click(object sender, EventArgs e)
         {
-            Element.ElementType elementType = Element.ElementType.Machine;
+            int elementType = 0;
             if (rbInstr.Checked)
             {
-                elementType = Element.ElementType.Tool;
+                elementType = 1;
+            }
+            if (rbAddition.Checked)
+            {
+                elementType = 3;
+            }
+            if (rbMeasure.Checked)
+            {
+                elementType = 4;
             }
             if (rbMat.Checked)
             {
-                elementType = Element.ElementType.Material;
+                elementType = 2;
+            }
+            if (rbMachine.Checked)
+            {
+                elementType = 0;
             }
             Processor.SelectXlsFiles(tbName.Text, tbTitle.Text, tbDoc.Text, tbYear.Text, pbLoad, elementType, lblStatus, lblNfiles);
         }

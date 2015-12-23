@@ -157,6 +157,7 @@ public class Position : Element
             SBigName += string.Format(" ({0})", SNotes);
         }
         SBigName = Instr.PrepareSqlParamString(SBigName, _N_NAME_CHAR);
+        SBigName = SBigName.Substring(0, _N_NAME_CHAR - 10);
         SNotes = Instr.PrepareSqlParamString(SNotes, _N_CHAR);
     }
 

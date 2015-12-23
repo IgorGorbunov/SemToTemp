@@ -94,7 +94,7 @@ public class GroupElement
 
     public void AddUserFolders()
     {
-        string[] split = _fullName.Split('/');
+        string[] split = _fullName.Split('/', '\\');
         int parentId = 0;
         int level = 0;
         foreach (string name in split)
@@ -123,7 +123,7 @@ public class GroupElement
     public void AddGeneralFolders(string begin)
     {
         begin += _fullName;
-        string[] split1 = begin.Split('/');
+        string[] split1 = begin.Split('/', '\\');
         string[] split = ReSize(split1);
         int parentId = 0;
         int isChild = 0;
