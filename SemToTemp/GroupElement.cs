@@ -18,9 +18,9 @@ public class GroupElement
     public int UserFolderId;
     public const int NParamNameChar = 2;
 
-    private readonly string _name;
+    public readonly string _name;
     private readonly Dictionary<string, string> _parametrs;
-    private readonly string _fullName;
+    public readonly string _fullName;
     private int _id = -1;
     private List<int> _listId; 
 
@@ -38,6 +38,13 @@ public class GroupElement
         return SqlOracle.Sel(query, sqlParams, out id);
     }
 
+    public GroupElement(int id, string name, string fullName)
+    {
+        _id = id;
+        _fullName = fullName;
+        _name = name;
+    }
+
     public GroupElement(string name, Dictionary<string, string> parametrs, string fullName)
     {
         _name = name;
@@ -51,11 +58,6 @@ public class GroupElement
         }
         _fullName = fullName;
         _listId = new List<int>();
-    }
-
-    public void AddId(Position position)
-    {
-        _listId.Add(position.Id);
     }
 
 

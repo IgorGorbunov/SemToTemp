@@ -64,18 +64,12 @@ namespace SemToTemp
                     SqlOracle.PreLogin = "AVIA_DESIGN.";
                     break;
                 case "Авиастар - Release":
-                    tBlogin.Text = "ulgu";
-                    tBpassword.Text = "1";
+                    tBlogin.Text = "avia_design";
+                    tBpassword.Text = "avia_design";
                     tBsid.Text = "asp";
                     tBhostname.Text = "10.68.2.61";
                     tBport.Text = "1521";
-                    SqlOracle.PreLogin = "";
-                    tBlogin.Text = "avia_design";
-                    tBpassword.Text = "avia_design0";
-                    tBsid.Text = "OTL";
-                    tBhostname.Text = "10.68.0.24";
-                    tBport.Text = "1521";
-                    SqlOracle.PreLogin = "AVIA_DESIGN.";
+                    SqlOracle.PreLogin = "avia_design";
                     break;
             }
         }

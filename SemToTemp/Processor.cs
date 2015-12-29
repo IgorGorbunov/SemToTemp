@@ -54,19 +54,19 @@ public static class Processor
                 List<Position> instruments = new List<Position>();
                 int iRow = _FIRST_ROW;
                 GroupElement group;
+
+                bool exist;
                 try
                 {
                     xls.OpenDocument(xlsBooks.FileNames[i], false);
                     string shortFileName = GetShortFileName(xlsBooks.FileNames[i]);
                     string fullName = xls.GetCellStringValue("A", 1);
                     group = new GroupElement(shortFileName, GetGroupParams(xls), fullName);
-                    bool exit;
                     int oldId;
-                    bool reWrite = ReWrite(shortFileName, out oldId, out exit);
-                    if (exit)
+                    exist = Exist(shortFileName, out oldId);
+                    if (exist)
                     {
-                        mess += "Операция прекращена пользователем на файле " + shortFileName;
-                        break;
+                        group = new GroupElement(oldId, group._name, group._fullName);
                     }
                     while (!xls.CellIsNullOrVoid(_nameColName, iRow) ||
                            !xls.CellIsNullOrVoid(_titleColName, iRow) ||
@@ -84,40 +84,28 @@ public static class Processor
                 }
                 if (instruments.Count > 0)
                 {
-                    group.WriteToDb();
-                    group.AddUserFolders();
+                    if (!exist)
+                    {
+                        group.WriteToDb();
+                        //group.AddUserFolders();
+                    }
                 }
                 bar.Maximum = instruments.Count;
                 bar.Value = 0;
                 status.Text = "Запись в БД";
                 foreach (Position pos in instruments)
                 {
-                    pos.WriteToDb2();
-                    group.AddId(pos);
-                    pos.AddUserFolder();
+                    int id;
+                    if (!Position.Exist(pos._title, out id))
+                    {
+                        pos.WriteToDb2();
+                        //group.AddId(pos.Id);
+                        //pos.AddUserFolder();
+                    }
                     bar.Increment(1);
                     Application.DoEvents();
                 }
-                switch (type)
-                {
-                    case 1:
-                        group.AddGeneralFolders(@"Справочники НСИ/");
-                        break;
-                    case 2:
-                        group.AddGeneralFolders(@"Справочники НСИ/");
-                        break;
-                    case 0:
-                        group.AddGeneralFolders(@"Справочники НСИ/");
-                        break;
-                    case 3:
-                        group.AddGeneralFolders(@"Справочники НСИ/");
-                        break;
-                    case 4:
-                        group.AddGeneralFolders(@"Справочники НСИ/");
-                        break;
-                }
-
-                
+                group.AddGeneralFolders(@"Справочники цеха 254/");
             }
         }
         finally
@@ -127,27 +115,27 @@ public static class Processor
         MessageBox.Show("Готово!");
     }
 
-    private static bool ReWrite(string shortFileName, out int oldId, out bool exit)
+    private static bool Exist(string shortFileName, out int oldId)
     {
         if (GroupElement.Exist(shortFileName, out oldId) && oldId != 0)
         {
-            DialogResult result =
-                MessageBox.Show(
-                    "В базе данных уже существует группа \"" + shortFileName +
-                    "\".\nОбновить атрибуты группы?", "Дубликат записи",
-                    MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
-            {
-                exit = false;
-                return true;
-            }
-            if (result == DialogResult.Cancel)
-            {
-                exit = true;
-                return false;
-            }
+            //DialogResult result =
+            //    MessageBox.Show(
+            //        "В базе данных уже существует группа \"" + shortFileName +
+            //        "\".\nОбновить атрибуты группы?", "Дубликат записи",
+            //        MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            //if (result == DialogResult.Yes)
+            //{
+            //    exit = false;
+            //    return true;
+            //}
+            //if (result == DialogResult.Cancel)
+            //{
+            //    exit = true;
+            //    return false;
+            //}\
+            return true;
         }
-        exit = false;
         return false;
     }
 

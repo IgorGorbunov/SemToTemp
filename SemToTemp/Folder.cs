@@ -55,6 +55,10 @@ class Folder : Element
         sqlParams.Add("GNAME", id.ToString());
         string childs;
         SqlOracle.Sel(query, sqlParams, out childs);
+        if (HasChild(childs, newChildId))
+        {
+            return;
+        }
         char c;
         if (isGroup)
         {
@@ -74,6 +78,23 @@ class Folder : Element
         query = "update " + SqlOracle.PreLogin + _TABLE_NAME;
         query += @" set tr_ng1 = :GROUPS where tr_ng = :IDF";
         SqlOracle.Update(query, sqlParams);
+    }
+
+    private static bool HasChild(string childs, int newiD)
+    {
+        string[] split = childs.Split(' ', '-');
+        foreach (string s in split)
+        {
+            if (!string.IsNullOrEmpty(s))
+            {
+                int number = int.Parse(s);
+                if (number == newiD)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public static bool Exist(string name, out int id)

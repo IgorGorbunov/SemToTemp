@@ -23,7 +23,7 @@ public class Position : Element
     private const int _N_YEAR_CHAR = 4;
 
     private readonly string _name;
-    private readonly string _title;
+    public readonly string _title;
     private readonly Dictionary<string, string> _parametrs;
     private readonly string _doc = "";
     private readonly string _docYear = "";
@@ -37,6 +37,14 @@ public class Position : Element
         STitle, SName, SDocType, SDocYear, SBigName, Stype, SvidOsn, Stool;
 
     private string _fullDoc;
+
+    public static bool Exist(string title, out int id)
+    {
+        string query = "select T2_NN from " + SqlOracle.PreLogin + "TABLE_2 where T2_OBOZ = :GNAME";
+        Dictionary<string, string> sqlParams = new Dictionary<string, string>();
+        sqlParams.Add("GNAME", Instr.PrepareSqlParamString(title, _N_CHAR));
+        return SqlOracle.Sel(query, sqlParams, out id);
+    }
 
 
     public void AddUserFolder()
