@@ -69,7 +69,7 @@ namespace SemToTemp
                     tBsid.Text = "asp";
                     tBhostname.Text = "10.68.2.61";
                     tBport.Text = "1521";
-                    SqlOracle.PreLogin = "avia_design";
+                    SqlOracle.PreLogin = "avia_design.";
                     break;
             }
         }
