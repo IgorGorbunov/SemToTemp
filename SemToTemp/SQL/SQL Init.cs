@@ -101,6 +101,7 @@ static partial class SqlOracle
         _connectionString = "User id=" + user +
                             ";password=" + password +
                             ";Data Source = " + dataSource;
+        Logger.WriteLine("----------------------------------------- NEW SESSION ----------------------------------------------");
     }
     
     /// <summary>
@@ -120,7 +121,7 @@ static partial class SqlOracle
                                                     ";Host = " + host +
                                                         ";Direct = true" +
                                                             ";Port = " + port;
-
+        Logger.WriteLine("----------------------------------------- NEW SESSION ----------------------------------------------");
     }
 
     /// <summary>
@@ -140,7 +141,7 @@ static partial class SqlOracle
                                                     ";Host = " + host +
                                                         ";Direct = true" +
                                                             ";Port = " + port;
-
+        Logger.WriteLine("----------------------------------------- NEW SESSION ----------------------------------------------");
     }
 
     /// <summary>

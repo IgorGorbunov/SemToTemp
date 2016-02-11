@@ -358,14 +358,20 @@ partial class SqlOracle
         }
         Logger.WriteLine(mess);
     }
-    static void ProcessSuccess<T>(string cmdQuery, List<T> values)
+    static void ProcessSuccess<T>(string cmdQuery, IEnumerable<T> values)
     {
         string mess = "Запрос прошёл!";
         mess += Environment.NewLine + cmdQuery;
-        mess += Environment.NewLine + "Data:";
+        mess += Environment.NewLine + "Data (первые 15 записей):";
+        int i = 0;
         foreach (T value in values)
         {
             mess += Environment.NewLine + value;
+            i++;
+            if (i == 15)
+            {
+                break;
+            }
         }
         Logger.WriteLine(mess);
     }

@@ -105,7 +105,7 @@ public static class Processor
                     bar.Increment(1);
                     Application.DoEvents();
                 }
-                group.AddGeneralFolders(@"Справочники цеха 254/");
+                group.AddGeneralFolders(@"Справочники цеха 254\");
             }
         }
         finally
