@@ -11,6 +11,8 @@ static partial class SqlOracle
 
     public static string Login;
 
+    private static Logger _logger;
+
     /// <summary>
     /// Объявление компонентов
     /// </summary>
@@ -27,14 +29,14 @@ static partial class SqlOracle
         try
         {
             _conn = new OracleConnection(_connectionString);
-            Logger.WriteLine("Статус соединения: " + _conn.State + " - открытие соединения...");
+            _logger.WriteLine("Статус соединения: " + _conn.State + " - открытие соединения...");
             _conn.Open();
-            Logger.WriteLine("Соединение открыто!");
+            _logger.WriteLine("Соединение открыто!");
         }
         catch (Exception ex)
         {
             const string sss = "Попытка соединения с БД прошла неудачно!";
-            Logger.WriteLine(sss, ex);
+            _logger.WriteLine(sss, ex);
             throw new TimeoutException();
         }
     }
@@ -46,7 +48,7 @@ static partial class SqlOracle
     {
         if (_conn != null)
         {
-            Logger.WriteLine("Статус соединения: " + _conn.State + " - закрытие соединения...");
+            _logger.WriteLine("Статус соединения: " + _conn.State + " - закрытие соединения...");
             bool closed = false;
             do
             {
@@ -83,8 +85,9 @@ static partial class SqlOracle
                         }
                 }
             } while (!closed);
+            _logger.WriteLine("Соединение закрыто!");
         }
-        Logger.WriteLine("Соединение закрыто!");
+        
     }
 
 
@@ -101,7 +104,7 @@ static partial class SqlOracle
         _connectionString = "User id=" + user +
                             ";password=" + password +
                             ";Data Source = " + dataSource;
-        Logger.WriteLine("----------------------------------------- NEW SESSION ----------------------------------------------");
+        BuildConnection();
     }
     
     /// <summary>
@@ -121,7 +124,7 @@ static partial class SqlOracle
                                                     ";Host = " + host +
                                                         ";Direct = true" +
                                                             ";Port = " + port;
-        Logger.WriteLine("----------------------------------------- NEW SESSION ----------------------------------------------");
+        BuildConnection();
     }
 
     /// <summary>
@@ -141,7 +144,13 @@ static partial class SqlOracle
                                                     ";Host = " + host +
                                                         ";Direct = true" +
                                                             ";Port = " + port;
-        Logger.WriteLine("----------------------------------------- NEW SESSION ----------------------------------------------");
+        BuildConnection();
+    }
+
+    private static void BuildConnection()
+    {
+        _logger = new Logger("sql", ".ttt");
+        _logger.WriteLine("----------------------------------------- NEW SESSION ----------------------------------------------");
     }
 
     /// <summary>

@@ -135,14 +135,14 @@ partial class SqlOracle
         catch (OracleException ex)
         {
             string mess = "Ошибка в запросе к БД!" + Environment.NewLine + cmdQuery + Environment.NewLine + ex;
-            Logger.WriteError(mess);
+            _logger.WriteError(mess);
             Message.Show(mess);
             throw new BadQueryExeption();
         }
         catch (Exception ex)
         {
             string mess = "Ошибка в запросе к БД!" + Environment.NewLine + cmdQuery + Environment.NewLine + ex;
-            Logger.WriteError(mess);
+            _logger.WriteError(mess);
             Message.Show(mess);
         }
         finally
@@ -313,7 +313,7 @@ partial class SqlOracle
     public static object TestSelect(string cmdQuery)
     {
         _open();
-        Logger.WriteLine(cmdQuery);
+        _logger.WriteLine(cmdQuery);
         object val = 0;
 
         OracleCommand cmd = new OracleCommand(cmdQuery, _conn);
@@ -335,7 +335,7 @@ partial class SqlOracle
     {
         string mess = "Запрос прошёл!";
         mess = RecordQuery(mess, cmdQuery, paramsDict);
-        Logger.WriteLine(mess);
+        _logger.WriteLine(mess);
     }
     static void ProcessSuccess<T>(string cmdQuery, Dictionary<string, string> paramsDict, T value)
     {
@@ -344,7 +344,7 @@ partial class SqlOracle
         mess += Environment.NewLine + "-";
         mess += Environment.NewLine + "Data:";
         mess += Environment.NewLine + value;
-        Logger.WriteLine(mess);
+        _logger.WriteLine(mess);
     }
     static void ProcessSuccess<T>(string cmdQuery, Dictionary<string, string> paramsDict, List<T> values)
     {
@@ -356,7 +356,7 @@ partial class SqlOracle
         {
             mess += Environment.NewLine + value;
         }
-        Logger.WriteLine(mess);
+        _logger.WriteLine(mess);
     }
     static void ProcessSuccess<T>(string cmdQuery, IEnumerable<T> values)
     {
@@ -373,7 +373,7 @@ partial class SqlOracle
                 break;
             }
         }
-        Logger.WriteLine(mess);
+        _logger.WriteLine(mess);
     }
     static void ProcessSuccess<T1, T2>(string cmdQuery, Dictionary<string, string> paramsDict, Dictionary<T1, T2> values)
     {
@@ -385,7 +385,7 @@ partial class SqlOracle
         {
             mess += Environment.NewLine + keyValuePair.ToString();
         }
-        Logger.WriteLine(mess);
+        _logger.WriteLine(mess);
     }
 
     static void ProcessSuccessData(string cmdQuery, Dictionary<string, string> paramsDict, DataTable value)
@@ -405,7 +405,7 @@ partial class SqlOracle
                 mess += Environment.NewLine;
             }
         }
-        Logger.WriteLine(mess);
+        _logger.WriteLine(mess);
     }
 
     static void ProcessUnSuccess(string cmdQuery, Dictionary<string, string> paramsDict, Exception ex)
@@ -414,7 +414,7 @@ partial class SqlOracle
         Message.Show(mess);
         mess = RecordQuery(mess, cmdQuery, paramsDict);
         mess += Environment.NewLine + ex;
-        Logger.WriteError(mess);
+        _logger.WriteError(mess);
     }
 
     static string RecordQuery(string mess, string cmdQuery, Dictionary<string, string> paramsDict)

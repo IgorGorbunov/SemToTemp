@@ -14,13 +14,15 @@ public class GroupElement
             return _id;
         }
     }
+    public readonly string Name;
+    public readonly string FullName;
 
     public int UserFolderId;
     public const int NParamNameChar = 2;
 
-    public readonly string _name;
+    
     private readonly Dictionary<string, string> _parametrs;
-    public readonly string _fullName;
+    
     private int _id = -1;
     private List<int> _listId; 
 
@@ -41,13 +43,13 @@ public class GroupElement
     public GroupElement(int id, string name, string fullName)
     {
         _id = id;
-        _fullName = fullName;
-        _name = name;
+        FullName = fullName;
+        Name = name;
     }
 
     public GroupElement(string name, Dictionary<string, string> parametrs, string fullName)
     {
-        _name = name;
+        Name = name;
         if (parametrs == null)
         {
             _parametrs = new Dictionary<string, string>();
@@ -56,14 +58,14 @@ public class GroupElement
         {
             _parametrs = parametrs;
         }
-        _fullName = fullName;
+        FullName = fullName;
         _listId = new List<int>();
     }
 
 
     public void WriteToDb()
     {
-        string nameSql = Instr.PrepareSqlParamString(_name, _N_CHAR);
+        string nameSql = Instr.PrepareSqlParamString(Name, _N_CHAR);
         string[,] paramSql = GetTenParams();
         string sqlToday = Instr.GetSqlToday();
         string sqlLogin = Instr.PrepareSqlParamString(SqlOracle.Login, Element.NUserNameChar);
@@ -96,7 +98,7 @@ public class GroupElement
 
     public void AddUserFolders()
     {
-        string[] split = _fullName.Split('\\');
+        string[] split = FullName.Split('\\');
         int parentId = 0;
         int level = 0;
         foreach (string name in split)
@@ -124,7 +126,7 @@ public class GroupElement
 
     public void AddGeneralFolders(string begin)
     {
-        begin += _fullName;
+        begin += FullName;
         string[] split1 = begin.Split('\\');
         string[] split = ReSize(split1);
         int parentId = 0;

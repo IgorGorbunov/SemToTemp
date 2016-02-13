@@ -52,6 +52,12 @@
   <ItemGroup>
     <Compile Include="BuyInstrument.cs" />
     <Compile Include="AssembleInstrument.cs" />
+    <Compile Include="DialogForms\AnotherGroupDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DialogForms\AnotherGroupDialog.Designer.cs">
+      <DependentUpon>AnotherGroupDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="MeasureInstrument.cs" />
     <Compile Include="Machine.cs" />
     <Compile Include="Element.cs" />
@@ -80,6 +86,10 @@
     <Compile Include="Position.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="DialogForms\AnotherGroupDialog.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>AnotherGroupDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="fMain.resx">
       <SubType>Designer</SubType>
       <DependentUpon>fMain.cs</DependentUpon>

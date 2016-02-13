@@ -72,13 +72,13 @@ partial class SqlOracle
         {
             string mess = "Ошибка в запросе к БД!" + Environment.NewLine + ex;
             Message.Show(mess);
-            Logger.WriteError(mess);
+            _logger.WriteError(mess);
             throw new BadQueryExeption();
         }
         catch (Exception ex)
         {
             string mess = "Ошибка в запросе к БД!" + Environment.NewLine + ex;
-            Logger.WriteError(mess);
+            _logger.WriteError(mess);
             Message.Show(mess);
         }
         finally

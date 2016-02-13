@@ -6,9 +6,12 @@ namespace SemToTemp
 {
     public partial class fMain : Form
     {
-        public fMain()
+        private Logger _logger;
+
+        public fMain(Logger logger)
         {
             InitializeComponent();
+            _logger = logger;
         }
 
         private void bttnRecord_Click(object sender, EventArgs e)

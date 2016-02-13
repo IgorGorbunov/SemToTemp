@@ -65,7 +65,7 @@ public static class Instr
         catch (Exception exception)
         {
             const string mess = "Проблемы с сортировкой!";
-            Logger.WriteError(mess, exception.ToString(), "a.Length - " + a.Length, "low - " + low, "high - " + high);
+            //Logger.WriteError(mess, exception.ToString(), "a.Length - " + a.Length, "low - " + low, "high - " + high);
             Message.ShowError(mess);
         }
     }

@@ -5,9 +5,12 @@ namespace SemToTemp
 {
     public partial class fConnect : Form
     {
+        private readonly Logger _logger;
+
         public fConnect()
         {
             InitializeComponent();
+            _logger = new Logger("Logger", ".log");
         }
 
         private void bttnConnect_Click(object sender, EventArgs e)
@@ -20,7 +23,7 @@ namespace SemToTemp
                 if (SqlOracle.TestQuery(SqlOracle.PreLogin + "TABLE_1"))
                 {
                     Visible = false;
-                    fMain mainForm = new fMain();
+                    fMain mainForm = new fMain(_logger);
                     mainForm.ShowDialog();
                 }
                 Close();
@@ -28,7 +31,7 @@ namespace SemToTemp
             catch (TimeoutException exception)
             {
                 const string mess = "База данных недоступна!";
-                Logger.WriteError(mess, exception);
+                _logger.WriteError(mess, exception);
                 MessageBox.Show(mess);
             }
         }

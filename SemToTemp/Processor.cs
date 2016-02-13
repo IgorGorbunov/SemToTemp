@@ -66,7 +66,7 @@ public static class Processor
                     exist = Exist(shortFileName, out oldId);
                     if (exist)
                     {
-                        group = new GroupElement(oldId, group._name, group._fullName);
+                        group = new GroupElement(oldId, group.Name, group.FullName);
                     }
                     while (!xls.CellIsNullOrVoid(_nameColName, iRow) ||
                            !xls.CellIsNullOrVoid(_titleColName, iRow) ||
@@ -96,7 +96,7 @@ public static class Processor
                 foreach (Position pos in instruments)
                 {
                     int id;
-                    if (!Position.Exist(pos._title, out id))
+                    if (!Position.Exist(pos.Title, out id))
                     {
                         pos.WriteToDb2();
                         //group.AddId(pos.Id);

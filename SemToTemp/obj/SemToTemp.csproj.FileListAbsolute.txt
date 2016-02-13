@@ -11,3 +11,4 @@ Z:\Work\Coding\Github\repos\SemToTemp\SemToTemp\obj\Debug\SemToTemp.fMain.resour
 Z:\Work\Coding\Github\repos\SemToTemp\SemToTemp\bin\Debug\Interop.Microsoft.Office.Interop.Excel.dll
 Z:\Work\Coding\Github\repos\SemToTemp\SemToTemp\bin\Debug\Devart.Data.dll
 Z:\Work\Coding\Github\repos\SemToTemp\SemToTemp\bin\Debug\Devart.Data.Oracle.dll
+Z:\Work\Coding\Github\repos\SemToTemp\SemToTemp\obj\Debug\SemToTemp.DialogForms.AnotherGroupDialog.resources

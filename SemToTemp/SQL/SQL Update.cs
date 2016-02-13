@@ -12,7 +12,7 @@ partial class SqlOracle
     public static void TestUpdate(string cmdQuery)
     {
         _open();
-        Logger.WriteLine(cmdQuery);
+        _logger.WriteLine(cmdQuery);
 
         OracleCommand cmd = new OracleCommand(cmdQuery, _conn);
         cmd.ExecuteNonQuery();

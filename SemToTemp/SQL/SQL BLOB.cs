@@ -55,7 +55,7 @@ partial class SqlOracle
         }
         catch (UnauthorizedAccessException ex)
         {
-            Logger.WriteError(ex, "Путь для записи - " + path);
+            _logger.WriteError(ex, "Путь для записи - " + path);
             throw;
         }
         catch (TimeoutException)

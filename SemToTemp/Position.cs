@@ -17,13 +17,13 @@ public class Position : Element
             return _id;
         }
     }
+    public readonly string Title;
 
     private const int _N_NAME_CHAR = 200;
     private const int _N_CHAR = 100;
     private const int _N_YEAR_CHAR = 4;
 
     private readonly string _name;
-    public readonly string _title;
     private readonly Dictionary<string, string> _parametrs;
     private readonly string _doc = "";
     private readonly string _docYear = "";
@@ -131,7 +131,7 @@ public class Position : Element
     protected Position(string name, string title, GroupElement groupElement, Dictionary<string, string> parametrs, string doc, string docYear)
     {
         _name = name;
-        _title = title;
+        Title = title;
         if (parametrs == null)
         {
             _parametrs = new Dictionary<string, string>();
@@ -153,13 +153,13 @@ public class Position : Element
         SParams = GetTenParams(TempElement.SingleElement, _parametrs);
         SGeom = "NULL";
         SdocFile = "NULL";
-        STitle = Instr.PrepareSqlParamString(_title, _N_CHAR);
+        STitle = Instr.PrepareSqlParamString(Title, _N_CHAR);
         SName = Instr.PrepareSqlParamString(_name, _N_CHAR);
         SDocType = Instr.PrepareSqlParamString(_doc, _N_CHAR);
         SDocYear = Instr.PrepareSqlParamString(_docYear, _N_YEAR_CHAR);
         _fullDoc = GetFullDoc(_doc, _docYear);
         SNotes = GetNotes();
-        SBigName = String.Format("{0} {1} {2}", _name, _title, _fullDoc);
+        SBigName = String.Format("{0} {1} {2}", _name, Title, _fullDoc);
         if (!string.IsNullOrEmpty(SNotes))
         {
             SBigName += string.Format(" ({0})", SNotes);
