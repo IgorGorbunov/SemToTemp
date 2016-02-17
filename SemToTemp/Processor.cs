@@ -63,7 +63,7 @@ public static class Processor
                     string fullName = xls.GetCellStringValue("A", 1);
                     group = new GroupElement(shortFileName, GetGroupParams(xls), fullName);
                     int oldId;
-                    exist = Exist(shortFileName, out oldId);
+                    exist = GroupElement.Exist(group.Name, out oldId);
                     if (exist)
                     {
                         group = new GroupElement(oldId, group.Name, group.FullName);
@@ -87,6 +87,7 @@ public static class Processor
                     if (!exist)
                     {
                         group.WriteToDb();
+                        group.AddGeneralFolders(@"Справочники цеха 254\");
                         //group.AddUserFolders();
                     }
                 }
@@ -99,13 +100,11 @@ public static class Processor
                     if (!Position.Exist(pos.Title, out id))
                     {
                         pos.WriteToDb2();
-                        //group.AddId(pos.Id);
-                        //pos.AddUserFolder();
                     }
                     bar.Increment(1);
                     Application.DoEvents();
                 }
-                group.AddGeneralFolders(@"Справочники цеха 254\");
+                
             }
         }
         finally
@@ -115,28 +114,14 @@ public static class Processor
         MessageBox.Show("Готово!");
     }
 
-    private static bool Exist(string shortFileName, out int oldId)
+    private static GroupElement GetGroupAnyWay(GroupElement groupElement)
     {
-        if (GroupElement.Exist(shortFileName, out oldId) && oldId != 0)
+        int oldId;
+        if (GroupElement.Exist(groupElement.Name, out oldId))
         {
-            //DialogResult result =
-            //    MessageBox.Show(
-            //        "В базе данных уже существует группа \"" + shortFileName +
-            //        "\".\nОбновить атрибуты группы?", "Дубликат записи",
-            //        MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-            //if (result == DialogResult.Yes)
-            //{
-            //    exit = false;
-            //    return true;
-            //}
-            //if (result == DialogResult.Cancel)
-            //{
-            //    exit = true;
-            //    return false;
-            //}\
-            return true;
+            return GroupElement.GetGroupElement(oldId);
         }
-        return false;
+        return groupElement;
     }
 
     private static void ProcessOneRow(ExcelClass xls, int iRow, ref string message, List<BuyInstrument> instruments, GroupElement group, string fileName)

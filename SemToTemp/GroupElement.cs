@@ -22,6 +22,9 @@ public class GroupElement
 
     
     private readonly Dictionary<string, string> _parametrs;
+    int _isSketch = 0;
+    string _fileExt = "";
+    string _file = "";
     
     private int _id = -1;
     private List<int> _listId; 
@@ -38,6 +41,11 @@ public class GroupElement
         Dictionary<string, string> sqlParams = new Dictionary<string, string>();
         sqlParams.Add("GNAME", Instr.PrepareSqlParamString(name, _N_CHAR));
         return SqlOracle.Sel(query, sqlParams, out id);
+    }
+
+    public static GroupElement GetGroupElement(int id)
+    {
+        return new GroupElement(id, GetName(id), null);
     }
 
     public GroupElement(int id, string name, string fullName)
@@ -69,9 +77,8 @@ public class GroupElement
         string[,] paramSql = GetTenParams();
         string sqlToday = Instr.GetSqlToday();
         string sqlLogin = Instr.PrepareSqlParamString(SqlOracle.Login, Element.NUserNameChar);
-        int isSketch = 0;
-        string sqlFileExt = "NULL";
-        string sqlFile = "NULL";
+        string sqlFileExt = _fileExt;
+        string sqlFile = _file;
 
         Dictionary<string, string> sqlParams = new Dictionary<string, string>();
         sqlParams.Add("IDGROUP", Id.ToString());
@@ -83,7 +90,7 @@ public class GroupElement
         }
         sqlParams.Add("TODAYDATE", sqlToday);
         sqlParams.Add("LOGINUSER", sqlLogin);
-        sqlParams.Add("SKETCH", isSketch.ToString());
+        sqlParams.Add("SKETCH", _isSketch.ToString());
         sqlParams.Add("FILEEXT", sqlFileExt);
         sqlParams.Add("FILEBLOB", sqlFile);
 
@@ -245,5 +252,29 @@ public class GroupElement
         }
         return paramSql;
     }
+
+    //--------------------------  SQL  ---------------------------------
+
+    private static string GetName(int id)
+    {
+        string query = "select t1_nm from " + SqlOracle.PreLogin + "TABLE_1 where T1_NG = :IDG";
+        Dictionary<string, string> sqlParams = new Dictionary<string, string>();
+        sqlParams.Add("IDG", id.ToString());
+        string name;
+        SqlOracle.Sel(query, sqlParams, out name);
+        return name;
+    }
+
+    private int GetSketch(int id)
+    {
+        string query = "select t1_r1 from " + SqlOracle.PreLogin + "TABLE_1 where T1_NG = :IDG";
+        Dictionary<string, string> sqlParams = new Dictionary<string, string>();
+        sqlParams.Add("IDG", id.ToString());
+        int sketch;
+        SqlOracle.Sel(query, sqlParams, out sketch);
+        return sketch;
+    }
+
+ 
 }
 
