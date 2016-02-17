@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
 
 /// <summary>
@@ -17,7 +18,10 @@ public static class Processor
     private const int _ATTR_TITLE_ROW = 3;
     private const int _FIRST_ROW = 4;
 
+    private static Logger _logger;
+    private static StreamWriter _userLog;
 
+    private static readonly string _USER_LOG_FULL_PATH = AppDomain.CurrentDomain.BaseDirectory + "status.log";
     
     // 
     /// <summary>
@@ -43,6 +47,12 @@ public static class Processor
         if (xlsBooks.ShowDialog() != DialogResult.OK)
             return;
 
+        _userLog = new StreamWriter(_USER_LOG_FULL_PATH, false, Encoding.UTF8);
+        _userLog.WriteLine(DateTime.Now.ToLongTimeString());
+        _userLog.WriteLine("Начало работы");
+        _logger = new Logger();
+        _logger.WriteLine("----------------------------------------- NEW SESSION ----------------------------------------------");
+
         ExcelClass xls = new ExcelClass();
         try
         {
@@ -59,14 +69,23 @@ public static class Processor
                 try
                 {
                     xls.OpenDocument(xlsBooks.FileNames[i], false);
+                    _userLog.WriteLine("Открыт файл " + xlsBooks.FileNames[i]);
+                    _logger.WriteLine("Открыт файл " + xlsBooks.FileNames[i]);
+
                     string shortFileName = GetShortFileName(xlsBooks.FileNames[i]);
+                    _logger.WriteLine("Короткое имя группы - " + shortFileName);
+
                     string fullName = xls.GetCellStringValue("A", 1);
+                    _logger.WriteLine("Полный путь группы - " + fullName);
+
                     group = new GroupElement(shortFileName, GetGroupParams(xls), fullName);
                     int oldId;
                     exist = GroupElement.Exist(group.Name, out oldId);
                     if (exist)
                     {
                         group = new GroupElement(oldId, group.Name, group.FullName);
+                        _userLog.WriteLine("Определена группа \"" + group.Name + "\"");
+                        _logger.WriteLine("Определена группа \"" + group.Name + "\"");
                     }
                     while (!xls.CellIsNullOrVoid(_nameColName, iRow) ||
                            !xls.CellIsNullOrVoid(_titleColName, iRow) ||
@@ -88,7 +107,8 @@ public static class Processor
                     {
                         group.WriteToDb();
                         group.AddGeneralFolders(@"Справочники цеха 254\");
-                        //group.AddUserFolders();
+                        _userLog.WriteLine("Группа записана в БД");
+                        _logger.WriteLine("Группа \"" + group.Name + "\" записана в БД");
                     }
                 }
                 bar.Maximum = instruments.Count;
@@ -104,63 +124,19 @@ public static class Processor
                     bar.Increment(1);
                     Application.DoEvents();
                 }
+                _userLog.WriteLine("Записано " + instruments.Count + " позиций");
+                _userLog.Flush();
+                _userLog.WriteLine();
+                _logger.WriteLine("Записано " + instruments.Count + " позиций");
                 
             }
         }
         finally
         {
             xls.Dispose();
+            _userLog.Close();
         }
         MessageBox.Show("Готово!");
-    }
-
-    private static GroupElement GetGroupAnyWay(GroupElement groupElement)
-    {
-        int oldId;
-        if (GroupElement.Exist(groupElement.Name, out oldId))
-        {
-            return GroupElement.GetGroupElement(oldId);
-        }
-        return groupElement;
-    }
-
-    private static void ProcessOneRow(ExcelClass xls, int iRow, ref string message, List<BuyInstrument> instruments, GroupElement group, string fileName)
-    {
-        string name = xls.GetCellStringValue(_nameColName, iRow);
-        string title = xls.GetCellStringValue(_titleColName, iRow);
-        if (string.IsNullOrEmpty(title))
-        {
-            message +=
-                fileName + " - в " + iRow +
-                " строке позиция без обозначения!" + Environment.NewLine;
-            return;
-        }
-        string doc = "", year;
-        if (_docColName == _yearColName)
-        {
-            string[] split = xls.GetCellStringValue(_docColName, iRow).Split('-');
-            for (int i = 0; i < split.Length - 1; i++)
-            {
-                doc += split[i];
-            }
-            year = split[split.Length - 1];
-        }
-        else if (string.IsNullOrEmpty(_yearColName.Trim()))
-        {
-            doc = xls.GetCellStringValue(_docColName, iRow);
-            year = "";
-        }
-        else
-        {
-            doc = xls.GetCellStringValue(_docColName, iRow);
-            year = xls.GetCellStringValue(_yearColName, iRow);
-        }
-        
-        BuyInstrument instrument = new BuyInstrument(name, title, group,
-                                                     GetPositionParams(xls, iRow),
-                                                     doc,
-                                                     year);
-        instruments.Add(instrument);
     }
 
     private static void ProcessOneRow2(ExcelClass xls, int iRow, ref string message, List<Position> positions, GroupElement group, string fileName, int posType)
@@ -172,6 +148,8 @@ public static class Processor
             message +=
                 fileName + " - в " + iRow +
                 " строке позиция без обозначения!" + Environment.NewLine;
+            _userLog.WriteLine("*** Ошибка! *** " + message);
+            _logger.WriteError(message);
             return;
         }
         string doc, year = "";
@@ -288,6 +266,7 @@ public static class Processor
 
     private static Dictionary<string, string> GetGroupParams(ExcelClass xls)
     {
+        _logger.WriteLine("Получение параметров группы");
         Dictionary<string, string> parametrs = new Dictionary<string, string>();
         int iCol = 1;
         string sKey = xls.GetCellStringValue(iCol, _ATTR_TITLE_ROW);
@@ -316,6 +295,7 @@ public static class Processor
                     i++;
                 }
                 parametrs.Add(sKey, sVal);
+                _logger.WriteLine(string.Format("\"{0}\" - \"{1}\"", sKey, sVal));
             }
             iCol++;
             sKey = xls.GetCellStringValue(iCol, _ATTR_TITLE_ROW);

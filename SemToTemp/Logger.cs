@@ -17,6 +17,11 @@ public class Logger
 
     private const long MaxSize = 1000000; //~ мегабайт
 
+    public Logger()
+    {
+
+    }
+
     public Logger(string name, string ext)
     {
         _name = name;
