@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -84,8 +85,8 @@ public static class Processor
                     if (exist)
                     {
                         group = new GroupElement(oldId, group.Name, group.FullName);
-                        _userLog.WriteLine("Определена группа \"" + group.Name + "\"");
-                        _logger.WriteLine("Определена группа \"" + group.Name + "\"");
+                        _userLog.WriteLine("Группа уже существует. Найдена группа \"" + group.Name + "\"");
+                        _logger.WriteLine("Группа уже существует. Найдена группа \"" + group.Name + "\"");
                     }
                     while (!xls.CellIsNullOrVoid(_nameColName, iRow) ||
                            !xls.CellIsNullOrVoid(_titleColName, iRow) ||
@@ -136,6 +137,7 @@ public static class Processor
             xls.Dispose();
             _userLog.Close();
         }
+        Process.Start(_USER_LOG_FULL_PATH); 
         MessageBox.Show("Готово!");
     }
 
