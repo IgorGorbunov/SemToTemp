@@ -70,6 +70,26 @@ public static class Instr
         }
     }
 
+    public static T[] ReSize<T>(T[] mass)
+    {
+        List<T> list = new List<T>();
+        for (int i = 0; i < mass.Length; i++)
+        {
+            if (mass[i] != null && !string.IsNullOrEmpty(mass[i].ToString()))
+            {
+                list.Add(mass[i]);
+            }
+        }
+        T[] newMass = new T[list.Count];
+        int j = 0;
+        foreach (T s in list)
+        {
+            newMass[j] = s;
+            j++;
+        }
+        return newMass;
+    }
+
 
     /// <summary>
     /// Добавляет объект в уникальный список.

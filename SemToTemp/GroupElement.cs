@@ -135,7 +135,7 @@ public class GroupElement
     {
         begin += FullName;
         string[] split1 = begin.Split('\\');
-        string[] split = ReSize(split1);
+        string[] split = Instr.ReSize(split1);
         int parentId = 0;
         int isChild = 0;
         Folder parentFolder = null;
@@ -186,27 +186,6 @@ public class GroupElement
             }
             isChild = 1;
         }
-    }
-
-
-    private string[] ReSize(string[] mass)
-    {
-        List<string> list = new List<string>();
-        for (int i = 0; i < mass.Length; i++)
-        {
-            if (!string.IsNullOrEmpty(mass[i]))
-            {
-                list.Add(mass[i]);
-            }
-        }
-        string[] newMass = new string[list.Count];
-        int j = 0;
-        foreach (string s in list)
-        {
-            newMass[j] = s;
-            j++;
-        }
-        return newMass;
     }
     
 
@@ -263,6 +242,17 @@ public class GroupElement
         string name;
         SqlOracle.Sel(query, sqlParams, out name);
         return name;
+    }
+
+    public List<string> GetParamCodes()
+    {
+        string query = "select T1_P1, T1_P2, T1_P3, T1_P4, T1_P5, T1_P6, T1_P7, T1_P8, T1_P9, T1_P0 from " + 
+            SqlOracle.PreLogin + "TABLE_1 where T1_NG = :IDG";
+        Dictionary<string, string> sqlParams = new Dictionary<string, string>();
+        sqlParams.Add("IDG", Id.ToString());
+        List<string> codes;
+        SqlOracle.Sel(query, sqlParams, out codes);
+        return codes;
     }
 
     private int GetSketch(int id)

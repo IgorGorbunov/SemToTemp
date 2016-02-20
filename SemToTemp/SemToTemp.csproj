@@ -50,7 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BuyInstrument.cs" />
+    <Compile Include="Positions\BuyInstrument.cs" />
     <Compile Include="AssembleInstrument.cs" />
     <Compile Include="DialogForms\AnotherGroupDialog.cs">
       <SubType>Form</SubType>
@@ -58,8 +58,8 @@
     <Compile Include="DialogForms\AnotherGroupDialog.Designer.cs">
       <DependentUpon>AnotherGroupDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="MeasureInstrument.cs" />
-    <Compile Include="Machine.cs" />
+    <Compile Include="Positions\MeasureInstrument.cs" />
+    <Compile Include="Positions\Machine.cs" />
     <Compile Include="Element.cs" />
     <Compile Include="ExcelClass.cs" />
     <Compile Include="Exceptions\BadQueryExeption.cs" />
@@ -81,7 +81,7 @@
     <Compile Include="GroupElement.cs" />
     <Compile Include="Instr.cs" />
     <Compile Include="Logger.cs" />
-    <Compile Include="materials.cs" />
+    <Compile Include="Positions\materials.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Position.cs" />
     <Compile Include="Program.cs" />

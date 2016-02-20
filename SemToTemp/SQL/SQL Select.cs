@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Windows.Forms;
 using Devart.Data.Oracle;
 
 /// <summary>
@@ -79,7 +80,10 @@ partial class SqlOracle
             OracleDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                values.Add((T)reader.GetValue(0));
+                for (int i = 0; i < reader.FieldCount; i++)
+                {
+                    values.Add((T)reader.GetValue(i));
+                }
             }
 
             reader.Close();

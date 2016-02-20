@@ -44,12 +44,12 @@ namespace SemToTemp
             this.tbName = new System.Windows.Forms.TextBox();
             this.bttnRecord = new System.Windows.Forms.Button();
             this.tp2 = new System.Windows.Forms.TabPage();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.rbMachine = new System.Windows.Forms.RadioButton();
             this.rbMeasure = new System.Windows.Forms.RadioButton();
             this.rbAddition = new System.Windows.Forms.RadioButton();
             this.rbMat = new System.Windows.Forms.RadioButton();
             this.rbInstr = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.tabControl.SuspendLayout();
             this.tpAddGroup.SuspendLayout();
             this.tp2.SuspendLayout();
@@ -215,6 +215,16 @@ namespace SemToTemp
             this.tp2.Text = "Настройки";
             this.tp2.UseVisualStyleBackColor = true;
             // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(27, 42);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(163, 17);
+            this.radioButton1.TabIndex = 5;
+            this.radioButton1.Text = "Вспомогательный процесс";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
             // rbMachine
             // 
             this.rbMachine.AutoSize = true;
@@ -222,7 +232,6 @@ namespace SemToTemp
             this.rbMachine.Name = "rbMachine";
             this.rbMachine.Size = new System.Drawing.Size(98, 17);
             this.rbMachine.TabIndex = 4;
-            this.rbMachine.TabStop = true;
             this.rbMachine.Text = "Оборудование";
             this.rbMachine.UseVisualStyleBackColor = true;
             // 
@@ -233,7 +242,6 @@ namespace SemToTemp
             this.rbMeasure.Name = "rbMeasure";
             this.rbMeasure.Size = new System.Drawing.Size(132, 17);
             this.rbMeasure.TabIndex = 3;
-            this.rbMeasure.TabStop = true;
             this.rbMeasure.Text = "Средства измерения";
             this.rbMeasure.UseVisualStyleBackColor = true;
             // 
@@ -244,42 +252,30 @@ namespace SemToTemp
             this.rbAddition.Name = "rbAddition";
             this.rbAddition.Size = new System.Drawing.Size(198, 17);
             this.rbAddition.TabIndex = 2;
-            this.rbAddition.TabStop = true;
             this.rbAddition.Text = "Слесарно-монтажный инструмент";
             this.rbAddition.UseVisualStyleBackColor = true;
             // 
             // rbMat
             // 
             this.rbMat.AutoSize = true;
-            this.rbMat.Checked = true;
             this.rbMat.Location = new System.Drawing.Point(27, 110);
             this.rbMat.Name = "rbMat";
             this.rbMat.Size = new System.Drawing.Size(83, 17);
             this.rbMat.TabIndex = 1;
-            this.rbMat.TabStop = true;
             this.rbMat.Text = "Материалы";
             this.rbMat.UseVisualStyleBackColor = true;
             // 
             // rbInstr
             // 
             this.rbInstr.AutoSize = true;
+            this.rbInstr.Checked = true;
             this.rbInstr.Location = new System.Drawing.Point(27, 19);
             this.rbInstr.Name = "rbInstr";
             this.rbInstr.Size = new System.Drawing.Size(134, 17);
             this.rbInstr.TabIndex = 0;
+            this.rbInstr.TabStop = true;
             this.rbInstr.Text = "Режущий инструмент";
             this.rbInstr.UseVisualStyleBackColor = true;
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(27, 42);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(163, 17);
-            this.radioButton1.TabIndex = 5;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Вспомогательный процесс";
-            this.radioButton1.UseVisualStyleBackColor = true;
             // 
             // fMain
             // 

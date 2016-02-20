@@ -67,6 +67,7 @@ public static class Processor
                 GroupElement group;
 
                 bool exist;
+                bool groupExist = false;
                 try
                 {
                     xls.OpenDocument(xlsBooks.FileNames[i], false);
@@ -85,6 +86,7 @@ public static class Processor
                     if (exist)
                     {
                         group = new GroupElement(oldId, group.Name, group.FullName);
+                        groupExist = true;
                         _userLog.WriteLine("Группа уже существует. Найдена группа \"" + group.Name + "\"");
                         _logger.WriteLine("Группа уже существует. Найдена группа \"" + group.Name + "\"");
                     }
@@ -118,8 +120,15 @@ public static class Processor
                 foreach (Position pos in instruments)
                 {
                     int id;
-                    if (!Position.Exist(pos.Title, out id))
+                    if (Position.Exist(pos.Title, out id))
                     {
+                        
+                    }
+                    else
+                    {
+                        string message;
+                        pos.IsSimilarParams(group.GetParamCodes(), out message);
+                        _userLog.WriteLine(message);
                         pos.WriteToDb2();
                     }
                     bar.Increment(1);
@@ -154,6 +163,8 @@ public static class Processor
             _logger.WriteError(message);
             return;
         }
+
+
         string doc, year = "";
         if (_docColName == _yearColName)
         {
