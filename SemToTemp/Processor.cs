@@ -137,7 +137,22 @@ public static class Processor
                                 break;
                             }
                         }
-
+                        string message;
+                        if (pos.IsSimilarPositionParams(oldPosId, out message))
+                        {
+                            _userLog.WriteLine(message);
+                            _logger.WriteLine(message);
+                            DialogResult result = MessageBox.Show(message + Environment.NewLine + "Обновить параметры?", "Внимание!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                            switch (result)
+                            {
+                                case DialogResult.Cancel:
+                                    cancel = true;
+                                    goto Cancel;
+                                case DialogResult.Yes:
+                                    
+                                    break;
+                            }
+                        }
                     }
                     else
                     {

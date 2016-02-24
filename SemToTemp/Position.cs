@@ -113,6 +113,32 @@ public class Position : Element
         SqlOracle.Insert(query, sqlParams);
     }
 
+    public bool IsSimilarPositionParams(int posId, out string mess)
+    {
+        bool found = false;
+        mess = "Позиция \"" + Title + "\" уже существует в базе данных." + Environment.NewLine;
+        Dictionary<string, string> parametrs = GetCodes(posId);
+        SGroupParams = new string[NParams, NColParams];
+        foreach (KeyValuePair<string, string> pair in parametrs)
+        {
+            for (int i = 0; i < SParams.Length / NColParams; i++)
+            {
+                if (pair.Key.Trim() == SParams[i, 0].Trim() && 
+                    pair.Value.Trim() != SParams[i, 1].Trim())
+                {
+                    mess += "Параметр \"" + pair.Key + "\" позиций в базе данных и в электронной таблице отличаются." + Environment.NewLine;
+                    found = true;
+                    break;
+                }
+            }
+        }
+        if (found)
+        {
+            return true;
+        }
+        return false;
+    }
+
     public bool IsSimilarGroupParams(List<string> parametrs, out string mess)
     {
         int p = 0;
@@ -263,6 +289,17 @@ public class Position : Element
         sqlParams.Add("IDG", newGroupId.ToString());
         sqlParams.Add("IDN", posId.ToString());
         SqlOracle.Update(query, sqlParams);
+    }
+
+    private static Dictionary<string, string> GetCodes(int id)
+    {
+        string query = "select T2_P1, T2_Z1, T2_P2, T2_Z2, T2_P3, T2_Z3, T2_P4, T2_Z4, T2_P5, T2_Z5, T2_P6, T2_Z6, T2_P7, T2_Z7, T2_P8, T2_Z8, T2_P9, T2_Z9, T2_P0, T2_Z0 from " +
+            SqlOracle.PreLogin + "TABLE_2 where T2_NN = :IDN";
+        Dictionary<string, string> sqlParams = new Dictionary<string, string>();
+        sqlParams.Add("IDN", id.ToString());
+        Dictionary<string, string> codes;
+        SqlOracle.Sel(query, sqlParams, out codes);
+        return codes;
     }
 }
 

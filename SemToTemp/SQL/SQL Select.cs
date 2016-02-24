@@ -33,8 +33,10 @@ partial class SqlOracle
             OracleDataReader reader = cmd.ExecuteReader();
             if (reader.Read())
             {
-                object o = reader.GetValue(0);
-                value = (T)o;
+                if (!reader.IsDBNull(0))
+                {
+                    value = (T)reader.GetValue(0);
+                }
                 flag = true;
             }
 
@@ -82,7 +84,10 @@ partial class SqlOracle
             {
                 for (int i = 0; i < reader.FieldCount; i++)
                 {
-                    values.Add((T)reader.GetValue(i));
+                    if (!reader.IsDBNull(i))
+                    {
+                        values.Add((T)reader.GetValue(i));
+                    }
                 }
             }
 
@@ -124,7 +129,10 @@ partial class SqlOracle
             OracleDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                values.Add((T)reader.GetValue(0));
+                if (!reader.IsDBNull(0))
+                {
+                    values.Add((T)reader.GetValue(0));
+                }
             }
 
             reader.Close();
@@ -172,8 +180,18 @@ partial class SqlOracle
             OracleDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                T1 t1 = (T1) reader.GetValue(0);
-                T2 t2 = (T2) reader.GetValue(1);
+                T1 t1 = default(T1);
+                T2 t2 = default(T2);
+                object val = reader.GetValue(0);
+                if (!reader.IsDBNull(0))
+                {
+                    t1 = (T1)val;
+                }
+                val = reader.GetValue(1);
+                if (!reader.IsDBNull(1))
+                {
+                    t2 = (T2)val;
+                }
                 values.Add(t1, t2);
             }
 
