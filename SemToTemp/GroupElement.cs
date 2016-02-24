@@ -234,7 +234,7 @@ public class GroupElement
 
     //--------------------------  SQL  ---------------------------------
 
-    private static string GetName(int id)
+    public static string GetName(int id)
     {
         string query = "select t1_nm from " + SqlOracle.PreLogin + "TABLE_1 where T1_NG = :IDG";
         Dictionary<string, string> sqlParams = new Dictionary<string, string>();

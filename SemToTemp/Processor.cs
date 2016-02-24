@@ -57,6 +57,7 @@ public static class Processor
         ExcelClass xls = new ExcelClass();
         try
         {
+            bool cancel = false;
             for (int i = 0; i < xlsBooks.FileNames.Length; i++)
             {
                 status.Text = "Чтение файлов";
@@ -119,15 +120,29 @@ public static class Processor
                 status.Text = "Запись в БД";
                 foreach (Position pos in instruments)
                 {
-                    int id;
-                    if (Position.Exist(pos.Title, out id))
+                    int oldPosId;
+                    if (Position.Exist(pos.Title, out oldPosId))
                     {
-                        
+                        int dbGroupId = Position.GetGroupId(oldPosId);
+                        if (group.Id != dbGroupId)
+                        {
+                            DialogResult result = MessageBox.Show("Позиция \"" + pos.Title + "\" уже существует и находится в другой группе (\"" + GroupElement.GetName(dbGroupId) + "\"). Перенести в группу из электронной таблицы (\"" + group.Name + "\") ?", "Внимание!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                            switch (result)
+                            {
+                                case DialogResult.Cancel:
+                                    cancel = true;
+                                    goto Cancel;
+                                case DialogResult.Yes:
+                                    pos.SetNewGroup(oldPosId, group.Id);
+                                break;
+                            }
+                        }
+
                     }
                     else
                     {
                         string message;
-                        pos.IsSimilarParams(group.GetParamCodes(), out message);
+                        pos.IsSimilarGroupParams(group.GetParamCodes(), out message);
                         _userLog.WriteLine(message);
                         pos.WriteToDb2();
                     }
@@ -139,6 +154,14 @@ public static class Processor
                 _userLog.WriteLine();
                 _logger.WriteLine("Записано " + instruments.Count + " позиций");
                 
+            }
+        Cancel:
+            if (cancel)
+            {
+                _userLog.WriteLine("***Операция отменена пользователем");
+                _userLog.Flush();
+                _userLog.WriteLine();
+                _logger.WriteLine("***Операция отменена пользователем");
             }
         }
         finally

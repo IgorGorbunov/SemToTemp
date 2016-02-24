@@ -18,6 +18,7 @@ public class Position : Element
         }
     }
     public readonly string Title;
+    public int SIdGroup;
 
     private const int _N_NAME_CHAR = 200;
     private const int _N_CHAR = 100;
@@ -31,7 +32,7 @@ public class Position : Element
 
     protected int _id = -1;
 
-    protected int SIdGroup;
+    
     protected string[,] SParams, SGroupParams, SParams10;
     protected string SModelType, SGeom, SdocFile, SNotes,
         STitle, SName, SDocType, SDocYear, SBigName, Stype, SvidOsn, Stool;
@@ -44,6 +45,26 @@ public class Position : Element
         Dictionary<string, string> sqlParams = new Dictionary<string, string>();
         sqlParams.Add("GNAME", Instr.PrepareSqlParamString(title, _N_CHAR));
         return SqlOracle.Sel(query, sqlParams, out id);
+    }
+
+    public static int GetGroupId(int posId)
+    {
+        string query = "select T2_NG from " + SqlOracle.PreLogin + "TABLE_2 where T2_NN = :IDN";
+        Dictionary<string, string> sqlParams = new Dictionary<string, string>();
+        sqlParams.Add("IDN", posId.ToString());
+        int gId;
+        SqlOracle.Sel(query, sqlParams, out gId);
+        return gId;
+    }
+
+    public int GetGroupId()
+    {
+        string query = "select T2_NG from " + SqlOracle.PreLogin + "TABLE_2 where T2_NN = :IDN";
+        Dictionary<string, string> sqlParams = new Dictionary<string, string>();
+        sqlParams.Add("IDN", Id.ToString());
+        int gId;
+        SqlOracle.Sel(query, sqlParams, out gId);
+        return gId;
     }
 
 
@@ -92,7 +113,7 @@ public class Position : Element
         SqlOracle.Insert(query, sqlParams);
     }
 
-    public bool IsSimilarParams(List<string> parametrs, out string mess)
+    public bool IsSimilarGroupParams(List<string> parametrs, out string mess)
     {
         int p = 0;
         mess = "";
@@ -231,6 +252,17 @@ public class Position : Element
             }
         }
         return text.Trim();
+    }
+
+    //--------------------------------------- SQL -------------------------------
+
+    public void SetNewGroup(int posId, int newGroupId)
+    {
+        string query = "UPDATE " + SqlOracle.PreLogin + "table_2 set t2_ng = :IDG where t2_nn = :IDN";
+        Dictionary<string, string> sqlParams = new Dictionary<string, string>();
+        sqlParams.Add("IDG", newGroupId.ToString());
+        sqlParams.Add("IDN", posId.ToString());
+        SqlOracle.Update(query, sqlParams);
     }
 }
 
