@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
-using System.Windows.Forms;
 using Devart.Data.Oracle;
 
 /// <summary>
@@ -66,6 +65,14 @@ partial class SqlOracle
         }
     }
 
+    /// <summary>
+    /// Метод, реализующий параметризированный select-запрос
+    /// </summary>
+    /// <typeparam name="T">Тип возвращаемых данных</typeparam>
+    /// <param name="cmdQuery">Текст SQL-запроса</param>
+    /// <param name="paramsDict">Список параметров</param>
+    /// <param name="values">Результирующие значения</param>
+    /// <returns></returns>
     public static bool Sel<T>(string cmdQuery, Dictionary<string, string> paramsDict, out List<T> values)
     {
         values = new List<T>();
@@ -121,6 +128,12 @@ partial class SqlOracle
         }
     }
 
+    /// <summary>
+    /// Метод, реализующий select-запрос
+    /// </summary>
+    /// <typeparam name="T">Тип возвращаемых данных</typeparam>
+    /// <param name="cmdQuery">Текст SQL-запроса</param>
+    /// <returns></returns>
     public static List<T> Sel<T>(string cmdQuery)
     {
         List<T> values = new List<T>();
@@ -172,6 +185,15 @@ partial class SqlOracle
         return values;
     }
 
+    /// <summary>
+    /// Метод, реализующий параметризированный select-запрос
+    /// </summary>
+    /// <typeparam name="T1">Первый тип возвращаемых данных</typeparam>
+    /// <typeparam name="T2">Второй тип возвращаемых данных</typeparam>
+    /// <param name="cmdQuery">Текст SQL-запроса</param>
+    /// <param name="paramsDict">Список параметров</param>
+    /// <param name="values">Результирующие значения</param>
+    /// <returns></returns>
     public static bool Sel<T1, T2>(string cmdQuery, Dictionary<string, string> paramsDict, out Dictionary<T1, T2> values)
     {
         values = new Dictionary<T1, T2>();
@@ -340,7 +362,7 @@ partial class SqlOracle
         }
     }
 
-    public static object TestSelect(string cmdQuery)
+    private static object TestSelect(string cmdQuery)
     {
         _open();
         _logger.WriteLine(cmdQuery);
@@ -361,13 +383,13 @@ partial class SqlOracle
         return val;
     }
 
-    static void ProcessSuccess(string cmdQuery, Dictionary<string, string> paramsDict)
+    private static void ProcessSuccess(string cmdQuery, Dictionary<string, string> paramsDict)
     {
         string mess = "Запрос прошёл!";
         mess = RecordQuery(mess, cmdQuery, paramsDict);
         _logger.WriteLine(mess);
     }
-    static void ProcessSuccess<T>(string cmdQuery, Dictionary<string, string> paramsDict, T value)
+    private static void ProcessSuccess<T>(string cmdQuery, Dictionary<string, string> paramsDict, T value)
     {
         string mess = "Запрос прошёл!";
         mess = RecordQuery(mess, cmdQuery, paramsDict);
@@ -376,7 +398,7 @@ partial class SqlOracle
         mess += Environment.NewLine + value;
         _logger.WriteLine(mess);
     }
-    static void ProcessSuccess<T>(string cmdQuery, Dictionary<string, string> paramsDict, List<T> values)
+    private static void ProcessSuccess<T>(string cmdQuery, Dictionary<string, string> paramsDict, List<T> values)
     {
         string mess = "Запрос прошёл!";
         mess = RecordQuery(mess, cmdQuery, paramsDict);
@@ -388,7 +410,7 @@ partial class SqlOracle
         }
         _logger.WriteLine(mess);
     }
-    static void ProcessSuccess<T>(string cmdQuery, IEnumerable<T> values)
+    private static void ProcessSuccess<T>(string cmdQuery, IEnumerable<T> values)
     {
         string mess = "Запрос прошёл!";
         mess += Environment.NewLine + cmdQuery;
@@ -405,7 +427,7 @@ partial class SqlOracle
         }
         _logger.WriteLine(mess);
     }
-    static void ProcessSuccess<T1, T2>(string cmdQuery, Dictionary<string, string> paramsDict, Dictionary<T1, T2> values)
+    private static void ProcessSuccess<T1, T2>(string cmdQuery, Dictionary<string, string> paramsDict, Dictionary<T1, T2> values)
     {
         string mess = "Запрос прошёл!";
         mess = RecordQuery(mess, cmdQuery, paramsDict);
@@ -418,7 +440,7 @@ partial class SqlOracle
         _logger.WriteLine(mess);
     }
 
-    static void ProcessSuccessData(string cmdQuery, Dictionary<string, string> paramsDict, DataTable value)
+    private static void ProcessSuccessData(string cmdQuery, Dictionary<string, string> paramsDict, DataTable value)
     {
         string mess = "Запрос прошёл!";
         mess = RecordQuery(mess, cmdQuery, paramsDict);
@@ -438,7 +460,7 @@ partial class SqlOracle
         _logger.WriteLine(mess);
     }
 
-    static void ProcessUnSuccess(string cmdQuery, Dictionary<string, string> paramsDict, Exception ex)
+    private static void ProcessUnSuccess(string cmdQuery, Dictionary<string, string> paramsDict, Exception ex)
     {
         string mess = "Запрос НЕ прошёл!";
         Message.Show(mess);
@@ -447,7 +469,7 @@ partial class SqlOracle
         _logger.WriteError(mess);
     }
 
-    static string RecordQuery(string mess, string cmdQuery, Dictionary<string, string> paramsDict)
+    private static string RecordQuery(string mess, string cmdQuery, Dictionary<string, string> paramsDict)
     {
         mess += Environment.NewLine + cmdQuery;
         mess += Environment.NewLine + "-";

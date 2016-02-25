@@ -9,12 +9,12 @@ using Devart.Data.Oracle;
 partial class SqlOracle
 {
     /// <summary>
-    /// Выгрузка файла в заданную папку.
+    /// Выгрузка файла в заданную папку через параметризированный запрос
     /// </summary>
-    /// <param name="cmdQuery"></param>
-    /// <param name="path"></param>
-    /// <param name="fileName"></param>
-    /// <param name="paramsDict"></param>
+    /// <param name="cmdQuery">Текст sql запроса</param>
+    /// <param name="path">Путь к файлу</param>
+    /// <param name="fileName">Имя файла</param>
+    /// <param name="paramsDict">Список параметров</param>
     /// <returns></returns>
     static public bool UnloadFile(string cmdQuery, string path, string fileName, Dictionary<string, string> paramsDict)
     {

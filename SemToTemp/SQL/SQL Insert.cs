@@ -9,12 +9,12 @@ using Devart.Data.Oracle;
 partial class SqlOracle
 {
     /// <summary>
-    /// 
+    /// Метод, реализующий параметризированный insert-запрос в базу данных Oracle
     /// </summary>
-    /// <param name="cmdQuery"></param>
-    /// <param name="paramsDict"></param>
+    /// <param name="cmdQuery">Текст sql-зароса</param>
+    /// <param name="paramsDict">Список параметров</param>
     /// <returns></returns>
-    static public bool Insert(string cmdQuery, Dictionary<string, string> paramsDict)
+    public static bool Insert(string cmdQuery, Dictionary<string, string> paramsDict)
     {
         try
         {
@@ -53,7 +53,11 @@ partial class SqlOracle
         }
     }
 
-    static public void Insert(string cmdQuery)
+    /// <summary>
+    /// Метод, реализующий insert-запрос в базу данных Oracle
+    /// </summary>
+    /// <param name="cmdQuery">Текст sql-запроса</param>
+    public static void Insert(string cmdQuery)
     {
         try
         {

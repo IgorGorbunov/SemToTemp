@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using Devart.Data.Oracle;
 
-
 /// <summary>
 /// Класс c методами типа Select
 /// </summary>
 partial class SqlOracle
 {
-
-    public static void TestUpdate(string cmdQuery)
+    /// <summary>
+    /// Метод, реализующий UPDATE-запрос
+    /// </summary>
+    /// <param name="cmdQuery">Текст UPDATE-запроса</param>
+    public static void Update(string cmdQuery)
     {
         _open();
         _logger.WriteLine(cmdQuery);
@@ -20,7 +22,13 @@ partial class SqlOracle
         _close();
     }
 
-    static public bool Update(string cmdQuery, Dictionary<string, string> paramsDict)
+    /// <summary>
+    /// Метод, реализующий параметризированный UPDATE-запрос
+    /// </summary>
+    /// <param name="cmdQuery">Текст UPDATE-запроса</param>
+    /// <param name="paramsDict">Список параметров</param>
+    /// <returns></returns>
+    public static bool Update(string cmdQuery, Dictionary<string, string> paramsDict)
     {
         try
         {

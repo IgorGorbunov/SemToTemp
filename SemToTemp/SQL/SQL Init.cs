@@ -7,38 +7,33 @@ using Devart.Data.Oracle;
 /// </summary>
 static partial class SqlOracle
 {
+    /// <summary>
+    /// Имя схемы (с точкой)
+    /// </summary>
     public static string PreLogin;
-
+    /// <summary>
+    /// Логин пользователя в БД
+    /// </summary>
     public static string Login;
 
     private static Logger _logger;
-
-    /// <summary>
-    /// Объявление компонентов
-    /// </summary>
-    static OracleConnection _conn;
-
+    private static OracleConnection _conn;
     private static string _connectionString;
 
 
     /// <summary>
-    /// Cоединене с БД (второе исполнение)
+    /// Тестовый запрос селект.
     /// </summary>
-    private static void _open()
+    /// <param name="tableName">Имя таблицы.</param>
+    /// <returns></returns>
+    public static bool TestQuery(string tableName)
     {
-        try
+        object data = TestSelect("SELECT * FROM " + tableName);
+        if (data != null)
         {
-            _conn = new OracleConnection(_connectionString);
-            _logger.WriteLine("Статус соединения: " + _conn.State + " - открытие соединения...");
-            _conn.Open();
-            _logger.WriteLine("Соединение открыто!");
+            return true;
         }
-        catch (Exception ex)
-        {
-            const string sss = "Попытка соединения с БД прошла неудачно!";
-            _logger.WriteLine(sss, ex);
-            throw new TimeoutException();
-        }
+        return false;
     }
 
     /// <summary>
@@ -89,8 +84,6 @@ static partial class SqlOracle
         }
         
     }
-
-
 
     /// <summary>
     /// Метод составляющий строку соединения с БД.
@@ -153,20 +146,20 @@ static partial class SqlOracle
         _logger.WriteLine("----------------------------------------- NEW SESSION ----------------------------------------------");
     }
 
-    /// <summary>
-    /// Тестовый запрос селект.
-    /// </summary>
-    /// <param name="tableName">Имя таблицы.</param>
-    /// <returns></returns>
-    public static bool TestQuery(string tableName)
+    private static void _open()
     {
-        object data = TestSelect("SELECT * FROM " + tableName);
-        if (data != null)
+        try
         {
-            return true;
+            _conn = new OracleConnection(_connectionString);
+            _logger.WriteLine("Статус соединения: " + _conn.State + " - открытие соединения...");
+            _conn.Open();
+            _logger.WriteLine("Соединение открыто!");
         }
-        return false;
+        catch (Exception ex)
+        {
+            const string sss = "Попытка соединения с БД прошла неудачно!";
+            _logger.WriteLine(sss, ex);
+            throw new TimeoutException();
+        }
     }
-
-    
 }
