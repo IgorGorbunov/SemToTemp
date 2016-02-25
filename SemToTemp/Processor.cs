@@ -138,7 +138,8 @@ public static class Processor
                             }
                         }
                         string message;
-                        if (pos.IsSimilarPositionParams(oldPosId, out message))
+                        Dictionary<int, string> differentParams;
+                        if (pos.IsSimilarPositionParams(oldPosId, out message, out differentParams))
                         {
                             _userLog.WriteLine(message);
                             _logger.WriteLine(message);
@@ -149,7 +150,7 @@ public static class Processor
                                     cancel = true;
                                     goto Cancel;
                                 case DialogResult.Yes:
-                                    
+                                    Position.EditParametrs(oldPosId, differentParams);
                                     break;
                             }
                         }

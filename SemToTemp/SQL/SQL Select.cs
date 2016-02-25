@@ -84,7 +84,11 @@ partial class SqlOracle
             {
                 for (int i = 0; i < reader.FieldCount; i++)
                 {
-                    if (!reader.IsDBNull(i))
+                    if (reader.IsDBNull(i))
+                    {
+                        values.Add(default(T));
+                    }
+                    else
                     {
                         values.Add((T)reader.GetValue(i));
                     }
@@ -129,7 +133,11 @@ partial class SqlOracle
             OracleDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                if (!reader.IsDBNull(0))
+                if (reader.IsDBNull(0))
+                {
+                    values.Add(default(T));
+                }
+                else
                 {
                     values.Add((T)reader.GetValue(0));
                 }

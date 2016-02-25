@@ -57,6 +57,33 @@ public class Position : Element
         return gId;
     }
 
+    public static void EditParametrs(int posId, Dictionary<int, string> parametrs)
+    {
+        string query = "UPDATE " + SqlOracle.PreLogin + "table_2 set";
+        Dictionary<string, string> sqlParams = new Dictionary<string, string>();
+        bool first = true;
+        foreach (KeyValuePair<int, string> pair in parametrs)
+        {
+            if (!first)
+            {
+                query += ',';
+            }
+            int nCol = pair.Key + 1;
+            if (nCol == 10)
+            {
+                nCol = 0;
+            }
+            string sCol = "T2_Z" + nCol;
+            query += string.Format(" {0} = {1}", sCol, ":COL" + nCol);
+            sqlParams.Add("COL" + nCol, pair.Value);
+            first = false;
+        }
+        query += " where t2_nn = :IDN";
+        sqlParams.Add("IDN", posId.ToString());
+        
+        SqlOracle.Update(query, sqlParams);
+    }
+
     public int GetGroupId()
     {
         string query = "select T2_NG from " + SqlOracle.PreLogin + "TABLE_2 where T2_NN = :IDN";
@@ -113,11 +140,12 @@ public class Position : Element
         SqlOracle.Insert(query, sqlParams);
     }
 
-    public bool IsSimilarPositionParams(int posId, out string mess)
+    public bool IsSimilarPositionParams(int posId, out string mess, out Dictionary<int, string> differentParams)
     {
         bool found = false;
         mess = "Позиция \"" + Title + "\" уже существует в базе данных." + Environment.NewLine;
         Dictionary<string, string> parametrs = GetCodes(posId);
+        differentParams = new Dictionary<int, string>(); 
         SGroupParams = new string[NParams, NColParams];
         foreach (KeyValuePair<string, string> pair in parametrs)
         {
@@ -128,6 +156,7 @@ public class Position : Element
                 {
                     mess += "Параметр \"" + pair.Key + "\" позиций в базе данных и в электронной таблице отличаются." + Environment.NewLine;
                     found = true;
+                    differentParams.Add(i, SParams[i, 1].Trim());
                     break;
                 }
             }
@@ -158,7 +187,7 @@ public class Position : Element
                     break;
                 }
             }
-            if (!found)
+            if (!found && !string.IsNullOrEmpty(parametr))
             {
                 mess += "*** Не найден параметр " + parametr + Environment.NewLine;
             }
@@ -297,9 +326,23 @@ public class Position : Element
             SqlOracle.PreLogin + "TABLE_2 where T2_NN = :IDN";
         Dictionary<string, string> sqlParams = new Dictionary<string, string>();
         sqlParams.Add("IDN", id.ToString());
-        Dictionary<string, string> codes;
+        List<string> codes;
         SqlOracle.Sel(query, sqlParams, out codes);
-        return codes;
+        Dictionary<string, string> dictionary = new Dictionary<string, string>();
+        string s = "";
+        foreach (string code in codes)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                s = code;
+            }
+            else
+            {
+                dictionary.Add(s, code);
+                s = "";
+            }
+        }
+        return dictionary;
     }
 }
 
