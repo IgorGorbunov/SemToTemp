@@ -9,6 +9,12 @@ using System.Security.Cryptography;
 /// </summary>
 public static class Instr
 {
+    /// <summary>
+    /// Dроизводит "быструю сортировку" массива чисел
+    /// </summary>
+    /// <param name="a">Входной массив</param>
+    /// <param name="low">Нижняя грань сортировки (по умолчанию - 0)</param>
+    /// <param name="high">Верхняя грань сортировки (по умолчанию - длина_массива-1)</param>
     public static void QSort(int[] a, int low, int high)
     {
         int i = low;
@@ -33,9 +39,10 @@ public static class Instr
     }
 
     /// <summary>
-    /// Производит "быструю сортировку" массива из пар Грань - Вещественное число (расстояние до грани).
+    /// Производит "быструю сортировку" массива из пар Первый параметр - Вещественное число
     /// </summary>
-    /// <param name="a">Одномерный массив пар Грань - Вещественное число</param>
+    /// <typeparam name="TKey">Первый параметр входного массива</typeparam>
+    /// <param name="a">Входной массив</param>
     /// <param name="low">Нижняя грань сортировки (по умолчанию - 0).</param>
     /// <param name="high">Верхняя грань сортировки (по умолчанию - длина_массива-1).</param>
     public static void QSortPairs<TKey>(KeyValuePair<TKey, double>[] a, int low, int high)
@@ -70,6 +77,12 @@ public static class Instr
         }
     }
 
+    /// <summary>
+    /// Усечение массива (убираем пустые поля)
+    /// </summary>
+    /// <typeparam name="T">Тип данных массива</typeparam>
+    /// <param name="mass">Входной массив</param>
+    /// <returns></returns>
     public static T[] ReSize<T>(T[] mass)
     {
         List<T> list = new List<T>();
@@ -89,7 +102,6 @@ public static class Instr
         }
         return newMass;
     }
-
 
     /// <summary>
     /// Добавляет объект в уникальный список.
@@ -111,7 +123,13 @@ public static class Instr
         list.Add(obj);
     }
 
-
+    /// <summary>
+    /// Метод проверяющий существование элемента в списке
+    /// </summary>
+    /// <typeparam name="T">Тип данных в списке</typeparam>
+    /// <param name="list">Входной список</param>
+    /// <param name="obj">Проверяемый элемент</param>
+    /// <returns></returns>
     public static bool Exist<T>(List<T> list, T obj)
     {
         foreach (T var in list)
@@ -133,10 +151,11 @@ public static class Instr
     {
         return Image.FromStream(new MemoryStream(bytes));
     }
+
     /// <summary>
     /// Возвращает максимальное значение для заданного массива.
     /// </summary>
-    /// <param name="array"></param>
+    /// <param name="array">Входной массив</param>
     public static double Max(IEnumerable<double> array)
     {
         double maxEl = double.MinValue;
@@ -172,11 +191,77 @@ public static class Instr
     }
 
     /// <summary>
+    /// Метод подготавливает строку для SQL-запроса с кавычками
+    /// </summary>
+    /// <param name="data">Входная строка</param>
+    /// <param name="nDataTypeBytes">Количество символов в поле</param>
+    /// <returns></returns>
+    public static string PrepareSqlString(string data, int nDataTypeBytes)
+    {
+        string newData = PrepareSqlParamString(data, nDataTypeBytes);
+        if (newData == "NULL")
+        {
+            return newData;
+        }
+        AddQuotes(ref newData);
+        return newData;
+    }
+
+    /// <summary>
+    /// Метод подготавливает строку для SQL-запроса без кавычек
+    /// </summary>
+    /// <param name="data">Входная строка</param>
+    /// <param name="nDataTypeBytes">Количество символов в поле</param>
+    /// <returns></returns>
+    public static string PrepareSqlParamString(string data, int nDataTypeBytes)
+    {
+        if (string.IsNullOrEmpty(data))
+        {
+            return "NULL";
+        }
+        string newData = DeleteDoubleSpaces(data);
+        if (string.IsNullOrEmpty(newData))
+        {
+            return "NULL";
+        }
+        AddSpaces(ref newData, nDataTypeBytes);
+        return newData;
+    }
+
+    /// <summary>
+    /// Добавление пробела в строку
+    /// </summary>
+    /// <param name="data">Входная строка</param>
+    /// <returns></returns>
+    public static string AddFirstSpace(string data)
+    {
+        if (data == "NULL")
+        {
+            return data;
+        }
+        if (data[0] == '-')
+        {
+            return data;
+        }
+        data = data.Substring(0, data.Length - 1);
+        return string.Format(" {0}", data);
+    }
+
+    /// <summary>
+    /// Получение даты для SQL строки
+    /// </summary>
+    /// <returns></returns>
+    public static string GetSqlToday()
+    {
+        return DateTime.Today.ToString("dd.MM.yy");
+    }
+
+    /// <summary>
     /// Возвращает строку без лишних пробелов.
     /// </summary>
     /// <param name="line">Начальная строка.</param>
     /// <returns></returns>
-    public static string DeleteDoubleSpaces(string line)
+    private static string DeleteDoubleSpaces(string line)
     {
         string[] split = line.Split(' ');
         string newLine = "";
@@ -196,23 +281,12 @@ public static class Instr
         return newLine;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="data"></param>
-    /// <param name="nDataTypeBytes"></param>
-    public static void AddSpaces(ref string data, int nDataTypeBytes)
+    private static void AddSpaces(ref string data, int nDataTypeBytes)
     {
         data = AddSpaces(data, nDataTypeBytes);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="data"></param>
-    /// <param name="nDataTypeBytes"></param>
-    /// <returns></returns>
-    public static string AddSpaces(string data, int nDataTypeBytes)
+    private static string AddSpaces(string data, int nDataTypeBytes)
     {
         if (data.Length >= nDataTypeBytes)
         {
@@ -226,75 +300,9 @@ public static class Instr
         return data + spaces;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="data"></param>
-    /// <returns></returns>
-    public static void AddQuotes(ref string data)
+    private static void AddQuotes(ref string data)
     {
         data = String.Format("\'{0}\'", data);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="data"></param>
-    /// <param name="nDataTypeBytes"></param>
-    /// <returns></returns>
-    public static string PrepareSqlString(string data, int nDataTypeBytes)
-    {
-        string newData = PrepareSqlParamString(data, nDataTypeBytes);
-        if (newData == "NULL")
-        {
-            return newData;
-        }
-        AddQuotes(ref newData);
-        return newData;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="data"></param>
-    /// <param name="nDataTypeBytes"></param>
-    /// <returns></returns>
-    public static string PrepareSqlParamString(string data, int nDataTypeBytes)
-    {
-        if (string.IsNullOrEmpty(data))
-        {
-            return "NULL";
-        }
-        string newData = DeleteDoubleSpaces(data);
-        if (string.IsNullOrEmpty(newData))
-        {
-            return "NULL";
-        }
-        AddSpaces(ref newData, nDataTypeBytes);
-        return newData;
-    }
-
-    public static string AddFirstSpace(string data)
-    {
-        if (data == "NULL")
-        {
-            return data;
-        }
-        if (data[0] == '-')
-        {
-            return data;
-        }
-        data = data.Substring(0, data.Length - 1);
-        return string.Format(" {0}", data);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
-    public static string GetSqlToday()
-    {
-        return DateTime.Today.ToString("dd.MM.yy");
     }
 }
 

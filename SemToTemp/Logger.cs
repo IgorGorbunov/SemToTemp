@@ -9,7 +9,7 @@ using System.IO;
 /// </summary>
 public class Logger
 {
-    StreamWriter _sW;
+    private StreamWriter _sW;
 
     private readonly string _name = @"Logger";
     private readonly string _extension = @".log";
@@ -17,11 +17,19 @@ public class Logger
 
     private const long MaxSize = 1000000; //~ мегабайт
 
+    /// <summary>
+    /// Конструктор для статического класса логирования
+    /// </summary>
     public Logger()
     {
 
     }
 
+    /// <summary>
+    /// Конструктор для класса логирования
+    /// </summary>
+    /// <param name="name">Полный путь к файлу</param>
+    /// <param name="ext">Расширение с точкой</param>
     public Logger(string name, string ext)
     {
         _name = name;

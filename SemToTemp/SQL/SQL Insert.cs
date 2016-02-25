@@ -1,18 +1,18 @@
-using System;
+п»їusing System;
 using System.Collections.Generic;
 using Devart.Data.Oracle;
 
 
 /// <summary>
-/// Класс c методами типа Insert
+/// РљР»Р°СЃСЃ c РјРµС‚РѕРґР°РјРё С‚РёРїР° Insert
 /// </summary>
 partial class SqlOracle
 {
     /// <summary>
-    /// Метод, реализующий параметризированный insert-запрос в базу данных Oracle
+    /// РњРµС‚РѕРґ, СЂРµР°Р»РёР·СѓСЋС‰РёР№ РїР°СЂР°РјРµС‚СЂРёР·РёСЂРѕРІР°РЅРЅС‹Р№ insert-Р·Р°РїСЂРѕСЃ РІ Р±Р°Р·Сѓ РґР°РЅРЅС‹С… Oracle
     /// </summary>
-    /// <param name="cmdQuery">Текст sql-зароса</param>
-    /// <param name="paramsDict">Список параметров</param>
+    /// <param name="cmdQuery">РўРµРєСЃС‚ sql-Р·Р°СЂРѕСЃР°</param>
+    /// <param name="paramsDict">РЎРїРёСЃРѕРє РїР°СЂР°РјРµС‚СЂРѕРІ</param>
     /// <returns></returns>
     public static bool Insert(string cmdQuery, Dictionary<string, string> paramsDict)
     {
@@ -54,9 +54,9 @@ partial class SqlOracle
     }
 
     /// <summary>
-    /// Метод, реализующий insert-запрос в базу данных Oracle
+    /// РњРµС‚РѕРґ, СЂРµР°Р»РёР·СѓСЋС‰РёР№ insert-Р·Р°РїСЂРѕСЃ РІ Р±Р°Р·Сѓ РґР°РЅРЅС‹С… Oracle
     /// </summary>
-    /// <param name="cmdQuery">Текст sql-запроса</param>
+    /// <param name="cmdQuery">РўРµРєСЃС‚ sql-Р·Р°РїСЂРѕСЃР°</param>
     public static void Insert(string cmdQuery)
     {
         try
@@ -74,14 +74,14 @@ partial class SqlOracle
         }
         catch (OracleException ex)
         {
-            string mess = "Ошибка в запросе к БД!" + Environment.NewLine + ex;
+            string mess = "РћС€РёР±РєР° РІ Р·Р°РїСЂРѕСЃРµ Рє Р‘Р”!" + Environment.NewLine + ex;
             Message.Show(mess);
             _logger.WriteError(mess);
             throw new BadQueryExeption();
         }
         catch (Exception ex)
         {
-            string mess = "Ошибка в запросе к БД!" + Environment.NewLine + ex;
+            string mess = "РћС€РёР±РєР° РІ Р·Р°РїСЂРѕСЃРµ Рє Р‘Р”!" + Environment.NewLine + ex;
             _logger.WriteError(mess);
             Message.Show(mess);
         }
