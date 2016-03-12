@@ -16,6 +16,11 @@ namespace SemToTemp
 
         private void bttnRecord_Click(object sender, EventArgs e)
         {
+            if (rbOpers.Checked)
+            {
+                Processor.SetOpers();
+                return;
+            }
             int elementType = 0;
             if (rbInstr.Checked)
             {

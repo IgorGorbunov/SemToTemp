@@ -50,6 +50,7 @@ namespace SemToTemp
             this.rbAddition = new System.Windows.Forms.RadioButton();
             this.rbMat = new System.Windows.Forms.RadioButton();
             this.rbInstr = new System.Windows.Forms.RadioButton();
+            this.rbOpers = new System.Windows.Forms.RadioButton();
             this.tabControl.SuspendLayout();
             this.tpAddGroup.SuspendLayout();
             this.tp2.SuspendLayout();
@@ -201,6 +202,7 @@ namespace SemToTemp
             // 
             // tp2
             // 
+            this.tp2.Controls.Add(this.rbOpers);
             this.tp2.Controls.Add(this.radioButton1);
             this.tp2.Controls.Add(this.rbMachine);
             this.tp2.Controls.Add(this.rbMeasure);
@@ -277,6 +279,17 @@ namespace SemToTemp
             this.rbInstr.Text = "Режущий инструмент";
             this.rbInstr.UseVisualStyleBackColor = true;
             // 
+            // rbOpers
+            // 
+            this.rbOpers.AutoSize = true;
+            this.rbOpers.Location = new System.Drawing.Point(27, 168);
+            this.rbOpers.Name = "rbOpers";
+            this.rbOpers.Size = new System.Drawing.Size(75, 17);
+            this.rbOpers.TabIndex = 6;
+            this.rbOpers.TabStop = true;
+            this.rbOpers.Text = "Операции";
+            this.rbOpers.UseVisualStyleBackColor = true;
+            // 
             // fMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -318,5 +331,6 @@ namespace SemToTemp
         private System.Windows.Forms.RadioButton rbMeasure;
         private System.Windows.Forms.RadioButton rbAddition;
         private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton rbOpers;
     }
 }

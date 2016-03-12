@@ -24,7 +24,29 @@ public static class Processor
 
     private static readonly string _USER_LOG_FULL_PATH = AppDomain.CurrentDomain.BaseDirectory + "status.log";
     
-    // 
+    public static void SetOpers()
+    {
+        _userLog = new StreamWriter(_USER_LOG_FULL_PATH, false, Encoding.UTF8);
+        _userLog.WriteLine(DateTime.Now.ToLongTimeString());
+        _userLog.WriteLine("Начало работы");
+        _logger = new Logger();
+        _logger.WriteLine("----------------------------------------- NEW SESSION ----------------------------------------------");
+        _logger.WriteLine("Выбор файла с операциями");
+
+        string mess = "";
+        OpenFileDialog xlsBooks = new OpenFileDialog();
+        xlsBooks.Title = "Выберите файлы Excel с операциями";
+        xlsBooks.Multiselect = false;
+        xlsBooks.DefaultExt = "xlsx";
+        xlsBooks.Filter = "Файлы Excel (*.xls;*.xlsx)|*.xls;*.xlsx|All files (*.*)|*.*";
+        if (xlsBooks.ShowDialog() != DialogResult.OK)
+        {
+            _logger.WriteLine("Файл не выбран");
+            return;
+        }
+        _logger.WriteLine("Файл - " + xlsBooks.FileName);
+    }
+
     /// <summary>
     /// Обработка Excel документов
     /// </summary>
