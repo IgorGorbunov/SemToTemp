@@ -26,9 +26,6 @@ public static class Processor
     
     public static void SetOpers()
     {
-        _userLog = new StreamWriter(_USER_LOG_FULL_PATH, false, Encoding.UTF8);
-        _userLog.WriteLine(DateTime.Now.ToLongTimeString());
-        _userLog.WriteLine("Начало работы");
         _logger = new Logger();
         _logger.WriteLine("----------------------------------------- NEW SESSION ----------------------------------------------");
         _logger.WriteLine("Выбор файла с операциями");
@@ -45,6 +42,8 @@ public static class Processor
             return;
         }
         _logger.WriteLine("Файл - " + xlsBooks.FileName);
+
+        List<Operation> operations = GetOperations(xlsBooks.FileName);
     }
 
     /// <summary>
@@ -209,6 +208,48 @@ public static class Processor
         }
         Process.Start(_USER_LOG_FULL_PATH); 
         MessageBox.Show("Готово!");
+    }
+
+    private static List<Operation> GetOperations(string fileName)
+    {
+        List<Operation> opers = new List<Operation>();
+        ExcelClass xls = new ExcelClass();
+        try
+        {
+            int i = 1;
+            try
+            {
+                xls.OpenDocument(fileName, false);
+                string guid = xls.GetCellStringValue(1, 1);
+                string kod = xls.GetCellStringValue(2, 1);
+                string text = xls.GetCellStringValue(3, 1);
+                
+                while (!string.IsNullOrEmpty(guid))
+                {
+                    int kodI = int.Parse(kod);
+                    opers.Add(new Operation(kodI, guid, text));
+
+                    i++;
+                    guid = xls.GetCellStringValue(1, i);
+                    kod = xls.GetCellStringValue(2, i);
+                    text = xls.GetCellStringValue(3, i);
+                }
+            }
+            finally
+            {
+                xls.CloseDocument();
+            }
+            _logger.WriteLine("Записано " + i + " позиций");
+        }
+        finally
+        {
+            xls.Dispose();
+        }
+        if (opers.Count <= 0)
+        {
+            return null;
+        }
+        return opers;
     }
 
     private static void ProcessOneRow2(ExcelClass xls, int iRow, ref string message, List<Position> positions, GroupElement group, string fileName, int posType)

@@ -20,7 +20,6 @@ static partial class SqlOracle
     private static OracleConnection _conn;
     private static string _connectionString;
 
-
     /// <summary>
     /// Тестовый запрос селект.
     /// </summary>
@@ -133,7 +132,7 @@ static partial class SqlOracle
         Login = user;
         _connectionString = "User id=" + user +
                                              ";password=" + password +
-                                               ";SID  = " + sid +
+                                               ";SID = " + sid +
                                                     ";Host = " + host +
                                                         ";Direct = true" +
                                                             ";Port = " + port;

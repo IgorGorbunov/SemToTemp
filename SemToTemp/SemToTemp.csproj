@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Operation.cs" />
     <Compile Include="Positions\BuyInstrument.cs" />
     <Compile Include="AssembleInstrument.cs" />
     <Compile Include="DialogForms\AnotherGroupDialog.cs">
