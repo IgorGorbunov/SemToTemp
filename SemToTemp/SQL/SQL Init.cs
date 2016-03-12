@@ -144,6 +144,8 @@ static partial class SqlOracle
     {
         _logger = new Logger("sql", ".ttt");
         _logger.WriteLine("----------------------------------------- NEW SESSION ----------------------------------------------");
+        _logger.WriteLine("PreLogin - " + PreLogin);
+        _logger.WriteLine("_connectionString - " + _connectionString);
     }
 
     private static void _open()
