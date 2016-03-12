@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using Devart.Data.Oracle;
 
@@ -33,6 +34,150 @@ static partial class SqlOracle
             return true;
         }
         return false;
+    }
+
+    /// <summary>
+    /// Метод вызывает очистку таблице в выбранной схеме.
+    /// </summary>
+    /// <param name="table">Таблица</param>
+    /// <param name="preLogin">Схема</param>
+    public static void TruncateTable(string table, string preLogin)
+    {
+        try
+        {
+            _open();
+            string tableWithSchema;
+            if (!string.IsNullOrEmpty(preLogin))
+            {
+                tableWithSchema = string.Format("{0}{1}", preLogin, table);
+            }
+            else
+            {
+                tableWithSchema = table;
+            }
+            string cmdQuery = "truncate table " + tableWithSchema;
+            _logger.WriteLine(cmdQuery);
+            OracleCommand cmd = new OracleCommand(cmdQuery, _conn);
+
+            cmd.ExecuteNonQuery();
+            cmd.Dispose();
+            _logger.WriteLine("Удачно!");
+        }
+        catch (TimeoutException)
+        {
+            throw;
+        }
+        catch (OracleException ex)
+        {
+            string mess = "Ошибка в запросе к БД!" + Environment.NewLine + ex;
+            Message.Show(mess);
+            _logger.WriteError(mess);
+            throw new BadQueryExeption();
+        }
+        catch (Exception ex)
+        {
+            string mess = "Ошибка в запросе к БД!" + Environment.NewLine + ex;
+            _logger.WriteError(mess);
+            Message.Show(mess);
+        }
+        finally
+        {
+            _close();
+        }
+    }
+
+    /// <summary>
+    /// Метод вызывает очистку таблице в активной схеме.
+    /// </summary>
+    /// <param name="table">Таблица</param>
+    public static void TruncateTable(string table)
+    {
+        TruncateTable(table, PreLogin);
+    }
+
+    /// <summary>
+    /// Метод, реализующий параметризированный запрос в базу данных Oracle
+    /// </summary>
+    /// <param name="cmdQuery">Текст sql-зароса</param>
+    /// <param name="paramsDict">Список параметров</param>
+    /// <returns></returns>
+    public static bool ExecuteVoidQuery(string cmdQuery, Dictionary<string, string> paramsDict)
+    {
+        try
+        {
+            _open();
+
+            OracleCommand cmd = new OracleCommand(cmdQuery, _conn);
+            foreach (KeyValuePair<string, string> pair in paramsDict)
+            {
+                object o = pair.Value == "NULL" ? null : pair.Value;
+                cmd.Parameters.AddWithValue(":" + pair.Key, o);
+            }
+
+            cmd.ExecuteNonQuery();
+            cmd.Dispose();
+
+            ProcessSuccess(cmdQuery, paramsDict);
+            return true;
+        }
+        catch (TimeoutException)
+        {
+            throw;
+        }
+        catch (OracleException ex)
+        {
+            ProcessUnSuccess(cmdQuery, paramsDict, ex);
+            throw new BadQueryExeption();
+        }
+        catch (Exception ex)
+        {
+            ProcessUnSuccess(cmdQuery, paramsDict, ex);
+            return false;
+        }
+        finally
+        {
+            _close();
+        }
+    }
+
+    /// <summary>
+    /// Метод реализующий параметризированный запрос в базу данных Oracle
+    /// </summary>
+    /// <param name="cmdQuery">Текст sql-запроса</param>
+    public static void ExecuteVoidQuery(string cmdQuery)
+    {
+        _logger.WriteLine(cmdQuery);
+        try
+        {
+            _open();
+
+            OracleCommand cmd = new OracleCommand(cmdQuery, _conn);
+
+            cmd.ExecuteNonQuery();
+            cmd.Dispose();
+            _logger.WriteLine("Удачно!");
+        }
+        catch (TimeoutException)
+        {
+            throw;
+        }
+        catch (OracleException ex)
+        {
+            string mess = "Ошибка в запросе к БД!" + Environment.NewLine + ex;
+            Message.Show(mess);
+            _logger.WriteError(mess);
+            throw new BadQueryExeption();
+        }
+        catch (Exception ex)
+        {
+            string mess = "Ошибка в запросе к БД!" + Environment.NewLine + ex;
+            _logger.WriteError(mess);
+            Message.Show(mess);
+        }
+        finally
+        {
+            _close();
+        }
     }
 
     /// <summary>
@@ -79,7 +224,7 @@ static partial class SqlOracle
                         }
                 }
             } while (!closed);
-            _logger.WriteLine("Соединение закрыто!");
+            _logger.WriteLine("--- Соединение закрыто!");
         }
         
     }
@@ -152,7 +297,7 @@ static partial class SqlOracle
         try
         {
             _conn = new OracleConnection(_connectionString);
-            _logger.WriteLine("Статус соединения: " + _conn.State + " - открытие соединения...");
+            _logger.WriteLine("+++ Статус соединения: " + _conn.State + " - открытие соединения...");
             _conn.Open();
             _logger.WriteLine("Соединение открыто!");
         }

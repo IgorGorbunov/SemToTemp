@@ -59,6 +59,7 @@ partial class SqlOracle
     /// <param name="cmdQuery">Текст sql-запроса</param>
     public static void Insert(string cmdQuery)
     {
+        _logger.WriteLine(cmdQuery);
         try
         {
             _open();
@@ -67,6 +68,7 @@ partial class SqlOracle
 
             cmd.ExecuteNonQuery();
             cmd.Dispose();
+            _logger.WriteLine("Удачно!");
         }
         catch (TimeoutException)
         {

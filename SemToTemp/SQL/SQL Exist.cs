@@ -26,6 +26,6 @@ partial class SqlOracle
         {
             return num != null;
         }
-        throw new TimeoutException();
+        return false;
     }
 }

@@ -30,7 +30,6 @@ public static class Processor
         _logger.WriteLine("----------------------------------------- NEW SESSION ----------------------------------------------");
         _logger.WriteLine("Выбор файла с операциями");
 
-        string mess = "";
         OpenFileDialog xlsBooks = new OpenFileDialog();
         xlsBooks.Title = "Выберите файлы Excel с операциями";
         xlsBooks.Multiselect = false;
@@ -44,6 +43,7 @@ public static class Processor
         _logger.WriteLine("Файл - " + xlsBooks.FileName);
 
         List<Operation> operations = GetOperations(xlsBooks.FileName);
+        WriteOpersToDb(operations);
     }
 
     /// <summary>
@@ -250,6 +250,23 @@ public static class Processor
             return null;
         }
         return opers;
+    }
+
+    private static void WriteOpersToDb(List<Operation> opers)
+    {
+        foreach (Operation operation in opers)
+        {
+            if (SqlOracle.Exist(operation.Kod, "KOD", "TABLE_OPERS"))
+            {
+                SqlOracle.ExecuteVoidQuery("delete from TABLE_OPERS where KOD = " + operation.Kod);
+            }
+            Dictionary<string, string> pDictionary = new Dictionary<string, string>();
+            pDictionary.Add("KOD", operation.Kod.ToString());
+            pDictionary.Add("GUID", operation.Guid);
+            pDictionary.Add("TEXT", operation.Text);
+            SqlOracle.Insert("insert into " + SqlOracle.PreLogin +
+                             "TABLE_OPERS (KOD, GUID, TEXT) VALUES (:KOD, :GUID, :TEXT)", pDictionary);
+        }
     }
 
     private static void ProcessOneRow2(ExcelClass xls, int iRow, ref string message, List<Position> positions, GroupElement group, string fileName, int posType)

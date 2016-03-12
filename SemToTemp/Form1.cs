@@ -26,7 +26,6 @@ namespace SemToTemp
                     fMain mainForm = new fMain(_logger);
                     mainForm.ShowDialog();
                 }
-                Close();
             }
             catch (TimeoutException exception)
             {
@@ -34,6 +33,7 @@ namespace SemToTemp
                 _logger.WriteError(mess, exception);
                 MessageBox.Show(mess);
             }
+            Close();
         }
 
         private void fConnect_Load(object sender, EventArgs e)
