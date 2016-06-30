@@ -16,7 +16,8 @@ partial class SqlOracle
     /// <param name="fileName">Имя файла</param>
     /// <param name="paramsDict">Список параметров</param>
     /// <returns></returns>
-    static public bool UnloadFile(string cmdQuery, string path, string fileName, Dictionary<string, string> paramsDict)
+    public static bool UnloadFile(string cmdQuery, string path, string fileName,
+                                  Dictionary<string, string> paramsDict)
     {
         try
         {
@@ -76,6 +77,48 @@ partial class SqlOracle
         {
             _close();
         }
+    }
+
+    static public Byte[] GetBytes(string cmdQuery, Dictionary<string, string> paramsDict)
+    {
+        try
+        {
+            _open();
+
+            OracleCommand cmd = new OracleCommand(cmdQuery, _conn);
+            foreach (KeyValuePair<string, string> pair in paramsDict)
+            {
+                cmd.Parameters.AddWithValue(":" + pair.Key, pair.Value);
+            }
+
+            Byte[] b = null;
+            OracleDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                b = new Byte[Convert.ToInt32((reader.GetBytes(0, 0, null, 0, Int32.MaxValue)))];
+                reader.GetBytes(0, 0, b, 0, b.Length);
+            }
+
+            reader.Close();
+            cmd.Dispose();
+
+
+            return b;
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            _logger.WriteError(ex, "Путь для записи - ");
+            throw;
+        }
+        catch (TimeoutException)
+        {
+            return null;
+        }
+        finally
+        {
+            _close();
+        }
+
 
     }
 

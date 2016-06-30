@@ -44,22 +44,40 @@ namespace SemToTemp
             this.tbName = new System.Windows.Forms.TextBox();
             this.bttnRecord = new System.Windows.Forms.Button();
             this.tp2 = new System.Windows.Forms.TabPage();
+            this.rbOpers = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.rbMachine = new System.Windows.Forms.RadioButton();
             this.rbMeasure = new System.Windows.Forms.RadioButton();
             this.rbAddition = new System.Windows.Forms.RadioButton();
             this.rbMat = new System.Windows.Forms.RadioButton();
             this.rbInstr = new System.Windows.Forms.RadioButton();
-            this.rbOpers = new System.Windows.Forms.RadioButton();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.bExcelExportTo = new System.Windows.Forms.Button();
+            this.tbWorkshop = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tpAddGroup.SuspendLayout();
             this.tp2.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
             // 
             this.tabControl.Controls.Add(this.tpAddGroup);
             this.tabControl.Controls.Add(this.tp2);
+            this.tabControl.Controls.Add(this.tabPage1);
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
@@ -217,6 +235,17 @@ namespace SemToTemp
             this.tp2.Text = "Настройки";
             this.tp2.UseVisualStyleBackColor = true;
             // 
+            // rbOpers
+            // 
+            this.rbOpers.AutoSize = true;
+            this.rbOpers.Location = new System.Drawing.Point(27, 168);
+            this.rbOpers.Name = "rbOpers";
+            this.rbOpers.Size = new System.Drawing.Size(75, 17);
+            this.rbOpers.TabIndex = 6;
+            this.rbOpers.TabStop = true;
+            this.rbOpers.Text = "Операции";
+            this.rbOpers.UseVisualStyleBackColor = true;
+            // 
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
@@ -279,16 +308,165 @@ namespace SemToTemp
             this.rbInstr.Text = "Режущий инструмент";
             this.rbInstr.UseVisualStyleBackColor = true;
             // 
-            // rbOpers
+            // tabPage1
             // 
-            this.rbOpers.AutoSize = true;
-            this.rbOpers.Location = new System.Drawing.Point(27, 168);
-            this.rbOpers.Name = "rbOpers";
-            this.rbOpers.Size = new System.Drawing.Size(75, 17);
-            this.rbOpers.TabIndex = 6;
-            this.rbOpers.TabStop = true;
-            this.rbOpers.Text = "Операции";
-            this.rbOpers.UseVisualStyleBackColor = true;
+            this.tabPage1.Controls.Add(this.label18);
+            this.tabPage1.Controls.Add(this.label17);
+            this.tabPage1.Controls.Add(this.label16);
+            this.tabPage1.Controls.Add(this.label15);
+            this.tabPage1.Controls.Add(this.label14);
+            this.tabPage1.Controls.Add(this.label13);
+            this.tabPage1.Controls.Add(this.label12);
+            this.tabPage1.Controls.Add(this.label11);
+            this.tabPage1.Controls.Add(this.label10);
+            this.tabPage1.Controls.Add(this.label9);
+            this.tabPage1.Controls.Add(this.label8);
+            this.tabPage1.Controls.Add(this.label7);
+            this.tabPage1.Controls.Add(this.bExcelExportTo);
+            this.tabPage1.Controls.Add(this.tbWorkshop);
+            this.tabPage1.Controls.Add(this.label5);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(343, 193);
+            this.tabPage1.TabIndex = 2;
+            this.tabPage1.Text = "Выгрузить ТО для цеха";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // bExcelExportTo
+            // 
+            this.bExcelExportTo.Location = new System.Drawing.Point(29, 42);
+            this.bExcelExportTo.Name = "bExcelExportTo";
+            this.bExcelExportTo.Size = new System.Drawing.Size(129, 23);
+            this.bExcelExportTo.TabIndex = 2;
+            this.bExcelExportTo.Text = "Выгрузить в Excel";
+            this.bExcelExportTo.UseVisualStyleBackColor = true;
+            this.bExcelExportTo.Click += new System.EventHandler(this.bExcelExportTo_Click);
+            // 
+            // tbWorkshop
+            // 
+            this.tbWorkshop.Location = new System.Drawing.Point(58, 16);
+            this.tbWorkshop.Name = "tbWorkshop";
+            this.tbWorkshop.Size = new System.Drawing.Size(100, 20);
+            this.tbWorkshop.TabIndex = 1;
+            this.tbWorkshop.Text = "303";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(26, 19);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(26, 13);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Цех";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(180, 16);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(25, 13);
+            this.label7.TabIndex = 3;
+            this.label7.Text = "ТП:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(180, 42);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(66, 13);
+            this.label8.TabIndex = 4;
+            this.label8.Text = "Операциии:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(180, 69);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(53, 13);
+            this.label9.TabIndex = 5;
+            this.label9.Text = "Переход:";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(252, 19);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(41, 13);
+            this.label10.TabIndex = 6;
+            this.label10.Text = "label10";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(252, 42);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(41, 13);
+            this.label11.TabIndex = 7;
+            this.label11.Text = "label11";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(252, 69);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(41, 13);
+            this.label12.TabIndex = 8;
+            this.label12.Text = "label12";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(289, 19);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(19, 13);
+            this.label13.TabIndex = 9;
+            this.label13.Text = "из";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(289, 69);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(19, 13);
+            this.label14.TabIndex = 10;
+            this.label14.Text = "из";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(289, 42);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(19, 13);
+            this.label15.TabIndex = 11;
+            this.label15.Text = "из";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(306, 19);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(41, 13);
+            this.label16.TabIndex = 12;
+            this.label16.Text = "label16";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(306, 42);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(41, 13);
+            this.label17.TabIndex = 13;
+            this.label17.Text = "label17";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(306, 69);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(41, 13);
+            this.label18.TabIndex = 14;
+            this.label18.Text = "label18";
             // 
             // fMain
             // 
@@ -303,6 +481,8 @@ namespace SemToTemp
             this.tpAddGroup.PerformLayout();
             this.tp2.ResumeLayout(false);
             this.tp2.PerformLayout();
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -332,5 +512,21 @@ namespace SemToTemp
         private System.Windows.Forms.RadioButton rbAddition;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton rbOpers;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.Button bExcelExportTo;
+        private System.Windows.Forms.TextBox tbWorkshop;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
     }
 }

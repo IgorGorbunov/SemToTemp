@@ -23,6 +23,14 @@ public static class Processor
     private static StreamWriter _userLog;
 
     private static readonly string _USER_LOG_FULL_PATH = AppDomain.CurrentDomain.BaseDirectory + "status.log";
+
+    public static void ExportTo(string workshop)
+    {
+        
+        
+
+
+    }
     
     public static void SetOpers()
     {
